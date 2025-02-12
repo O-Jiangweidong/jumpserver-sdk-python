@@ -44,7 +44,10 @@ class Response(object):
                 self.total = data.get('count', 0)
                 self._previous_url = data.get('previous') or ''
                 self._next_url = data.get('next') or ''
-                data = [self.to_obj(d) for d in data.get('results') or []]
+                if data.get('results') is None:
+                    data = self.to_obj(data)
+                else:
+                    data = [self.to_obj(d) for d in data['results']]
         except Exception as e:
             self._err_msg = str(e)
         return data

@@ -3,7 +3,7 @@ class Instance(object):
         pass
 
 
-class GenerateDeleteInstance(Instance):
+class GenerateInstance(Instance):
     def __init__(self, id, *args, **kwargs):
         """
         :param id: 对象 ID

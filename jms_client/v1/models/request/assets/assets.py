@@ -3,6 +3,7 @@ from jms_client.v1.models.instance.assets import (
     CloudInstance, WebInstance, GPTInstance, CustomInstance
 )
 from ..common import Request
+from ..mixins import GetInstanceMixin
 
 
 class DescribeAssetsRequest(Request):
@@ -10,15 +11,12 @@ class DescribeAssetsRequest(Request):
     InstanceClass = AssetInstance
 
 
-class DeleteAssetRequest(Request):
-    URL = 'assets/assets/'
+class DetailAssetRequest(GetInstanceMixin, DescribeAssetsRequest):
+    pass
 
-    def get_url(self):
-        if not self.instance or not getattr(self.instance, 'id', None):
-            raise ValueError(
-                'When performing delete action, the parameter [instance] is required'
-            )
-        return f'{self.url_prefix}{self.URL}{self.instance.id}/'
+
+class DeleteAssetRequest(GetInstanceMixin, Request):
+    URL = 'assets/assets/'
 
     def get_method(self):
         return 'delete'
