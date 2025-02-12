@@ -8,12 +8,13 @@ class Request(object):
     InstanceClass = None
 
     def __init__(
-            self, limit=100, offset=0, fields_size='', **kwargs
+            self, limit=100, offset=0, fields_size='', instance=None, **kwargs
     ):
         self.url_prefix = 'api/v1/'
         self.limit = limit
         self.offset = offset
         self.fields_size = fields_size
+        self.instance = instance
         self.other = kwargs
 
     @staticmethod

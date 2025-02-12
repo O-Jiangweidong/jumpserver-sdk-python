@@ -10,6 +10,20 @@ class DescribeAssetsRequest(Request):
     InstanceClass = AssetInstance
 
 
+class DeleteAssetRequest(Request):
+    URL = 'assets/assets/'
+
+    def get_url(self):
+        if not self.instance or not getattr(self.instance, 'id', None):
+            raise ValueError(
+                'When performing delete action, the parameter [instance] is required'
+            )
+        return f'{self.url_prefix}{self.URL}{self.instance.id}/'
+
+    def get_method(self):
+        return 'delete'
+
+
 class DescribeHostsRequest(Request):
     URL = 'assets/hosts/'
     InstanceClass = HostInstance

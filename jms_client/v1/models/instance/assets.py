@@ -22,8 +22,8 @@ class AssetInstance(Instance):
         """
         :param name: 资产名称
         :param address: 资产地址
-        :param nodes: 节点（可选）
-        :param platform: 平台（可选）
+        :param nodes: 节点
+        :param platform: 平台
         :param id: 资产ID（可选）
         :param auto_config: 自动化配置（可选）
         :param comment: 备注（可选）

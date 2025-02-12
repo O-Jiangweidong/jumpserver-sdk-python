@@ -9,11 +9,15 @@ class Response(object):
         self._total = 0
         # other
         self._err_msg = ''
+        self._http_status = 0
         self.ins_class = ins_class
         self._data = self._parse_data_from_resp(net_response)
 
     def is_success(self):
         return not bool(self.get_err_msg())
+
+    def is_request_ok(self):
+        return self._http_status < 500
 
     def get_err_msg(self):
         return self._err_msg
@@ -24,6 +28,14 @@ class Response(object):
         return self.ins_class(**attrs)
 
     def _parse_data_from_resp(self, response):
+        data = []
+        self._http_status = response.status_code
+        if response.status_code >= 400:
+            self._err_msg = response.reason
+            return data
+
+        if response.text == '':
+            return data
         try:
             data = response.json()
             if isinstance(data, list):
@@ -35,7 +47,6 @@ class Response(object):
                 data = [self.to_obj(d) for d in data.get('results') or []]
         except Exception as e:
             self._err_msg = str(e)
-            data = []
         return data
 
     def get_data(self):
