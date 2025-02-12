@@ -1,12 +1,11 @@
 from urllib.parse import urlencode
 
-from jms_client.v1.models.response import Response
 from .const import FIELDS_MINI, FIELDS_SMALL
 
 
 class Request(object):
     URL = ''
-    ResponseClass = Response
+    InstanceClass = None
 
     def __init__(
             self, limit=100, offset=0, fields_size='', **kwargs
