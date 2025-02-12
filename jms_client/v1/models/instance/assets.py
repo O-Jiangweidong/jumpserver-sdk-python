@@ -8,17 +8,31 @@ class AssetInstance(Instance):
             self,
             name,
             address,
+            nodes,
+            platform,
             id=None,
             auto_config=None,
             comment='',
             domain=None,
             is_active=True,
             labels=None,
-            nodes=None,
-            platform=None,
             protocols=None,
             **kwargs
     ):
+        """
+        :param name: 资产名称
+        :param address: 资产地址
+        :param nodes: 节点（可选）
+        :param platform: 平台（可选）
+        :param id: 资产ID（可选）
+        :param auto_config: 自动化配置（可选）
+        :param comment: 备注（可选）
+        :param domain: 网域（可选）
+        :param is_active: 激活状态（可选）
+        :param labels: 标签（可选）
+        :param protocols: 协议（可选）
+        :param kwargs: 其他参数
+        """
         self.id = id
         self.address = address
         self.name = name
@@ -43,6 +57,9 @@ class AssetInstance(Instance):
 
     def __repr__(self):
         return self.__str__()
+
+    def to_dict(self):
+        return vars(self)
 
 
 class HostInstance(AssetInstance):
@@ -72,6 +89,15 @@ class DatabaseInstance(AssetInstance):
             db_name='',
             **kwargs
     ):
+        """
+        :param allow_invalid_cert: 是否忽略证书检查（可选）
+        :param use_ssl: 是否使用 SSL/TLS（可选）
+        :param ca_cert: CA 证书（可选）
+        :param client_cert: 客户端证书（可选）
+        :param client_key: 客户端密钥（可选）
+        :param db_name: 数据库名（可选）
+        :param kwargs: 其他参数
+        """
         self.use_ssl = use_ssl
         self.allow_invalid_cert = allow_invalid_cert
         self.ca_cert = ca_cert
@@ -107,6 +133,14 @@ class WebInstance(AssetInstance):
             script=None,
             **kwargs
     ):
+        """
+        :param autofill: 自动填充（可选）
+        :param username_selector: 用户名选择器（可选）
+        :param password_selector: 密码选择器（可选）
+        :param submit_selector: 提交选择器（可选）
+        :param script: 脚本内容（可选）
+        :param kwargs: 其他参数
+        """
         self.autofill = autofill
         self.username_selector = username_selector
         self.password_selector = password_selector
@@ -119,6 +153,10 @@ class GPTInstance(AssetInstance):
     TYPE = 'GTP'
 
     def __init__(self, proxy='', **kwargs):
+        """
+        :param proxy: HTTP(s) 代理（可选）
+        :param kwargs: 其他参数
+        """
         self.proxy = proxy
         super().__init__(**kwargs)
 
