@@ -1,0 +1,2 @@
+class JMSException(Exception):
+    pass
