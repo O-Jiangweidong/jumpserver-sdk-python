@@ -36,6 +36,9 @@ class TestFunctionality(unittest.TestCase):
         self.assertIsInstance(resp.get_data(), list)
 
     def test_retrieve_asset(self):
+        """
+        测试获取指定 ID 资产
+        """
         instance = GenerateInstance(id='bc248546-20ca-4bda-a735-bd47b475d931')
         request = DetailAssetRequest(instance=instance)
         resp: Response = self.client.do(request, with_model=True)
@@ -45,7 +48,7 @@ class TestFunctionality(unittest.TestCase):
 
     def test_delete_asset(self):
         """
-        测试删除指定资产
+        测试删除指定 ID 资产
         """
         instance = GenerateInstance(id='ede0b1c1-9e2f-4355-acbf-7af9550a616b')
         request = DeleteAssetRequest(instance=instance)
