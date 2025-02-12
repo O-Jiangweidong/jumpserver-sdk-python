@@ -22,7 +22,7 @@ class TestFunctionality(unittest.TestCase):
             username='jumpserver', password='Calong@2015'
         )
 
-    def test_retrieve_assets(self):
+    def test_list_assets(self):
         """
         测试获取 所有 类型资产列表
         :return:
@@ -46,7 +46,7 @@ class TestFunctionality(unittest.TestCase):
         is_ok = resp.is_request_ok()
         self.assertTrue(is_ok)
 
-    def test_retrieve_hosts(self):
+    def test_list_hosts(self):
         """
         测试获取 主机 类型资产列表
         """
@@ -58,7 +58,7 @@ class TestFunctionality(unittest.TestCase):
         result = resp.get_data()
         self.assertIsInstance(result, list)
 
-    def test_retrieve_databases(self):
+    def test_list_databases(self):
         """
         测试获取 数据库 类型资产列表
         """
@@ -70,7 +70,7 @@ class TestFunctionality(unittest.TestCase):
         result = resp.get_data()
         self.assertIsInstance(result, list)
 
-    def test_retrieve_devices(self):
+    def test_list_devices(self):
         """
         测试获取 网络设备 类型资产列表
         """
@@ -82,7 +82,7 @@ class TestFunctionality(unittest.TestCase):
         result = resp.get_data()
         self.assertIsInstance(result, list)
 
-    def test_retrieve_clouds(self):
+    def test_list_clouds(self):
         """
         测试获取 云服务 类型资产列表
         """
@@ -94,7 +94,7 @@ class TestFunctionality(unittest.TestCase):
         result = resp.get_data()
         self.assertIsInstance(result, list)
 
-    def test_retrieve_webs(self):
+    def test_list_webs(self):
         """
         测试获取 Web 类型资产列表
         """
@@ -106,7 +106,7 @@ class TestFunctionality(unittest.TestCase):
         result = resp.get_data()
         self.assertIsInstance(result, list)
 
-    def test_retrieve_gpts(self):
+    def test_list_gpts(self):
         """
         测试获取 Gpt 类型资产列表
         """
@@ -118,7 +118,7 @@ class TestFunctionality(unittest.TestCase):
         result = resp.get_data()
         self.assertIsInstance(result, list)
 
-    def test_retrieve_customs(self):
+    def test_list_customs(self):
         """
         测试获取 自定义 类型资产列表
         """
