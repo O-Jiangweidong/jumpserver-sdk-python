@@ -17,6 +17,7 @@ class DescribeAssetsRequest(ExtraRequestMixin, BaseAssetRequest):
     如数据库中的 dbname 则不存在，若想获取不同类型独特的字段，则需要更改请求模型
     如数据库的则为 DescribeDatabasesRequest
     """
+
     def __init__(
             self,
             search: str = '',
@@ -96,8 +97,35 @@ class DeleteAssetRequest(DetailMixin, BaseAssetRequest):
     """
     删除指定 ID 的资产
     """
+
     def get_method(self):
         return 'delete'
+
+
+class CreateMixin(object):
+    _body: dict
+
+    def __init__(
+            self,
+            id_: str = '',
+            **kwargs
+    ):
+        """
+        :param id_: ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        if id_:
+            self._body['id'] = id_
+
+    def get_url(self):
+        url = super().get_url()
+        sep = '?' if '?' not in url else '&'
+        return f'{url}{sep}platform={self._body.get("platform", "1")}'
+
+    @staticmethod
+    def get_method():
+        return 'post'
 
 
 class CreateUpdateAssetParamsMixin(object):
@@ -125,6 +153,7 @@ class CreateUpdateAssetParamsMixin(object):
             }
         ]
     """
+
     def __init__(
             self,
             name: str,
@@ -188,32 +217,6 @@ class DetailHostRequest(DetailMixin, BaseHostRequest):
     """
 
 
-class CreateMixin(object):
-    _body: dict
-
-    def __init__(
-            self,
-            id_: str = '',
-            **kwargs
-    ):
-        """
-        :param id_: ID
-        :param kwargs: 其他参数
-        """
-        super().__init__(**kwargs)
-        if id_:
-            self._body['id'] = id_
-
-    def get_url(self):
-        url = super().get_url()
-        sep = '?' if '?' not in url else '&'
-        return f'{url}{sep}platform={self._body.get("platform", "1")}'
-
-    @staticmethod
-    def get_method():
-        return 'post'
-
-
 class CreateHostRequest(
     CreateUpdateAssetParamsMixin, CreateMixin, BaseHostRequest
 ):
@@ -272,18 +275,35 @@ class UpdateDatabaseRequest(
         return 'put'
 
 
-class DescribeDevicesRequest(DescribeAssetsRequest):
-    """
-    查询资产类型为 网络设备 的列表
-    """
+class BaseDeviceRequest(Request):
     URL = 'assets/devices/'
     InstanceClass = DeviceInstance
 
 
-class DetailDeviceRequest(DetailMixin, DescribeDevicesRequest):
+class DescribeDevicesRequest(BaseDeviceRequest, DescribeAssetsRequest):
+    """
+    查询资产类型为 网络设备 的列表
+    """
+
+
+class DetailDeviceRequest(DetailMixin, BaseDeviceRequest):
     """
     查询资产类型为 网络设备 的详情
     """
+
+
+class CreateDeviceRequest(
+    CreateUpdateAssetParamsMixin, CreateMixin, BaseDeviceRequest
+):
+    """ 创建网络设备 """
+
+
+class UpdateDeviceRequest(
+    CreateUpdateAssetParamsMixin, DetailMixin, BaseDeviceRequest
+):
+    """ 更新网络设备 """
+    def get_method(self):
+        return 'put'
 
 
 class DescribeCloudsRequest(DescribeAssetsRequest):

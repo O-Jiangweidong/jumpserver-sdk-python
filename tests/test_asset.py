@@ -15,6 +15,7 @@ from jms_client.v1.models.request.assets import (
     DetailGPTRequest, DetailCustomRequest,
     CreateHostRequest, UpdateHostRequest,
     CreateDatabaseRequest, UpdateDatabaseRequest,
+    CreateDeviceRequest, UpdateDeviceRequest,
 )
 from jms_client.v1.models.instance import (
     AssetInstance,
@@ -178,6 +179,41 @@ class TestFunctionality(unittest.TestCase):
     def test_retrieve_device(self):
         """ 测试获取指定 ID 网络设备详情 """
         request = DetailDeviceRequest(id_='bc248546-20ca-4bda-a735-bd47b475d931')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_create_device(self):
+        """ 测试创建网络设备类型资产 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = CreateDeviceRequest(
+            name='sdk-device', address='1.1.1.1',
+            domain='bf6682af-7056-413d-be80-302604129598',
+            platform='123', nodes=[
+                '02f821c7-a316-4e2e-a50b-e41faf59f68d'
+            ],
+            protocols=[{'name': 'ssh', 'port': '22'}],
+            labels=['大西瓜:big', '水蜜桃:a'],
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_update_device(self):
+        """ 测试更新指定 ID 网络设备资产属性 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = UpdateDeviceRequest(
+            id_='415682fa-e0ec-4153-9b2d-61f69bfd604d',
+            name='sdk-device-new', address='192.168.1.1',
+            domain='bf6682af-7056-413d-be80-302604129598',
+            platform='123', nodes=[
+                '02f821c7-a316-4e2e-a50b-e41faf59f68d'
+            ],
+            protocols=[{'name': 'ssh', 'port': '33'}],
+            labels=['新事物:new']
+        )
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())
