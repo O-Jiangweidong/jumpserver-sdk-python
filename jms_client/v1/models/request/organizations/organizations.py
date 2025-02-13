@@ -66,9 +66,9 @@ class CreateOrganizationRequest(
         :param id_: ID
         :param kwargs: 其他参数
         """
+        super().__init__(**kwargs)
         if id_:
             self._body['id'] = id_
-        super().__init__(**kwargs)
 
     def get_method(self):
         return 'post'

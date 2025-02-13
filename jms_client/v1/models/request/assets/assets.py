@@ -188,10 +188,9 @@ class DetailHostRequest(DetailMixin, BaseHostRequest):
     """
 
 
-class CreateHostRequest(
-    CreateUpdateAssetParamsMixin, BaseHostRequest
-):
-    """ 创建主机 """
+class CreateMixin(object):
+    _body: dict
+
     def __init__(
             self,
             id_: str = '',
@@ -201,17 +200,24 @@ class CreateHostRequest(
         :param id_: ID
         :param kwargs: 其他参数
         """
+        super().__init__(**kwargs)
         if id_:
             self._body['id'] = id_
-        super().__init__(**kwargs)
 
     def get_url(self):
         url = super().get_url()
         sep = '?' if '?' not in url else '&'
         return f'{url}{sep}platform={self._body.get("platform", "1")}'
 
-    def get_method(self):
+    @staticmethod
+    def get_method():
         return 'post'
+
+
+class CreateHostRequest(
+    CreateUpdateAssetParamsMixin, CreateMixin, BaseHostRequest
+):
+    """ 创建主机 """
 
 
 class UpdateHostRequest(
@@ -222,18 +228,48 @@ class UpdateHostRequest(
         return 'put'
 
 
-class DescribeDatabasesRequest(DescribeAssetsRequest):
-    """
-    查询资产类型为 数据库 的列表
-    """
+class BaseDatabaseRequest(Request):
     URL = 'assets/databases/'
     InstanceClass = DatabaseInstance
 
 
-class DetailDatabaseRequest(DetailMixin, DescribeDatabasesRequest):
+class DescribeDatabasesRequest(BaseDatabaseRequest, DescribeAssetsRequest):
+    """
+    查询资产类型为 数据库 的列表
+    """
+
+
+class DetailDatabaseRequest(DetailMixin, BaseDatabaseRequest):
     """
     查询资产类型为 数据库 的详情
     """
+
+
+class CreateUpdateDatabaseParamsMixin(CreateUpdateAssetParamsMixin):
+    def __init__(
+            self,
+            db_name: str,
+            **kwargs
+    ):
+        """
+            :param db_name: 数据库名称
+        """
+        super().__init__(**kwargs)
+        self._body['db_name'] = db_name
+
+
+class CreateDatabaseRequest(
+    CreateUpdateDatabaseParamsMixin, CreateMixin, BaseDatabaseRequest
+):
+    """ 创建数据库 """
+
+
+class UpdateDatabaseRequest(
+    CreateUpdateDatabaseParamsMixin, DetailMixin, BaseDatabaseRequest
+):
+    """ 更新数据库 """
+    def get_method(self):
+        return 'put'
 
 
 class DescribeDevicesRequest(DescribeAssetsRequest):

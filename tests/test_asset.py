@@ -14,6 +14,7 @@ from jms_client.v1.models.request.assets import (
     DetailCloudRequest, DetailWebRequest,
     DetailGPTRequest, DetailCustomRequest,
     CreateHostRequest, UpdateHostRequest,
+    CreateDatabaseRequest, UpdateDatabaseRequest,
 )
 from jms_client.v1.models.instance import (
     AssetInstance,
@@ -125,6 +126,41 @@ class TestFunctionality(unittest.TestCase):
     def test_retrieve_database(self):
         """ 测试获取指定 ID 数据库详情 """
         request = DetailDatabaseRequest(id_='bc248546-20ca-4bda-a735-bd47b475d931')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_create_database(self):
+        """ 测试创建数据库类型资产 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = CreateDatabaseRequest(
+            name='sdk-db', address='1.1.1.1', db_name='db_name',
+            domain='bf6682af-7056-413d-be80-302604129598',
+            platform='41', nodes=[
+                '02f821c7-a316-4e2e-a50b-e41faf59f68d'
+            ],
+            protocols=[{'name': 'oracle', 'port': '22332'}],
+            labels=['大西瓜:big', '水蜜桃:a'],
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_update_database(self):
+        """ 测试更新指定 ID 数据库资产属性 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = UpdateDatabaseRequest(
+            id_='2d677794-309c-4ed5-a6a3-3c4e8830aac7',
+            name='sdk-db-new', address='192.168.1.1', db_name='new_db_name',
+            domain='bf6682af-7056-413d-be80-302604129598',
+            platform='41', nodes=[
+                '02f821c7-a316-4e2e-a50b-e41faf59f68d'
+            ],
+            protocols=[{'name': 'oracle', 'port': '65533'}],
+            labels=['新事物:new']
+        )
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())
