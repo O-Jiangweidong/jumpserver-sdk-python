@@ -50,7 +50,7 @@ class TestFunctionality(unittest.TestCase):
 
     def test_delete_organization(self):
         """
-        测试删除指定 ID 资产
+        测试删除指定 ID 组织
         """
         request = DeleteOrganizationRequest(id='ede0b1c1-9e2f-4355-acbf-7af9550a616b')
         resp: Response = self.client.do(request)
