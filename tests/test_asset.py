@@ -1,5 +1,5 @@
 import configparser
-import os
+
 import unittest
 
 from jms_client.client import get_client
@@ -9,10 +9,13 @@ from jms_client.v1.models.request.assets import (
     DescribeCloudsRequest, DescribeWebsRequest,
     DescribeGPTsRequest, DescribeCustomsRequest,
     DescribeAssetsRequest, DeleteAssetRequest,
-    DetailAssetRequest,
+    DetailAssetRequest, DetailHostRequest,
+    DetailDeviceRequest, DetailDatabaseRequest,
+    DetailCloudRequest, DetailWebRequest,
+    DetailGPTRequest, DetailCustomRequest
 )
 from jms_client.v1.models.instance import (
-    GenerateInstance, AssetInstance,
+    AssetInstance,
 )
 from jms_client.v1.models.response import Response
 
@@ -43,10 +46,9 @@ class TestFunctionality(unittest.TestCase):
 
     def test_retrieve_asset(self):
         """
-        测试获取指定 ID 资产
+        测试获取指定 ID 资产详情
         """
-        instance = GenerateInstance(id='bc248546-20ca-4bda-a735-bd47b475d931')
-        request = DetailAssetRequest(instance=instance)
+        request = DetailAssetRequest(id='bc248546-20ca-4bda-a735-bd47b475d931')
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())
@@ -56,8 +58,7 @@ class TestFunctionality(unittest.TestCase):
         """
         测试删除指定 ID 资产
         """
-        instance = GenerateInstance(id='ede0b1c1-9e2f-4355-acbf-7af9550a616b')
-        request = DeleteAssetRequest(instance=instance)
+        request = DeleteAssetRequest(id='ede0b1c1-9e2f-4355-acbf-7af9550a616b')
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_request_ok())
@@ -73,6 +74,16 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
 
+    def test_retrieve_host(self):
+        """
+        测试获取指定 ID 主机详情
+        """
+        request = DetailHostRequest(id='bc248546-20ca-4bda-a735-bd47b475d931')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
     # --------------------- 数据库类 ---------------------
     def test_list_databases(self):
         """
@@ -83,6 +94,16 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
+
+    def test_retrieve_database(self):
+        """
+        测试获取指定 ID 数据库详情
+        """
+        request = DetailDatabaseRequest(id='bc248546-20ca-4bda-a735-bd47b475d931')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
 
     # --------------------- 网络设备类 ---------------------
     def test_list_devices(self):
@@ -95,6 +116,16 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
 
+    def test_retrieve_device(self):
+        """
+        测试获取指定 ID 网络设备详情
+        """
+        request = DetailDeviceRequest(id='bc248546-20ca-4bda-a735-bd47b475d931')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
     # --------------------- 云服务类 ---------------------
     def test_list_clouds(self):
         """
@@ -105,6 +136,16 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
+
+    def test_retrieve_cloud(self):
+        """
+        测试获取指定 ID 云服务详情
+        """
+        request = DetailCloudRequest(id='bc248546-20ca-4bda-a735-bd47b475d931')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
 
     # --------------------- Web 类 ---------------------
     def test_list_webs(self):
@@ -117,6 +158,16 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
 
+    def test_retrieve_web(self):
+        """
+        测试获取指定 ID Web详情
+        """
+        request = DetailWebRequest(id='bc248546-20ca-4bda-a735-bd47b475d931')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
     # --------------------- GPT 类 ---------------------
     def test_list_gpts(self):
         """
@@ -128,6 +179,16 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
 
+    def test_retrieve_gpt(self):
+        """
+        测试获取指定 ID GPT详情
+        """
+        request = DetailGPTRequest(id='2fb4b869-633f-44a0-a6cd-0dd76c859c3d')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
     # --------------------- 自定义类 ---------------------
     def test_list_customs(self):
         """
@@ -138,6 +199,16 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
+
+    def test_retrieve_custom(self):
+        """
+        测试获取指定 ID 自定义资产详情
+        """
+        request = DetailCustomRequest(id='bc248546-20ca-4bda-a735-bd47b475d931')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
 
 
 if __name__ == '__main__':
