@@ -100,18 +100,126 @@ class DeleteAssetRequest(DetailMixin, BaseAssetRequest):
         return 'delete'
 
 
-class DescribeHostsRequest(DescribeAssetsRequest):
+class CreateUpdateAssetParamsMixin(object):
+    # TODO 后边搞完账号模型后，再来补充账号相关的内容
     """
-    查询资产类型为 主机 的列表
+        "accounts":[
+        {
+            "privileged": False,
+            "secret_type": "password",
+            "push_now": True,
+            "on_invalid": "error",
+            "is_active": True,
+            "name": "hello",
+            "username": "hello",
+            "params": {
+                "push_account_posix": {
+                    "modify_sudo": True,
+                    "sudo": "/bin/whoami",
+                    "shell": "/bin/bash",
+                    "home": "/home",
+                    "groups": "usergroup"
+                }
+            },
+            "secret": "secret"
+            }
+        ]
     """
+    def __init__(
+            self,
+            name: str,
+            address: str,
+            domain: str = '',
+            platform: str = '',
+            nodes: list = None,
+            protocols: list = None,
+            labels: list = None,
+            is_active: bool = True,
+            comment: str = '',
+            **kwargs
+    ):
+        """
+        :param name: 名称
+        :param address: 地址
+        :param domain: 网域 ID
+        :param platform: 平台 ID
+                :param nodes: 节点 ID 列表, eg: ["node1_id", "node2_id"]
+        :param protocols: 协议列表, eg: [{'name': 'ssh', 'port': '22'}]
+        :param labels: 标签列表, eg: ["name1:key1", "name2:key2"]
+        :param is_active: 是否激活
+        :param comment: 备注
+        :param kwargs: 其他参数
+        """
+        self._body = {
+            'name': name,
+            'address': address,
+            'platform': platform,
+            'is_active': is_active,
+            'comment': comment,
+        }
+        if domain:
+            self._body['domain'] = domain
+        if nodes is not None:
+            self._body['nodes'] = nodes
+        if protocols is not None:
+            self._body['protocols'] = protocols
+        if labels is not None:
+            self._body['labels'] = labels
+        super().__init__(**kwargs)
+
+    def get_data(self):
+        return self._body
+
+
+class BaseHostRequest(Request):
     URL = 'assets/hosts/'
     InstanceClass = HostInstance
 
 
-class DetailHostRequest(DetailMixin, DescribeHostsRequest):
+class DescribeHostsRequest(BaseHostRequest, DescribeAssetsRequest):
+    """
+    查询资产类型为 主机 的列表
+    """
+
+
+class DetailHostRequest(DetailMixin, BaseHostRequest):
     """
     查询资产类型为 主机 的详情
     """
+
+
+class CreateHostRequest(
+    CreateUpdateAssetParamsMixin, BaseHostRequest
+):
+    """ 创建主机 """
+    def __init__(
+            self,
+            id_: str = '',
+            **kwargs
+    ):
+        """
+        :param id_: ID
+        :param kwargs: 其他参数
+        """
+        if id_:
+            self._body['id'] = id_
+        super().__init__(**kwargs)
+
+    def get_url(self):
+        url = super().get_url()
+        sep = '?' if '?' not in url else '&'
+        return f'{url}{sep}platform={self._body.get("platform", "1")}'
+
+    def get_method(self):
+        return 'post'
+
+
+class UpdateHostRequest(
+    CreateUpdateAssetParamsMixin, DetailMixin, BaseHostRequest
+):
+    """ 更新主机 """
+    def get_method(self):
+        return 'put'
 
 
 class DescribeDatabasesRequest(DescribeAssetsRequest):

@@ -12,7 +12,8 @@ from jms_client.v1.models.request.assets import (
     DetailAssetRequest, DetailHostRequest,
     DetailDeviceRequest, DetailDatabaseRequest,
     DetailCloudRequest, DetailWebRequest,
-    DetailGPTRequest, DetailCustomRequest
+    DetailGPTRequest, DetailCustomRequest,
+    CreateHostRequest, UpdateHostRequest,
 )
 from jms_client.v1.models.instance import (
     AssetInstance,
@@ -72,6 +73,41 @@ class TestFunctionality(unittest.TestCase):
     def test_retrieve_host(self):
         """ 测试获取指定 ID 主机详情 """
         request = DetailHostRequest(id_='bc248546-20ca-4bda-a735-bd47b475d931')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_create_host(self):
+        """ 测试创建主机类型资产 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = CreateHostRequest(
+            name='sdk-host', address='1.1.1.1',
+            domain='bf6682af-7056-413d-be80-302604129598',
+            platform='32', nodes=[
+                '02f821c7-a316-4e2e-a50b-e41faf59f68d'
+            ],
+            protocols=[{'name': 'ssh', 'port': '22'}],
+            labels=['大西瓜:big', '水蜜桃:a']
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_update_host(self):
+        """ 测试更新指定 ID 主机资产属性 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = UpdateHostRequest(
+            id_='c2e4dde4-c777-4b24-a084-a8b44e99b5a1',
+            name='sdk-host-new', address='192.168.1.1',
+            domain='bf6682af-7056-413d-be80-302604129598',
+            platform='32', nodes=[
+                '02f821c7-a316-4e2e-a50b-e41faf59f68d'
+            ],
+            protocols=[{'name': 'ssh', 'port': '22'}],
+            labels=['新事物:new']
+        )
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())

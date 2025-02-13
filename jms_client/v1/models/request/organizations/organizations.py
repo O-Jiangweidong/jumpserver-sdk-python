@@ -5,12 +5,12 @@ from ..common import Request
 from ..mixins import DetailMixin, ExtraRequestMixin
 
 
-class BaseAssetRequest(Request):
+class BaseOrganizationRequest(Request):
     URL = 'orgs/orgs/'
     InstanceClass = OrganizationInstance
 
 
-class DescribeOrganizationsRequest(ExtraRequestMixin, BaseAssetRequest):
+class DescribeOrganizationsRequest(ExtraRequestMixin, BaseOrganizationRequest):
     """ 查询组织列表 """
     def __init__(
             self,
@@ -20,7 +20,7 @@ class DescribeOrganizationsRequest(ExtraRequestMixin, BaseAssetRequest):
     ):
         """
         :param search: 条件搜索，支持名称、备注
-        :param name: 组织名称过滤
+        :param name: 名称过滤
         :param kwargs: 其他参数
         """
         query_params = {}
@@ -31,7 +31,7 @@ class DescribeOrganizationsRequest(ExtraRequestMixin, BaseAssetRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailOrganizationRequest(DetailMixin, BaseAssetRequest):
+class DetailOrganizationRequest(DetailMixin, BaseOrganizationRequest):
     """ 获取指定 ID 的组织详情 """
 
 
@@ -42,16 +42,19 @@ class CreateUpdateOrganizationParamsMixin(object):
             **kwargs
     ):
         """
-        :param name: 组织名称
+        :param name: 名称
         """
         self._body = {
             'name': name
         }
         super().__init__(**kwargs)
 
+    def get_data(self):
+        return self._body
+
 
 class CreateOrganizationRequest(
-    CreateUpdateOrganizationParamsMixin, BaseAssetRequest
+    CreateUpdateOrganizationParamsMixin, BaseOrganizationRequest
 ):
     """ 创建组织 """
     def __init__(
@@ -60,7 +63,7 @@ class CreateOrganizationRequest(
             **kwargs
     ):
         """
-        :param id_: 组织 ID
+        :param id_: ID
         :param kwargs: 其他参数
         """
         if id_:
@@ -70,23 +73,17 @@ class CreateOrganizationRequest(
     def get_method(self):
         return 'post'
 
-    def get_data(self):
-        return self._body
-
 
 class UpdateOrganizationRequest(
     CreateUpdateOrganizationParamsMixin,
-    DetailMixin, BaseAssetRequest
+    DetailMixin, BaseOrganizationRequest
 ):
     """ 更新指定 ID 的组织属性 """
     def get_method(self):
         return 'put'
 
-    def get_data(self):
-        return self._body
 
-
-class DeleteOrganizationRequest(DetailMixin, BaseAssetRequest):
+class DeleteOrganizationRequest(DetailMixin, BaseOrganizationRequest):
     """ 删除指定 ID 的资产 """
 
     def get_method(self):
