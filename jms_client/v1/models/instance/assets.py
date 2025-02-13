@@ -40,6 +40,12 @@ class AssetInstance(Instance):
         self.created_by = ''
         self.date_created = ''
         self.date_verified = ''
+        self.gathered_info = ''
+        self.nodes_display = []
+        self.org_id = ''
+        self.org_name = ''
+        self.spec_info = ''
+        self.type = ''
         super().__init__(**kwargs)
 
     def __str__(self):
@@ -54,16 +60,6 @@ class AssetInstance(Instance):
 
 class HostInstance(AssetInstance):
     TYPE = 'Host'
-
-    def __init__(self, **kwargs):
-        # readonly
-        self.gathered_info = ''
-        self.nodes_display = []
-        self.org_id = ''
-        self.org_name = ''
-        self.spec_info = ''
-        self.type = ''
-        super().__init__(**kwargs)
 
 
 class DatabaseInstance(AssetInstance):
