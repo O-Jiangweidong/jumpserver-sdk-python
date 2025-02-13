@@ -6,15 +6,17 @@ from ..common import Request
 from ..mixins import DetailMixin
 
 
-class DescribeAssetsRequest(Request):
+class BaseAssetRequest(Request):
+    URL = 'assets/assets/'
+    InstanceClass = AssetInstance
+
+
+class DescribeAssetsRequest(BaseAssetRequest):
     """
     此方法获取的资产是通用类型，顾返回的资产只包含通用类型的字段
     如数据库中的 dbname 则不存在，若想获取不同类型独特的字段，则需要更改请求模型
     如数据库的则为 DescribeDatabasesRequest
     """
-    URL = 'assets/assets/'
-    InstanceClass = AssetInstance
-
     def __init__(
             self,
             search: str = '',
@@ -50,39 +52,39 @@ class DescribeAssetsRequest(Request):
         :param gather_accounts_enabled: 资产平台中的自动化 - 账号收集是否启用
         :param kwargs: 其他参数
         """
-        father_kwargs = {}
+        query_params = {}
         if search:
-            father_kwargs['search'] = search
+            query_params['search'] = search
         if platform:
-            father_kwargs['platform'] = platform
+            query_params['platform'] = platform
         if exclude_platform:
-            father_kwargs['exclude_platform'] = exclude_platform
+            query_params['exclude_platform'] = exclude_platform
         if domain:
-            father_kwargs['domain'] = domain
+            query_params['domain'] = domain
         if type_:
-            father_kwargs['type'] = type_
+            query_params['type'] = type_
         if category:
-            father_kwargs['category'] = category
+            query_params['category'] = category
         if protocols:
-            father_kwargs['protocols'] = protocols
+            query_params['protocols'] = protocols
         if isinstance(domain_enabled, bool):
-            father_kwargs['domain_enabled'] = domain_enabled
+            query_params['domain_enabled'] = domain_enabled
         if isinstance(ping_enabled, bool):
-            father_kwargs['ping_enabled'] = ping_enabled
+            query_params['ping_enabled'] = ping_enabled
         if isinstance(gather_facts_enabled, bool):
-            father_kwargs['gather_facts_enabled'] = gather_facts_enabled
+            query_params['gather_facts_enabled'] = gather_facts_enabled
         if isinstance(change_secret_enabled, bool):
-            father_kwargs['change_secret_enabled'] = change_secret_enabled
+            query_params['change_secret_enabled'] = change_secret_enabled
         if isinstance(push_account_enabled, bool):
-            father_kwargs['push_account_enabled'] = push_account_enabled
+            query_params['push_account_enabled'] = push_account_enabled
         if isinstance(verify_account_enabled, bool):
-            father_kwargs['verify_account_enabled'] = verify_account_enabled
+            query_params['verify_account_enabled'] = verify_account_enabled
         if isinstance(gather_accounts_enabled, bool):
-            father_kwargs['gather_accounts_enabled'] = gather_accounts_enabled
-        super().__init__(**father_kwargs, **kwargs)
+            query_params['gather_accounts_enabled'] = gather_accounts_enabled
+        super().__init__(**query_params, **kwargs)
 
 
-class DetailAssetRequest(DetailMixin, DescribeAssetsRequest):
+class DetailAssetRequest(DetailMixin, BaseAssetRequest):
     """
     此方法获取的资产是通用类型，顾返回的资产只包含通用类型的字段
     如数据库中的 dbname 则不存在，若想获取不同类型独特的字段，则需要更改请求模型
@@ -90,12 +92,10 @@ class DetailAssetRequest(DetailMixin, DescribeAssetsRequest):
     """
 
 
-class DeleteAssetRequest(DetailMixin, Request):
+class DeleteAssetRequest(DetailMixin, BaseAssetRequest):
     """
     删除指定 ID 的资产
     """
-    URL = 'assets/assets/'
-
     def get_method(self):
         return 'delete'
 

@@ -31,7 +31,11 @@ class Response(object):
         data = []
         self._http_status = response.status_code
         if response.status_code >= 400:
-            self._err_msg = response.reason
+            try:
+                message = response.json()
+                self._err_msg = message
+            except Exception: # noqa
+                self._err_msg = response.reason
             return data
 
         if response.text == '':

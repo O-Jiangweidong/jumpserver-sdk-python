@@ -4,46 +4,36 @@ from .common import Instance
 class AssetInstance(Instance):
     TYPE = 'Asset'
 
-    def __init__(
-            self,
-            name: str,
-            address: str,
-            nodes: str,
-            platform: str,
-            id_: str = None,
-            auto_config: dict = None,
-            comment: str = '',
-            domain: str = None,
-            is_active: bool = True,
-            labels: list = None,
-            protocols: dict = None,
-            **kwargs
-    ):
+    def __init__(self, **kwargs):
         """
-        :param name: 资产名称
-        :param address: 资产地址
-        :param nodes: 节点
-        :param platform: 平台
-        :param id_: 资产 ID（可选）
-        :param auto_config: 自动化配置（可选）
-        :param comment: 备注（可选）
-        :param domain: 网域（可选）
-        :param is_active: 激活状态（可选）
-        :param labels: 标签（可选）
-        :param protocols: 协议（可选）
-        :param kwargs: 其他参数
+        :attr name: 资产名称
+        :attr address: 资产地址
+        :attr nodes: 节点
+        :attr platform: 平台
+        :attr id_: 资产 ID
+        :attr auto_config: 自动化配置
+        :attr comment: 备注
+        :attr domain: 网域
+        :attr is_active: 激活状态
+        :attr labels: 标签
+        :attr protocols: 协议
+        :attr category: 资产类别
+        :attr connectivity: 连通性
+        :attr created_by: 创建人
+        :attr date_created: 创建时间
+        :attr date_verified: 验证时间
         """
-        self.id = id_
-        self.address = address
-        self.name = name
-        self.auto_config = auto_config
-        self.comment = comment
-        self.domain = domain
-        self.is_active = is_active
-        self.labels = labels
-        self.nodes = nodes
-        self.platform = platform
-        self.protocols = protocols
+        self.id: str = ''
+        self.address: str = ''
+        self.name: str = ''
+        self.auto_config: dict = {}
+        self.comment: str = ''
+        self.domain: dict = {}
+        self.is_active: bool = False
+        self.labels: list = []
+        self.nodes: list = []
+        self.platform: dict = {}
+        self.protocols: list = []
         # readonly
         self.category = ''
         self.connectivity = ''
@@ -79,31 +69,21 @@ class HostInstance(AssetInstance):
 class DatabaseInstance(AssetInstance):
     TYPE = 'Database'
 
-    def __init__(
-            self,
-            allow_invalid_cert=False,
-            use_ssl=False,
-            ca_cert='',
-            client_cert='',
-            client_key='',
-            db_name='',
-            **kwargs
-    ):
+    def __init__(self, **kwargs):
         """
-        :param allow_invalid_cert: 是否忽略证书检查（可选）
-        :param use_ssl: 是否使用 SSL/TLS（可选）
-        :param ca_cert: CA 证书（可选）
-        :param client_cert: 客户端证书（可选）
-        :param client_key: 客户端密钥（可选）
-        :param db_name: 数据库名（可选）
-        :param kwargs: 其他参数
+        :attr allow_invalid_cert: 是否忽略证书检查
+        :attr use_ssl: 是否使用 SSL/TLS
+        :attr ca_cert: CA 证书
+        :attr client_cert: 客户端证书
+        :attr client_key: 客户端密钥
+        :attr db_name: 数据库名
         """
-        self.use_ssl = use_ssl
-        self.allow_invalid_cert = allow_invalid_cert
-        self.ca_cert = ca_cert
-        self.client_cert = client_cert
-        self.client_key = client_key
-        self.db_name = db_name
+        self.use_ssl: bool = False
+        self.allow_invalid_cert: bool = False
+        self.ca_cert: str = ''
+        self.client_cert: str = ''
+        self.client_key: str = ''
+        self.db_name: str = ''
         super().__init__(**kwargs)
 
 
@@ -124,46 +104,39 @@ class CloudInstance(AssetInstance):
 class WebInstance(AssetInstance):
     TYPE = 'Web'
 
-    def __init__(
-            self,
-            autofill='no',
-            username_selector='name=username',
-            password_selector='name=password',
-            submit_selector='id=login_button',
-            script=None,
-            **kwargs
-    ):
+    def __init__(self, **kwargs):
         """
-        :param autofill: 自动填充（可选）
-        :param username_selector: 用户名选择器（可选）
-        :param password_selector: 密码选择器（可选）
-        :param submit_selector: 提交选择器（可选）
-        :param script: 脚本内容（可选）
-        :param kwargs: 其他参数
+        :attr autofill: 自动填充
+        :attr username_selector: 用户名选择器
+        :attr password_selector: 密码选择器
+        :attr submit_selector: 提交选择器
+        :attr script: 脚本内容
         """
-        self.autofill = autofill
-        self.username_selector = username_selector
-        self.password_selector = password_selector
-        self.submit_selector = submit_selector
-        self.script = script
+        self.autofill: bool = False
+        self.username_selector: str = ''
+        self.password_selector: str = ''
+        self.submit_selector: str = ''
+        self.script: list = []
         super().__init__(**kwargs)
 
 
 class GPTInstance(AssetInstance):
     TYPE = 'GTP'
 
-    def __init__(self, proxy='', **kwargs):
+    def __init__(self, **kwargs):
         """
-        :param proxy: HTTP(s) 代理（可选）
-        :param kwargs: 其他参数
+        :attr proxy: HTTP(s) 代理地址
         """
-        self.proxy = proxy
+        self.proxy: str = ''
         super().__init__(**kwargs)
 
 
 class CustomInstance(AssetInstance):
     TYPE = 'Custom'
 
-    def __init__(self, custom_info=None, **kwargs):
-        self.custom_info = custom_info
+    def __init__(self, **kwargs):
+        """
+        :attr custom_info: 自定义字段信息
+        """
+        self.custom_info: dict = {}
         super().__init__(**kwargs)
