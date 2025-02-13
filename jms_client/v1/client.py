@@ -23,6 +23,10 @@ class Client(object):
         )
 
     def set_org(self, org_id):
+        """
+        切换组织
+        :param org_id: 组织 ID
+        """
         self.client.set_org(org_id)
 
     def do(self, request_instance, with_model=False):

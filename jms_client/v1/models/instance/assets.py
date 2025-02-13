@@ -6,17 +6,17 @@ class AssetInstance(Instance):
 
     def __init__(
             self,
-            name,
-            address,
-            nodes,
-            platform,
-            id=None,
-            auto_config=None,
-            comment='',
-            domain=None,
-            is_active=True,
-            labels=None,
-            protocols=None,
+            name: str,
+            address: str,
+            nodes: str,
+            platform: str,
+            id_: str = None,
+            auto_config: dict = None,
+            comment: str = '',
+            domain: str = None,
+            is_active: bool = True,
+            labels: list = None,
+            protocols: dict = None,
             **kwargs
     ):
         """
@@ -24,7 +24,7 @@ class AssetInstance(Instance):
         :param address: 资产地址
         :param nodes: 节点
         :param platform: 平台
-        :param id: 资产ID（可选）
+        :param id_: 资产 ID（可选）
         :param auto_config: 自动化配置（可选）
         :param comment: 备注（可选）
         :param domain: 网域（可选）
@@ -33,7 +33,7 @@ class AssetInstance(Instance):
         :param protocols: 协议（可选）
         :param kwargs: 其他参数
         """
-        self.id = id
+        self.id = id_
         self.address = address
         self.name = name
         self.auto_config = auto_config

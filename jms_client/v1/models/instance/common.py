@@ -1,14 +1,7 @@
 class Instance(object):
-    def __init__(self, *args, **kwargs):
-        pass
+    def __init__(self, *args, **other):
+        self._bind_attrs(other)
 
-
-class GenerateInstance(Instance):
-    def __init__(self, id, *args, **kwargs):
-        """
-        :param id: 对象 ID
-        :param args: 其他参数
-        :type kwargs: 其他参数
-        """
-        self.id = id
-        super().__init__(*args, **kwargs)
+    def _bind_attrs(self, attrs):
+        for k, v in attrs.items():
+            setattr(self, k, v)

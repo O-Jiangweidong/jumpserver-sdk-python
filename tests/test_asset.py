@@ -36,13 +36,16 @@ class TestFunctionality(unittest.TestCase):
     def test_list_assets(self):
         """
         测试获取 所有 类型资产列表
-        :return:
         """
+        # 切换组织
+        self.client.set_org(self.client.default_org)
+
         request = DescribeAssetsRequest(limit=1, search='jms')
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
+        print(resp.get_data())
 
     def test_retrieve_asset(self):
         """
