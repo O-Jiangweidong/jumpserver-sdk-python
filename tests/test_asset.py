@@ -1,3 +1,5 @@
+import configparser
+import os
 import unittest
 
 from jms_client.client import get_client
@@ -18,9 +20,13 @@ from jms_client.v1.models.response import Response
 class TestFunctionality(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+        username = config['test']['username']
+        password = config['test']['password']
         self.client: Client = get_client(
             version='3.10', web_url='https://js-internal.fit2cloud.cn',
-            username='jumpserver', password='Calong@2015'
+            username=username, password=password
         )
 
     # --------------------- 通用的 ---------------------
