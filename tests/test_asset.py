@@ -5,17 +5,23 @@ import unittest
 from jms_client.client import get_client
 from jms_client.v1.client import Client
 from jms_client.v1.models.request.assets import (
-    DescribeHostsRequest, DescribeDatabasesRequest,
-    DescribeCloudsRequest, DescribeWebsRequest,
-    DescribeGPTsRequest, DescribeCustomsRequest,
-    DescribeAssetsRequest, DeleteAssetRequest,
-    DetailAssetRequest, DetailHostRequest,
-    DetailDeviceRequest, DetailDatabaseRequest,
-    DetailCloudRequest, DetailWebRequest,
-    DetailGPTRequest, DetailCustomRequest,
+    DescribeAssetsRequest, DetailAssetRequest, DeleteAssetRequest,
+
+    DescribeHostsRequest, DetailHostRequest,
     CreateHostRequest, UpdateHostRequest,
+
+    DescribeDatabasesRequest, DetailDatabaseRequest,
     CreateDatabaseRequest, UpdateDatabaseRequest,
+
+    DescribeDevicesRequest, DetailDeviceRequest,
     CreateDeviceRequest, UpdateDeviceRequest,
+
+    DescribeCloudsRequest, DetailCloudRequest,
+    CreateCloudRequest, UpdateCloudRequest,
+
+    DescribeWebsRequest, DetailWebRequest,
+    DescribeGPTsRequest, DetailGPTRequest,
+    DescribeCustomsRequest, DetailCustomRequest
 )
 from jms_client.v1.models.instance import (
     AssetInstance,
@@ -170,7 +176,7 @@ class TestFunctionality(unittest.TestCase):
     # --------------------- 网络设备类 ---------------------
     def test_list_devices(self):
         """ 测试获取 网络设备 类型资产列表 """
-        request = DescribeDatabasesRequest(limit=1)
+        request = DescribeDevicesRequest(limit=1)
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_success())
@@ -231,6 +237,41 @@ class TestFunctionality(unittest.TestCase):
     def test_retrieve_cloud(self):
         """ 测试获取指定 ID 云服务详情 """
         request = DetailCloudRequest(id_='bc248546-20ca-4bda-a735-bd47b475d931')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_create_cloud(self):
+        """ 测试创建云服务类型资产 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = CreateCloudRequest(
+            name='sdk-cloud', address='http://1.1.1.1/k8s',
+            domain='bf6682af-7056-413d-be80-302604129598',
+            platform='77', nodes=[
+                '02f821c7-a316-4e2e-a50b-e41faf59f68d'
+            ],
+            protocols=[{'name': 'k8s', 'port': '443'}],
+            labels=['大西瓜:big', '水蜜桃:a'],
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_update_cloud(self):
+        """ 测试更新指定 ID 网络设备资产属性 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = UpdateCloudRequest(
+            id_='23f78712-2732-4f6e-a762-757d17fdffc5',
+            name='sdk-cloud-new', address='http://192.168.1.1/k8s',
+            domain='bf6682af-7056-413d-be80-302604129598',
+            platform='77', nodes=[
+                '02f821c7-a316-4e2e-a50b-e41faf59f68d'
+            ],
+            protocols=[{'name': 'k8s', 'port': '4443'}],
+            labels=['新事物:new']
+        )
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())

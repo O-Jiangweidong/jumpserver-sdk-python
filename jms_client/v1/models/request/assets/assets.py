@@ -306,18 +306,35 @@ class UpdateDeviceRequest(
         return 'put'
 
 
-class DescribeCloudsRequest(DescribeAssetsRequest):
-    """
-    查询资产类型为 云服务 的列表
-    """
+class BaseCloudRequest(Request):
     URL = 'assets/clouds/'
     InstanceClass = CloudInstance
 
 
-class DetailCloudRequest(DetailMixin, DescribeCloudsRequest):
+class DescribeCloudsRequest(BaseCloudRequest, DescribeAssetsRequest):
+    """
+    查询资产类型为 云服务 的列表
+    """
+
+
+class DetailCloudRequest(DetailMixin, BaseCloudRequest):
     """
     查询资产类型为 云服务 的详情
     """
+
+
+class CreateCloudRequest(
+    CreateUpdateAssetParamsMixin, CreateMixin, BaseCloudRequest
+):
+    """ 创建云服务 """
+
+
+class UpdateCloudRequest(
+    CreateUpdateAssetParamsMixin, DetailMixin, BaseCloudRequest
+):
+    """ 更新云服务 """
+    def get_method(self):
+        return 'put'
 
 
 class DescribeWebsRequest(DescribeAssetsRequest):
