@@ -16,7 +16,8 @@ class Session(object):
         data = {
             'username': self.auth.username, 'password': self.auth.password
         }
-        response = requests.post(url=url, json=data, verify=False)
+        headers = {'User-Agent': f'JumpServer-SDK-Python'}
+        response = requests.post(url=url, json=data, verify=False, headers=headers)
         try:
             response_json = response.json()
             token = f"{response_json['keyword']} {response_json['token']}"
