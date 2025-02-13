@@ -20,7 +20,10 @@ from jms_client.v1.models.request.assets import (
     CreateCloudRequest, UpdateCloudRequest,
 
     DescribeWebsRequest, DetailWebRequest,
+
     DescribeGPTsRequest, DetailGPTRequest,
+    CreateGPTRequest, UpdateGPTRequest,
+
     DescribeCustomsRequest, DetailCustomRequest
 )
 from jms_client.v1.models.instance import (
@@ -306,6 +309,43 @@ class TestFunctionality(unittest.TestCase):
     def test_retrieve_gpt(self):
         """ 测试获取指定 ID GPT资产详情 """
         request = DetailGPTRequest(id_='2fb4b869-633f-44a0-a6cd-0dd76c859c3d')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_create_gpt(self):
+        """ 测试创建 GPT 类型资产 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = CreateGPTRequest(
+            name='sdk-gpt', address='http://1.1.1.1/gpt',
+            proxy='http://1.1.1.1/proxy',
+            domain='bf6682af-7056-413d-be80-302604129598',
+            platform='103', nodes=[
+                '02f821c7-a316-4e2e-a50b-e41faf59f68d'
+            ],
+            protocols=[{'name': 'chatgpt', 'port': '443'}],
+            labels=['大西瓜:big', '水蜜桃:a'],
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_update_gpt(self):
+        """ 测试更新指定 ID GPT 资产属性 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = UpdateGPTRequest(
+            id_='970f281d-90ab-4410-b42e-b26662788301',
+            name='sdk-gpt-new', address='http://192.168.1.1/gpt',
+            proxy='http://1.1.1.1/proxy-new',
+            domain='bf6682af-7056-413d-be80-302604129598',
+            platform='103', nodes=[
+                '02f821c7-a316-4e2e-a50b-e41faf59f68d'
+            ],
+            protocols=[{'name': 'chatgpt', 'port': '4443'}],
+            labels=['新事物:new']
+        )
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())

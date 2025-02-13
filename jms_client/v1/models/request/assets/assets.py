@@ -351,18 +351,48 @@ class DetailWebRequest(DetailMixin, DescribeWebsRequest):
     """
 
 
-class DescribeGPTsRequest(DescribeAssetsRequest):
-    """
-    查询资产类型为 GPT 的列表
-    """
+class BaseGPTRequest(Request):
     URL = 'assets/gpts/'
     InstanceClass = GPTInstance
 
 
-class DetailGPTRequest(DetailMixin, DescribeGPTsRequest):
+class DescribeGPTsRequest(BaseGPTRequest, DescribeAssetsRequest):
+    """
+    查询资产类型为 GPT 的列表
+    """
+
+
+class DetailGPTRequest(DetailMixin, BaseGPTRequest):
     """
     查询资产类型为 GPT 的详情
     """
+
+
+class CreateUpdateGPTParamsMixin(CreateUpdateAssetParamsMixin):
+    def __init__(
+            self,
+            proxy: str = '',
+            **kwargs
+    ):
+        """
+            :param proxy: HTTP(s) 代理
+        """
+        super().__init__(**kwargs)
+        self._body['proxy'] = proxy
+
+
+class CreateGPTRequest(
+    CreateUpdateGPTParamsMixin, CreateMixin, BaseGPTRequest
+):
+    """ 创建 GPT """
+
+
+class UpdateGPTRequest(
+    CreateUpdateGPTParamsMixin, DetailMixin, BaseGPTRequest
+):
+    """ 更新 GPT """
+    def get_method(self):
+        return 'put'
 
 
 class DescribeCustomsRequest(DescribeAssetsRequest):
