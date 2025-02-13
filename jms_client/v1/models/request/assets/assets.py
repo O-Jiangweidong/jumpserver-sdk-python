@@ -34,7 +34,10 @@ class DeleteAssetRequest(DetailMixin, Request):
         return 'delete'
 
 
-class DescribeHostsRequest(Request):
+class DescribeHostsRequest(DescribeAssetsRequest):
+    """
+    查询资产类型为 主机 的列表
+    """
     URL = 'assets/hosts/'
     InstanceClass = HostInstance
 
@@ -45,7 +48,10 @@ class DetailHostRequest(DetailMixin, DescribeHostsRequest):
     """
 
 
-class DescribeDatabasesRequest(Request):
+class DescribeDatabasesRequest(DescribeAssetsRequest):
+    """
+    查询资产类型为 数据库 的列表
+    """
     URL = 'assets/databases/'
     InstanceClass = DatabaseInstance
 
@@ -56,7 +62,10 @@ class DetailDatabaseRequest(DetailMixin, DescribeDatabasesRequest):
     """
 
 
-class DescribeDevicesRequest(Request):
+class DescribeDevicesRequest(DescribeAssetsRequest):
+    """
+    查询资产类型为 网络设备 的列表
+    """
     URL = 'assets/devices/'
     InstanceClass = DeviceInstance
 
@@ -67,7 +76,10 @@ class DetailDeviceRequest(DetailMixin, DescribeDevicesRequest):
     """
 
 
-class DescribeCloudsRequest(Request):
+class DescribeCloudsRequest(DescribeAssetsRequest):
+    """
+    查询资产类型为 云服务 的列表
+    """
     URL = 'assets/clouds/'
     InstanceClass = CloudInstance
 
@@ -78,7 +90,10 @@ class DetailCloudRequest(DetailMixin, DescribeCloudsRequest):
     """
 
 
-class DescribeWebsRequest(Request):
+class DescribeWebsRequest(DescribeAssetsRequest):
+    """
+    查询资产类型为 Web 的列表
+    """
     URL = 'assets/webs/'
     InstanceClass = WebInstance
 
@@ -89,7 +104,10 @@ class DetailWebRequest(DetailMixin, DescribeWebsRequest):
     """
 
 
-class DescribeGPTsRequest(Request):
+class DescribeGPTsRequest(DescribeAssetsRequest):
+    """
+    查询资产类型为 GPT 的列表
+    """
     URL = 'assets/gpts/'
     InstanceClass = GPTInstance
 
@@ -100,7 +118,10 @@ class DetailGPTRequest(DetailMixin, DescribeGPTsRequest):
     """
 
 
-class DescribeCustomsRequest(Request):
+class DescribeCustomsRequest(DescribeAssetsRequest):
+    """
+    查询资产类型为 自定义资产 的列表
+    """
     URL = 'assets/customs/'
     InstanceClass = CustomInstance
 
