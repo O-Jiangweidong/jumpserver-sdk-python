@@ -38,7 +38,7 @@ class TestFunctionality(unittest.TestCase):
         测试获取 所有 类型资产列表
         :return:
         """
-        request = DescribeAssetsRequest(limit=1)
+        request = DescribeAssetsRequest(limit=1, search='jms')
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())
