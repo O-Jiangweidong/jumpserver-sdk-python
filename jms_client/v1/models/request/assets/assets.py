@@ -3,7 +3,7 @@ from jms_client.v1.models.instance.assets import (
     CloudInstance, WebInstance, GPTInstance, CustomInstance
 )
 from ..common import Request
-from ..mixins import DetailMixin
+from ..mixins import DetailMixin, ExtraRequestMixin
 
 
 class BaseAssetRequest(Request):
@@ -11,7 +11,7 @@ class BaseAssetRequest(Request):
     InstanceClass = AssetInstance
 
 
-class DescribeAssetsRequest(BaseAssetRequest):
+class DescribeAssetsRequest(ExtraRequestMixin, BaseAssetRequest):
     """
     此方法获取的资产是通用类型，顾返回的资产只包含通用类型的字段
     如数据库中的 dbname 则不存在，若想获取不同类型独特的字段，则需要更改请求模型

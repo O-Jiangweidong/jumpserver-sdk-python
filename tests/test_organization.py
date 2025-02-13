@@ -31,7 +31,7 @@ class TestFunctionality(unittest.TestCase):
 
     def test_list_organizations(self):
         """ 测试获取组织列表 """
-        request = DescribeOrganizationsRequest(limit=10)
+        request = DescribeOrganizationsRequest(limit=1)
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())
@@ -56,7 +56,7 @@ class TestFunctionality(unittest.TestCase):
     def test_update_organization(self):
         """ 测试更新指定 ID 组织属性 """
         request = UpdateOrganizationRequest(
-            id_='e6bf4ebd-0962-4af3-a5fb-dec1bca2c5bb', name='hello',
+            id_='e6bf4ebd-0962-4af3-a5fb-dec1bca2c5bb', name='woo',
         )
         resp: Response = self.client.do(request, with_model=True)
 
