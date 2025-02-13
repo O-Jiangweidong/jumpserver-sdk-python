@@ -108,10 +108,10 @@ class WebInstance(AssetInstance):
         :attr submit_selector: 提交选择器
         :attr script: 脚本内容
         """
-        self.autofill: bool = False
-        self.username_selector: str = ''
-        self.password_selector: str = ''
-        self.submit_selector: str = ''
+        self.autofill: str = 'basic'
+        self.username_selector: str = 'name=username'
+        self.password_selector: str = 'name=password'
+        self.submit_selector: str = 'id=login_button'
         self.script: list = []
         super().__init__(**kwargs)
 

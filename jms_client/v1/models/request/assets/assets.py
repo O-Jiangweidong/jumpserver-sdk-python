@@ -337,18 +337,82 @@ class UpdateCloudRequest(
         return 'put'
 
 
-class DescribeWebsRequest(DescribeAssetsRequest):
-    """
-    查询资产类型为 Web 的列表
-    """
+class BaseWebRequest(Request):
     URL = 'assets/webs/'
     InstanceClass = WebInstance
 
 
-class DetailWebRequest(DetailMixin, DescribeWebsRequest):
+class DescribeWebsRequest(BaseWebRequest, DescribeAssetsRequest):
+    """
+    查询资产类型为 Web 的列表
+    """
+
+
+class DetailWebRequest(DetailMixin, BaseWebRequest):
     """
     查询资产类型为 Web 的详情
     """
+
+
+class Script(object):
+    def __init__(self):
+        self._current_step = 1
+        self._script = []
+
+    def add_script(self, value, target, command):
+        self._script.append({
+            'value': value, 'target': target,
+            'command': command, 'step': self._current_step
+        })
+        self._current_step += 1
+
+    def get_script(self):
+        return self._script
+
+
+class CreateUpdateWebParamsMixin(CreateUpdateAssetParamsMixin):
+    def __init__(
+            self,
+            autofill: str = 'basic',  # 支持 no(禁用代填)、basic(根据选择器代填)、scrit(根据脚本代填)
+            username_selector: str = 'name=username',
+            password_selector: str = 'name=password',
+            submit_selector: str = 'id=login_button',
+            script: Script = None,
+            **kwargs
+    ):
+        super().__init__(**kwargs)
+        self._body.update({
+            'autofill': autofill,
+            'username_selector': username_selector,
+            'password_selector': password_selector,
+            'submit_selector': submit_selector,
+        })
+        if isinstance(script, Script):
+            self._body['script'] = script.get_script()
+
+
+class CreateWebRequest(
+    CreateUpdateWebParamsMixin, CreateMixin, BaseWebRequest
+):
+    """
+    创建 Web
+    注意：
+        Web 类型的资产，协议会根据指定平台自动设置，传递无效
+        但是参数必须携带，传递 [{'name': 'http', 'port': '80'}] 即可
+    """
+
+
+class UpdateWebRequest(
+    CreateUpdateWebParamsMixin, DetailMixin, BaseWebRequest
+):
+    """
+    更新 Web
+    注意：
+        Web 类型的资产，协议会根据指定平台自动设置，传递无效，
+        但是参数必须携带，传递 [{'name': 'http', 'port': '80'}] 即可
+    """
+    def get_method(self):
+        return 'put'
 
 
 class BaseGPTRequest(Request):

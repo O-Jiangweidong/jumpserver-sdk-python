@@ -20,6 +20,7 @@ from jms_client.v1.models.request.assets import (
     CreateCloudRequest, UpdateCloudRequest,
 
     DescribeWebsRequest, DetailWebRequest,
+    CreateWebRequest, UpdateWebRequest, Script,
 
     DescribeGPTsRequest, DetailGPTRequest,
     CreateGPTRequest, UpdateGPTRequest,
@@ -292,6 +293,54 @@ class TestFunctionality(unittest.TestCase):
     def test_retrieve_web(self):
         """ 测试获取指定 ID Web资产详情 """
         request = DetailWebRequest(id_='bc248546-20ca-4bda-a735-bd47b475d931')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_create_web(self):
+        """ 测试创建 Web 类型资产 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = CreateWebRequest(
+            name='sdk-web', address='http://1.1.1.1/web',
+            domain='bf6682af-7056-413d-be80-302604129598',
+            platform='47', nodes=[
+                '02f821c7-a316-4e2e-a50b-e41faf59f68d'
+            ],
+            protocols=[{'name': 'http', 'port': '80'}],
+            labels=['大西瓜:big', '水蜜桃:a'],
+            autofill='basic', submit_selector='id=login-btn',
+            username_selector='id=username', password_selector='id=password',
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_update_web(self):
+        """ 测试更新指定 ID Web 资产属性 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        auto_script = Script()
+        auto_script.add_script(
+            value='{USERNAME}', target='id=username', command='type'
+        )
+        auto_script.add_script(
+            value='{SECRET}', target='id=password', command='type'
+        )
+        auto_script.add_script(
+            value='', target='id=login-btn', command='click'
+        )
+        request = UpdateWebRequest(
+            id_='ad2a26b0-dc37-4cbd-9393-05ebc2161481',
+            name='sdk-web-new', address='http://192.168.1.1/web',
+            domain='bf6682af-7056-413d-be80-302604129598',
+            platform='47', nodes=[
+                '02f821c7-a316-4e2e-a50b-e41faf59f68d'
+            ],
+            protocols=[{'name': 'http', 'port': '80'}],
+            labels=['新事物:new'],
+            autofill='script', script=auto_script,
+        )
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())

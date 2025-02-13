@@ -7,6 +7,9 @@ class DetailMixin(object):
     instance: object = None
 
     def __init__(self, id_, *args, **kwargs):
+        if not id_:
+            raise ValueError('id_ is required')
+
         self.id = id_
         super().__init__(*args, **kwargs)
 
