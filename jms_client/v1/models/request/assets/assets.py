@@ -3,17 +3,25 @@ from jms_client.v1.models.instance.assets import (
     CloudInstance, WebInstance, GPTInstance, CustomInstance
 )
 from ..common import Request
-from ..mixins import DetailMixin, ExtraRequestMixin
+from ..mixins import DetailMixin, ExtraRequestMixin, CreateMixin
 
 
 class BaseAssetRequest(Request):
     URL = 'assets/assets/'
     InstanceClass = AssetInstance
 
+    def get_url(self):
+        url = super().get_url()
+        platform = self._body.get('platform')
+        if platform and self.get_method() == 'post':
+            sep = '?' if '?' not in url else '&'
+            url = f'{url}{sep}platform={platform}'
+        return url
+
 
 class DescribeAssetsRequest(ExtraRequestMixin, BaseAssetRequest):
     """
-    此方法获取的资产是通用类型，顾返回的资产只包含通用类型的字段
+    此方法获取的资产是通用类型，顾返回的资产只包含不同类型共同的字段
     如数据库中的 dbname 则不存在，若想获取不同类型独特的字段，则需要更改请求模型
     如数据库的则为 DescribeDatabasesRequest
     """
@@ -102,33 +110,9 @@ class DeleteAssetRequest(DetailMixin, BaseAssetRequest):
         return 'delete'
 
 
-class CreateMixin(object):
+class CreateUpdateAssetParamsMixin(object):
     _body: dict
 
-    def __init__(
-            self,
-            id_: str = '',
-            **kwargs
-    ):
-        """
-        :param id_: ID
-        :param kwargs: 其他参数
-        """
-        super().__init__(**kwargs)
-        if id_:
-            self._body['id'] = id_
-
-    def get_url(self):
-        url = super().get_url()
-        sep = '?' if '?' not in url else '&'
-        return f'{url}{sep}platform={self._body.get("platform", "1")}'
-
-    @staticmethod
-    def get_method():
-        return 'post'
-
-
-class CreateUpdateAssetParamsMixin(object):
     # TODO 后边搞完账号模型后，再来补充账号相关的内容
     """
         "accounts":[
@@ -172,20 +156,20 @@ class CreateUpdateAssetParamsMixin(object):
         :param address: 地址
         :param domain: 网域 ID
         :param platform: 平台 ID
-                :param nodes: 节点 ID 列表, eg: ["node1_id", "node2_id"]
+        :param nodes: 节点 ID 列表, eg: ["node1_id", "node2_id"]
         :param protocols: 协议列表, eg: [{'name': 'ssh', 'port': '22'}]
         :param labels: 标签列表, eg: ["name1:key1", "name2:key2"]
         :param is_active: 是否激活
         :param comment: 备注
         :param kwargs: 其他参数
         """
-        self._body = {
+        self._body.update({
             'name': name,
             'address': address,
             'platform': platform,
             'is_active': is_active,
             'comment': comment,
-        }
+        })
         if domain:
             self._body['domain'] = domain
         if nodes is not None:
@@ -196,11 +180,8 @@ class CreateUpdateAssetParamsMixin(object):
             self._body['labels'] = labels
         super().__init__(**kwargs)
 
-    def get_data(self):
-        return self._body
 
-
-class BaseHostRequest(Request):
+class BaseHostRequest(BaseAssetRequest):
     URL = 'assets/hosts/'
     InstanceClass = HostInstance
 
@@ -231,7 +212,7 @@ class UpdateHostRequest(
         return 'put'
 
 
-class BaseDatabaseRequest(Request):
+class BaseDatabaseRequest(BaseAssetRequest):
     URL = 'assets/databases/'
     InstanceClass = DatabaseInstance
 
@@ -275,7 +256,7 @@ class UpdateDatabaseRequest(
         return 'put'
 
 
-class BaseDeviceRequest(Request):
+class BaseDeviceRequest(BaseAssetRequest):
     URL = 'assets/devices/'
     InstanceClass = DeviceInstance
 
@@ -306,7 +287,7 @@ class UpdateDeviceRequest(
         return 'put'
 
 
-class BaseCloudRequest(Request):
+class BaseCloudRequest(BaseAssetRequest):
     URL = 'assets/clouds/'
     InstanceClass = CloudInstance
 
@@ -337,7 +318,7 @@ class UpdateCloudRequest(
         return 'put'
 
 
-class BaseWebRequest(Request):
+class BaseWebRequest(BaseAssetRequest):
     URL = 'assets/webs/'
     InstanceClass = WebInstance
 
@@ -415,7 +396,7 @@ class UpdateWebRequest(
         return 'put'
 
 
-class BaseGPTRequest(Request):
+class BaseGPTRequest(BaseAssetRequest):
     URL = 'assets/gpts/'
     InstanceClass = GPTInstance
 

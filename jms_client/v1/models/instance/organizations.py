@@ -6,8 +6,8 @@ class OrganizationInstance(Instance):
 
     def __init__(self,  **kwargs):
         """
-        :attr name: 组织名称
-        :attr id: 组织 ID
+        :attr name: 名称
+        :attr id: ID
         :attr comment: 备注
         :attr internal: 是否为内置组织
         :attr is_default: 是否为默认组织

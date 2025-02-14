@@ -14,7 +14,6 @@ class DescribeOrganizationsRequest(ExtraRequestMixin, BaseOrganizationRequest):
     """ 查询组织列表 """
     def __init__(
             self,
-            search: str = '',
             name: str = '',
             **kwargs
     ):
@@ -24,8 +23,6 @@ class DescribeOrganizationsRequest(ExtraRequestMixin, BaseOrganizationRequest):
         :param kwargs: 其他参数
         """
         query_params = {}
-        if search:
-            query_params['search'] = search
         if name:
             query_params['name'] = name
         super().__init__(**query_params, **kwargs)
@@ -48,9 +45,6 @@ class CreateUpdateOrganizationParamsMixin(object):
             'name': name
         }
         super().__init__(**kwargs)
-
-    def get_data(self):
-        return self._body
 
 
 class CreateOrganizationRequest(

@@ -10,6 +10,7 @@ class Request(object):
     ):
         self.url_prefix = 'api/v1/'
         self.instance = instance
+        self._body = {}
 
     @staticmethod
     def get_method():
@@ -23,9 +24,8 @@ class Request(object):
         params = self.get_params()
         return f'{self.url_prefix}{self.URL}?{urlencode(params)}'
 
-    @staticmethod
-    def get_data():
-        return {}
+    def get_data(self):
+        return self._body
 
     @staticmethod
     def get_headers():
