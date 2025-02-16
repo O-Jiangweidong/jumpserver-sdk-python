@@ -44,12 +44,3 @@ class PlatformInstance(Instance):
         self.date_updated: str = ''
         self.automation: dict = {}
         super().__init__(**kwargs)
-
-    def __str__(self):
-        return f'<{self.TYPE}>: {self.name}'
-
-    def __repr__(self):
-        return self.__str__()
-
-    def to_dict(self):
-        return vars(self)

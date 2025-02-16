@@ -24,12 +24,3 @@ class DomainInstance(Instance):
         self.gateways: dict = {}
         self.assets_amount: int = 0
         super().__init__(**kwargs)
-
-    def __str__(self):
-        return f'<{self.TYPE}>: {self.name}'
-
-    def __repr__(self):
-        return self.__str__()
-
-    def to_dict(self):
-        return vars(self)

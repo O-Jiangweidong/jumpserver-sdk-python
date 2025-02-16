@@ -48,14 +48,8 @@ class AssetInstance(Instance):
         self.type = ''
         super().__init__(**kwargs)
 
-    def __str__(self):
-        return f'<{self.TYPE}>: {self.name}({self.address})'
-
-    def __repr__(self):
-        return self.__str__()
-
-    def to_dict(self):
-        return vars(self)
+    def display(self):
+        return f'{self.name}({self.address})'
 
 
 class HostInstance(AssetInstance):
