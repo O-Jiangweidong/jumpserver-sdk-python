@@ -9,9 +9,7 @@ class BaseDomainRequest(Request):
 
 
 class DescribeDomainsRequest(ExtraRequestMixin, BaseDomainRequest):
-    """
-    获取网域列表
-    """
+    """ 获取网域列表 """
     def __init__(
             self,
             name: str = '',
@@ -29,9 +27,7 @@ class DescribeDomainsRequest(ExtraRequestMixin, BaseDomainRequest):
 
 
 class DetailDomainRequest(DetailMixin, BaseDomainRequest):
-    """
-    获取网域详情
-    """
+    """ 获取网域详情 """
 
 
 class CreateUpdateDomainParamsMixin(object):
@@ -65,25 +61,19 @@ class CreateUpdateDomainParamsMixin(object):
 class CreateDomainRequest(
     CreateUpdateDomainParamsMixin, CreateMixin, BaseDomainRequest
 ):
-    """
-    创建 网域
-    """
+    """ 创建 网域 """
 
 
 class UpdateDomainRequest(
     CreateUpdateDomainParamsMixin, DetailMixin, BaseDomainRequest
 ):
-    """
-    更新 网域
-    """
+    """ 更新 网域 """
     def get_method(self):
         return 'put'
 
 
 class DeleteDomainRequest(DetailMixin, BaseDomainRequest):
-    """
-    删除指定 ID 的网域
-    """
+    """ 删除指定 ID 的网域 """
 
     def get_method(self):
         return 'delete'

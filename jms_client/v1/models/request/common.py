@@ -10,6 +10,7 @@ class Request(object):
     ):
         self.url_prefix = 'api/v1/'
         self.instance = instance
+        self.other = kwargs
         self._body = {}
 
     @staticmethod
@@ -22,6 +23,7 @@ class Request(object):
 
     def get_url(self):
         params = self.get_params()
+        params.update(self.other)
         return f'{self.url_prefix}{self.URL}?{urlencode(params)}'
 
     def get_data(self):

@@ -35,6 +35,10 @@ class Client(object):
         :param with_model: 是否将数据转为 python 对应的实例对象，默认 False 是返回 json 格式
         :return:
         """
+        # from pprint import pprint
+        # pprint(request_instance.get_data())
+        # return
+
         response = self.client.request(
             url=request_instance.get_url(),
             method=request_instance.get_method(),
