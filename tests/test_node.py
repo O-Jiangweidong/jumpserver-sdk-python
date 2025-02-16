@@ -8,7 +8,7 @@ from jms_client.v1.models.request.assets import (
     DescribeNodesRequest, DetailNodeRequest,
     CreateNodeRequest, UpdateNodeRequest, DeleteNodeRequest
 )
-from jms_client.v1.models.instance import (
+from jms_client.v1.models.instance.assets import (
     NodeInstance,
 )
 from jms_client.v1.models.response import Response

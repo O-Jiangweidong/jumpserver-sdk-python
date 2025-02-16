@@ -27,7 +27,7 @@ from jms_client.v1.models.request.assets import (
 
     DescribeCustomsRequest, DetailCustomRequest
 )
-from jms_client.v1.models.instance import (
+from jms_client.v1.models.instance.assets import (
     AssetInstance,
 )
 from jms_client.v1.models.response import Response

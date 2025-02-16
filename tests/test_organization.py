@@ -11,7 +11,7 @@ from jms_client.v1.models.request.organizations import (
     UpdateOrganizationRequest,
     DeleteOrganizationRequest
 )
-from jms_client.v1.models.instance import (
+from jms_client.v1.models.instance.organizations import (
     OrganizationInstance,
 )
 from jms_client.v1.models.response import Response

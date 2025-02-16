@@ -12,7 +12,7 @@ from jms_client.v1.models.request.assets import (
     CreatePlatformRequest, UpdatePlatformRequest, DeletePlatformRequest,
     AutomationParam, ProtocolParam, SuParam
 )
-from jms_client.v1.models.instance import (
+from jms_client.v1.models.instance.assets import (
     PlatformInstance,
 )
 from jms_client.v1.models.response import Response

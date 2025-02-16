@@ -8,7 +8,7 @@ from jms_client.v1.models.request.assets import (
     DescribeDomainsRequest, DetailDomainRequest,
     CreateDomainRequest, UpdateDomainRequest, DeleteDomainRequest
 )
-from jms_client.v1.models.instance import (
+from jms_client.v1.models.instance.assets import (
     DomainInstance,
 )
 from jms_client.v1.models.response import Response
