@@ -1,4 +1,4 @@
-from .common import Instance
+from ..common import Instance
 
 
 class DomainInstance(Instance):
