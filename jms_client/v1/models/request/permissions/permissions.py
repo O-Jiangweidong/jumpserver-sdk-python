@@ -102,26 +102,31 @@ class AccountParam(object):
             raise ValueError('AccountParam 中不能同时包含 所有账号 和 指定账号')
         return self._accounts
 
-    def set_all(self):
+    def with_all(self):
         self._accounts.append(self.ALL)
+        return self
 
-    def set_input(self):
+    def with_input(self):
         """ 设置手动账号 """
         self._accounts.append(self.INPUT)
+        return self
 
-    def set_user(self):
+    def with_user(self):
         """ 设置同名账号 """
         self._accounts.append(self.USER)
+        return self
 
-    def set_spec(self, username: list):
+    def with_spec(self, username: list):
         """ 设置指定账号
         :param username:
         """
         self._accounts.extend([self.SPEC, *username])
+        return self
 
-    def set_anon(self):
+    def with_anon(self):
         """ 设置匿名账号 """
         self._accounts.append(self.ANON)
+        return self
 
 
 class ActionParam(object):
