@@ -33,6 +33,8 @@ class DetailOrganizationRequest(DetailMixin, BaseOrganizationRequest):
 
 
 class CreateUpdateOrganizationParamsMixin(object):
+    _body: dict
+
     def __init__(
             self,
             name: str,
@@ -41,10 +43,8 @@ class CreateUpdateOrganizationParamsMixin(object):
         """
         :param name: 名称
         """
-        self._body = {
-            'name': name
-        }
         super().__init__(**kwargs)
+        self._body['name'] = name
 
 
 class CreateOrganizationRequest(

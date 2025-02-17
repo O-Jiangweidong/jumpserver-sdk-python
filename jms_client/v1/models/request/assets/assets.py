@@ -163,6 +163,7 @@ class CreateUpdateAssetParamsMixin(object):
         :param comment: 备注
         :param kwargs: 其他参数
         """
+        super().__init__(**kwargs)
         self._body.update({
             'name': name,
             'address': address,
@@ -178,7 +179,6 @@ class CreateUpdateAssetParamsMixin(object):
             self._body['protocols'] = protocols
         if labels is not None:
             self._body['labels'] = labels
-        super().__init__(**kwargs)
 
 
 class BaseHostRequest(BaseAssetRequest):

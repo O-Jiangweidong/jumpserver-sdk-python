@@ -17,6 +17,18 @@ class DetailMixin(object):
         return f'{self.url_prefix}{self.URL}{self.id}/'
 
 
+class DeleteMixin(DetailMixin):
+    @staticmethod
+    def get_method():
+        return 'delete'
+
+
+class UpdateMixin(DetailMixin):
+    @staticmethod
+    def get_method():
+        return 'put'
+
+
 class ExtraRequestMixin(object):
     def __init__(
             self,
