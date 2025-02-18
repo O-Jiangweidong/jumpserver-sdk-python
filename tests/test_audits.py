@@ -9,10 +9,11 @@ from jms_client.v1.models.request.audits import (
     DescribeLoginLogsRequest, DetailLoginLogRequest,
     DescribeOperateLogsRequest, DetailOperateLogRequest,
     DescribeChangePasswordLogsRequest, DetailChangePasswordLogRequest,
+    DescribeJobLogsRequest, DetailJobLogRequest,
 )
 from jms_client.v1.models.instance.audits import (
     UserSessionInstance, LoginLogInstance, OperateLogInstance,
-    ChangePasswordLogInstance,
+    ChangePasswordLogInstance, JobLogInstance,
 )
 from jms_client.v1.models.response import Response
 
@@ -113,6 +114,28 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), ChangePasswordLogInstance)
+
+    # --------------------- 作业日志 ---------------------
+    def test_list_job_logs(self):
+        """ 测试获取作业日志列表 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = DescribeJobLogsRequest(
+            limit=2, date_from='2024-06-01 00:00:00',
+            date_to='2024-12-31 00:00:00'
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), list)
+
+    def test_retrieve_job_logs(self):
+        """ 测试获取指定 ID 作业日志详情 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = DetailJobLogRequest(id_='250b2665-3a5e-43ea-81a2-9ae54172a5e3')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), JobLogInstance)
 
 
 if __name__ == '__main__':
