@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from jms_client.v1.models.instance.permissions import (
     PermissionInstance
 )
+from jms_client.v1.utils import handle_range_datetime
 from ..common import Request, ProtocolParam as BaseProtocolParam
 from ..mixins import (
     DetailMixin, CreateMixin, DeleteMixin,
@@ -191,7 +192,7 @@ class CreateUpdatePermissionParamsMixin(object):
         :param name: 名称
         """
         super().__init__(**kwargs)
-        date_start, date_expired = self.handle_datetime(date_start, date_expired)
+        date_start, date_expired = handle_range_datetime(date_start, date_expired)
         self._body.update({
             'name': name, 'is_active': is_active,
             'date_start': date_start, 'date_expired': date_expired,
@@ -212,21 +213,6 @@ class CreateUpdatePermissionParamsMixin(object):
             self._body['protocols'] = protocols.get_protocols(only_name=True)
         if comment:
             self._body['comment'] = comment
-
-    @staticmethod
-    def handle_datetime(start, expired, formater='%Y-%m-%d %H:%M:%S'):
-        try:
-            start_time = datetime.strptime(start, formater)
-        except ValueError:
-            start_time = datetime.now()
-
-        try:
-            expired_time = datetime.strptime(expired, formater)
-        except ValueError:
-            expired_time = start_time + timedelta(days=70 * 365)
-        start_time = start_time.strftime(formater)
-        expired_time = expired_time.strftime(formater)
-        return start_time, expired_time
 
 
 class CreatePermissionRequest(
