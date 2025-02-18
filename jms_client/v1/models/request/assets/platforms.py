@@ -8,7 +8,10 @@ from ..const import (
     POSTGRESQL_AUTOMATION, ORACLE_AUTOMATION, SQLSERVER_AUTOMATION,
     MONGODB_AUTOMATION,
 )
-from ..mixins import ExtraRequestMixin, DetailMixin, CreateMixin
+from ..mixins import (
+    ExtraRequestMixin, DetailMixin, CreateMixin,
+    UpdateMixin, DeleteMixin,
+)
 
 
 class BasePlatformRequest(Request):
@@ -216,15 +219,10 @@ class CreatePlatformRequest(
 
 
 class UpdatePlatformRequest(
-    CreateUpdatePlatformParamsMixin, DetailMixin, BasePlatformRequest
+    CreateUpdatePlatformParamsMixin, UpdateMixin, BasePlatformRequest
 ):
     """ 更新 网域 """
-    def get_method(self):
-        return 'put'
 
 
-class DeletePlatformRequest(DetailMixin, BasePlatformRequest):
+class DeletePlatformRequest(DeleteMixin, BasePlatformRequest):
     """ 删除指定 ID 的平台 """
-
-    def get_method(self):
-        return 'delete'

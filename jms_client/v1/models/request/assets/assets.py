@@ -3,7 +3,10 @@ from jms_client.v1.models.instance.assets import (
     CloudInstance, WebInstance, GPTInstance, CustomInstance
 )
 from ..common import Request
-from ..mixins import DetailMixin, ExtraRequestMixin, CreateMixin
+from ..mixins import (
+    DetailMixin, ExtraRequestMixin, CreateMixin,
+    UpdateMixin, DeleteMixin,
+)
 
 
 class BaseAssetRequest(Request):
@@ -101,13 +104,10 @@ class DetailAssetRequest(DetailMixin, BaseAssetRequest):
     """
 
 
-class DeleteAssetRequest(DetailMixin, BaseAssetRequest):
+class DeleteAssetRequest(DeleteMixin, BaseAssetRequest):
     """
     删除指定 ID 的资产
     """
-
-    def get_method(self):
-        return 'delete'
 
 
 class CreateUpdateAssetParamsMixin(object):
@@ -205,11 +205,9 @@ class CreateHostRequest(
 
 
 class UpdateHostRequest(
-    CreateUpdateAssetParamsMixin, DetailMixin, BaseHostRequest
+    CreateUpdateAssetParamsMixin, UpdateMixin, BaseHostRequest
 ):
     """ 更新主机 """
-    def get_method(self):
-        return 'put'
 
 
 class BaseDatabaseRequest(BaseAssetRequest):
@@ -249,11 +247,9 @@ class CreateDatabaseRequest(
 
 
 class UpdateDatabaseRequest(
-    CreateUpdateDatabaseParamsMixin, DetailMixin, BaseDatabaseRequest
+    CreateUpdateDatabaseParamsMixin, UpdateMixin, BaseDatabaseRequest
 ):
     """ 更新数据库 """
-    def get_method(self):
-        return 'put'
 
 
 class BaseDeviceRequest(BaseAssetRequest):
@@ -280,11 +276,9 @@ class CreateDeviceRequest(
 
 
 class UpdateDeviceRequest(
-    CreateUpdateAssetParamsMixin, DetailMixin, BaseDeviceRequest
+    CreateUpdateAssetParamsMixin, UpdateMixin, BaseDeviceRequest
 ):
     """ 更新网络设备 """
-    def get_method(self):
-        return 'put'
 
 
 class BaseCloudRequest(BaseAssetRequest):
@@ -311,11 +305,9 @@ class CreateCloudRequest(
 
 
 class UpdateCloudRequest(
-    CreateUpdateAssetParamsMixin, DetailMixin, BaseCloudRequest
+    CreateUpdateAssetParamsMixin, UpdateMixin, BaseCloudRequest
 ):
     """ 更新云服务 """
-    def get_method(self):
-        return 'put'
 
 
 class BaseWebRequest(BaseAssetRequest):
@@ -384,7 +376,7 @@ class CreateWebRequest(
 
 
 class UpdateWebRequest(
-    CreateUpdateWebParamsMixin, DetailMixin, BaseWebRequest
+    CreateUpdateWebParamsMixin, UpdateMixin, BaseWebRequest
 ):
     """
     更新 Web
@@ -392,8 +384,6 @@ class UpdateWebRequest(
         Web 类型的资产，协议会根据指定平台自动设置，传递无效，
         但是参数必须携带，传递 [{'name': 'http', 'port': '80'}] 即可
     """
-    def get_method(self):
-        return 'put'
 
 
 class BaseGPTRequest(BaseAssetRequest):
@@ -433,11 +423,9 @@ class CreateGPTRequest(
 
 
 class UpdateGPTRequest(
-    CreateUpdateGPTParamsMixin, DetailMixin, BaseGPTRequest
+    CreateUpdateGPTParamsMixin, UpdateMixin, BaseGPTRequest
 ):
     """ 更新 GPT """
-    def get_method(self):
-        return 'put'
 
 
 class DescribeCustomsRequest(DescribeAssetsRequest):

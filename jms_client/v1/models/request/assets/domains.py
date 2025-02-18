@@ -1,6 +1,9 @@
-from jms_client.v1.models.instance.domains import DomainInstance
+from jms_client.v1.models.instance.assets import DomainInstance
 from ..common import Request
-from ..mixins import ExtraRequestMixin, DetailMixin, CreateMixin
+from ..mixins import (
+    ExtraRequestMixin, DetailMixin, CreateMixin,
+    DeleteMixin, UpdateMixin,
+)
 
 
 class BaseDomainRequest(Request):
@@ -65,15 +68,10 @@ class CreateDomainRequest(
 
 
 class UpdateDomainRequest(
-    CreateUpdateDomainParamsMixin, DetailMixin, BaseDomainRequest
+    CreateUpdateDomainParamsMixin, UpdateMixin, BaseDomainRequest
 ):
     """ 更新 网域 """
-    def get_method(self):
-        return 'put'
 
 
-class DeleteDomainRequest(DetailMixin, BaseDomainRequest):
+class DeleteDomainRequest(DeleteMixin, BaseDomainRequest):
     """ 删除指定 ID 的网域 """
-
-    def get_method(self):
-        return 'delete'

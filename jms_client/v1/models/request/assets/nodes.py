@@ -1,6 +1,9 @@
-from jms_client.v1.models.instance.nodes import NodeInstance
+from jms_client.v1.models.instance.assets import NodeInstance
 from ..common import Request
-from ..mixins import ExtraRequestMixin, DetailMixin, CreateMixin
+from ..mixins import (
+    ExtraRequestMixin, DetailMixin, CreateMixin,
+    UpdateMixin, DeleteMixin,
+)
 
 
 class BaseNodeRequest(Request):
@@ -72,15 +75,10 @@ class CreateNodeRequest(
 
 
 class UpdateNodeRequest(
-    CreateUpdateNodeParamsMixin, DetailMixin, BaseNodeRequest
+    CreateUpdateNodeParamsMixin, UpdateMixin, BaseNodeRequest
 ):
     """ 更新 节点 """
-    def get_method(self):
-        return 'put'
 
 
-class DeleteNodeRequest(DetailMixin, BaseNodeRequest):
+class DeleteNodeRequest(DeleteMixin, BaseNodeRequest):
     """ 删除指定 ID 的节点 """
-
-    def get_method(self):
-        return 'delete'

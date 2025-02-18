@@ -2,7 +2,10 @@ from jms_client.v1.models.instance.organizations import (
     OrganizationInstance
 )
 from ..common import Request
-from ..mixins import DetailMixin, ExtraRequestMixin
+from ..mixins import (
+    ExtraRequestMixin, DetailMixin, CreateMixin,
+    UpdateMixin, DeleteMixin
+)
 
 
 class BaseOrganizationRequest(Request):
@@ -48,37 +51,17 @@ class CreateUpdateOrganizationParamsMixin(object):
 
 
 class CreateOrganizationRequest(
-    CreateUpdateOrganizationParamsMixin, BaseOrganizationRequest
+    CreateUpdateOrganizationParamsMixin, CreateMixin, BaseOrganizationRequest
 ):
     """ 创建组织 """
-    def __init__(
-            self,
-            id_: str = '',
-            **kwargs
-    ):
-        """
-        :param id_: ID
-        :param kwargs: 其他参数
-        """
-        super().__init__(**kwargs)
-        if id_:
-            self._body['id'] = id_
-
-    def get_method(self):
-        return 'post'
 
 
 class UpdateOrganizationRequest(
     CreateUpdateOrganizationParamsMixin,
-    DetailMixin, BaseOrganizationRequest
+    UpdateMixin, BaseOrganizationRequest
 ):
     """ 更新指定 ID 的组织属性 """
-    def get_method(self):
-        return 'put'
 
 
-class DeleteOrganizationRequest(DetailMixin, BaseOrganizationRequest):
+class DeleteOrganizationRequest(DeleteMixin, BaseOrganizationRequest):
     """ 删除指定 ID 的资产 """
-
-    def get_method(self):
-        return 'delete'
