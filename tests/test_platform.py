@@ -32,7 +32,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_list_platforms(self):
         """ 测试获取平台列表 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = DescribePlatformsRequest(
             limit=2, category=PlatformCategory.DEVICE
         )
@@ -51,7 +50,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_create_platform(self):
         """ 测试创建平台 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         type_ = PlatformType.GENERAL
         # 配置协议
         protocols = ProtocolParam(type_=type_)
@@ -75,7 +73,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_update_platform(self):
         """ 测试更新指定 ID 平台属性 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         type_ = PlatformType.GENERAL
         # 配置协议
         protocols = ProtocolParam(type_=type_)
@@ -99,7 +96,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_delete_platform(self):
         """ 测试删除指定 ID 平台 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = DeletePlatformRequest(id_='200')
         resp: Response = self.client.do(request)
 
