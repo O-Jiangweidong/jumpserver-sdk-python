@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from .const import FIELDS_MINI, FIELDS_SMALL
 
 
@@ -11,10 +13,11 @@ class DetailMixin(object):
             raise ValueError('Param [id_] is required')
 
         self.id = id_
+        self.other = kwargs
         super().__init__(*args, **kwargs)
 
     def get_url(self):
-        return f'{self.url_prefix}{self.URL}{self.id}/'
+        return f'{self.url_prefix}{self.URL}{self.id}/?{urlencode(self.other)}'
 
 
 class DeleteMixin(DetailMixin):

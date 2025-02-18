@@ -31,11 +31,10 @@ class SessionClient(object):
         request_headers.update(headers)
 
         action = getattr(requests, method, 'get')
-        response = action(
+        return action(
             f'{self.web_url}/{url}', auth=self.session.ak_auth,
             headers=request_headers, json=data, verify=False
         )
-        return response
 
 
 def construct_http_client(

@@ -12,11 +12,12 @@ from jms_client.v1.models.request.audits import (
     DescribeJobLogsRequest, DetailJobLogRequest,
     DescribeSessionsRequest, DetailSessionRequest,
     DescribeFTPLogsRequest, DetailFTPLogRequest,
+    DescribeCommandsRequest, DetailCommandRequest,
 )
 from jms_client.v1.models.instance.audits import (
     UserSessionInstance, LoginLogInstance, OperateLogInstance,
     ChangePasswordLogInstance, JobLogInstance, SessionInstance,
-    FTPLogInstance,
+    FTPLogInstance, CommandInstance,
 )
 from jms_client.v1.models.response import Response
 
@@ -183,6 +184,33 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), FTPLogInstance)
+
+    # --------------------- 命令记录 ---------------------
+    def test_list_commands(self):
+        """ 测试获取 命令记录 列表 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = DescribeCommandsRequest(
+            limit=2, date_from='2024-06-01 00:00:00',
+            date_to='2024-12-31 00:00:00',
+            command_storage_id='854dacc4-c6a8-4691-a56f-3adf2e954ff4'
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        print(resp.get_data())
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), list)
+
+    def test_retrieve_command(self):
+        """ 测试获取指定 ID 命令记录详情 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = DetailCommandRequest(
+            id_='ae4f7f19-1169-48a8-81c5-bde9a5e09af5',
+            command_storage_id='854dacc4-c6a8-4691-a56f-3adf2e954ff4'
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), CommandInstance)
 
 
 if __name__ == '__main__':
