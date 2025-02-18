@@ -10,10 +10,11 @@ from jms_client.v1.models.request.audits import (
     DescribeOperateLogsRequest, DetailOperateLogRequest,
     DescribeChangePasswordLogsRequest, DetailChangePasswordLogRequest,
     DescribeJobLogsRequest, DetailJobLogRequest,
+    DescribeSessionsRequest, DetailSessionRequest,
 )
 from jms_client.v1.models.instance.audits import (
     UserSessionInstance, LoginLogInstance, OperateLogInstance,
-    ChangePasswordLogInstance, JobLogInstance,
+    ChangePasswordLogInstance, JobLogInstance, SessionInstance,
 )
 from jms_client.v1.models.response import Response
 
@@ -136,6 +137,28 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), JobLogInstance)
+
+    # --------------------- 会话记录 ---------------------
+    def test_list_sessions(self):
+        """ 测试获取会话记录列表 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = DescribeSessionsRequest(
+            limit=2, date_from='2024-06-01 00:00:00',
+            date_to='2024-12-31 00:00:00'
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), list)
+
+    def test_retrieve_session(self):
+        """ 测试获取指定 ID 会话详情 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = DetailSessionRequest(id_='73afc136-11ea-4f89-afed-ea203d93a189')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), SessionInstance)
 
 
 if __name__ == '__main__':
