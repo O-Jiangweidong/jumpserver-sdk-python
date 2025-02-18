@@ -1,1 +1,2 @@
-from .user_group import *
+from .users import *
+from .user_groups import *
