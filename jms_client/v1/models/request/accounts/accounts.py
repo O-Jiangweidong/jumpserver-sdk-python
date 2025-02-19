@@ -1,6 +1,6 @@
 from jms_client.v1.models.instance.accounts import AccountInstance
 from ..common import Request
-from ..mixins import (DetailMixin, ExtraRequestMixin)
+from ..mixins import DetailMixin, ExtraRequestMixin
 
 
 class BaseAccountRequest(Request):
@@ -27,11 +27,11 @@ class DescribeAccountsRequest(ExtraRequestMixin, BaseAccountRequest):
         """
         :param search: 条件搜索，支持名称、备注、用户名、资产名称、资产地址
         :param asset: 资产 ID
-        :param source_id: 创建该账号所使用的模板 ID
-        :param username: 账号名称精确匹配
+        :param source_id: 账号模板 ID
+        :param username: 账号名称
         :param address: 资产地址
         :param node_id: 节点 ID
-        :param platform: 资产平台过滤，支持按照平台 ID 查询
+        :param platform: 资产平台 ID
         :param category: 资产平台类别
         :param type_: 资产平台类型
         :param secret_type: 密钥类型

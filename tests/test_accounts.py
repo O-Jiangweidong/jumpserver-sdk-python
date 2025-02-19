@@ -26,7 +26,7 @@ class TestFunctionality(unittest.TestCase):
         # 切换组织
         self.client.set_org(self.client.default_org)
 
-        request = DescribeAccountsRequest(limit=1, name='root')
+        request = DescribeAccountsRequest(limit=10, username='root')
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())

@@ -23,8 +23,8 @@ class AccountInstance(Instance):
         :attr org_name: 组织名称
         :attr has_secret: 是否托管密码
         :attr labels: 标签
-        :attr source_id: 创建该账号所使用的模板 ID
-        :attr su_from: 切换自（该账号切换到其他账号下）
+        :attr source_id: 账号模板 ID
+        :attr su_from: 切换自（从其他账号切换到该账号下）
         :attr version: 账号版本号（初始值为1，修改一次加1）
         """
         self.id: str = ''
@@ -49,5 +49,6 @@ class AccountInstance(Instance):
         self.version: int = 0
         super().__init__(**kwargs)
 
+    @property
     def display(self):
         return f'{self.name}({self.username})'
