@@ -1,11 +1,11 @@
-from jms_client.v1.models.instance.accounts import AccountsInstance
+from jms_client.v1.models.instance.accounts import AccountInstance
 from ..common import Request
 from ..mixins import (DetailMixin, ExtraRequestMixin)
 
 
 class BaseAccountRequest(Request):
     URL = 'accounts/accounts/'
-    InstanceClass = AccountsInstance
+    InstanceClass = AccountInstance
 
 
 class DescribeAccountsRequest(ExtraRequestMixin, BaseAccountRequest):
@@ -20,20 +20,21 @@ class DescribeAccountsRequest(ExtraRequestMixin, BaseAccountRequest):
             platform: str = '',
             category: str = '',
             type_: str = '',
-            has_secret: str = '',
+            has_secret: bool = None,
             secret_type: str = '',
             **kwargs
     ):
         """
-        :param asset: 资产 ID 精确匹配
-        :param source_id: 账号来源 ID
+        :param search: 条件搜索，支持名称、备注、用户名、资产名称、资产地址
+        :param asset: 资产 ID
+        :param source_id: 创建该账号所使用的模板 ID
         :param username: 账号名称精确匹配
-        :param address: 账号绑定的资产 IP 精确匹配
-        :param node_id: 节点 ID 精确匹配
-        :param platform: 账号绑定的资产平台过滤，支持按照 `平台名称` 或者 `平台 ID` 精确匹配
-        :param category: 账号绑定的资产平台类别精确匹配
-        :param type_: 账号绑定的资产平台类型精确匹配
-        :param secret_type: 密钥类型精确匹配
+        :param address: 资产地址
+        :param node_id: 节点 ID
+        :param platform: 资产平台过滤，支持按照平台 ID 查询
+        :param category: 资产平台类别
+        :param type_: 资产平台类型
+        :param secret_type: 密钥类型
         :param has_secret: 是否托管密码
         :param kwargs: 其他参数
         """
@@ -49,7 +50,7 @@ class DescribeAccountsRequest(ExtraRequestMixin, BaseAccountRequest):
             query_params['address'] = address
         if node_id:
             query_params['node_id'] = node_id
-        if has_secret:
+        if isinstance(has_secret, bool):
             query_params['has_secret'] = has_secret
         if platform:
             query_params['platform'] = platform

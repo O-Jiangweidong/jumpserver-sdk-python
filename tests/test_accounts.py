@@ -5,7 +5,7 @@ import unittest
 from jms_client.client import get_client
 from jms_client.v1.client import Client
 from jms_client.v1.models.request.accounts import DescribeAccountsRequest, DetailAccountRequest
-from jms_client.v1.models.instance.accounts import AccountsInstance
+from jms_client.v1.models.instance.accounts import AccountInstance
 from jms_client.v1.models.response import Response
 
 
@@ -21,9 +21,8 @@ class TestFunctionality(unittest.TestCase):
             username=username, password=password
         )
 
-    # --------------------- 通用的 ---------------------
     def test_list_accounts(self):
-        """ 测试获取 所有 账号列表 """
+        """ 测试获取账号列表 """
         # 切换组织
         self.client.set_org(self.client.default_org)
 
@@ -39,4 +38,4 @@ class TestFunctionality(unittest.TestCase):
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())
-        self.assertIsInstance(resp.get_data(), AccountsInstance)
+        self.assertIsInstance(resp.get_data(), AccountInstance)
