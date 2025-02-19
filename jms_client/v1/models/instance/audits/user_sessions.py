@@ -35,5 +35,4 @@ class UserSessionInstance(Instance):
 
     @property
     def display(self):
-        username = self.user['name']
-        return f'{username}({self.backend_display})'
+        return f'{self.user["name"]}({self.backend_display})'

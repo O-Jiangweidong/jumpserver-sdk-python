@@ -1,5 +1,7 @@
 from jms_client.const import USER, ORG_USER
-from jms_client.v1.models.instance.users import UserInstance
+from jms_client.v1.models.instance.users import (
+    UserInstance, UserProfileInstance,
+)
 from ..const import Source, MFALevel
 from ..common import Request
 from ..mixins import (
@@ -184,3 +186,8 @@ class UpdateUserRequest(
 
 class DeleteUserRequest(DeleteMixin, BaseUserRequest):
     """ 删除指定 ID 的用户 """
+
+
+class UserProfileRequest(Request):
+    URL = 'users/profile/'
+    InstanceClass = UserProfileInstance

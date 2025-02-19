@@ -49,11 +49,3 @@ class Client(object):
         if with_model:
             init_data['ins_class'] = request_instance.InstanceClass
         return Response(**init_data)
-
-    def ping(self):
-        try:
-            profile = self.user.get_profile()
-            status = profile.is_active
-        except Exception: # noqa
-            status = False
-        return status

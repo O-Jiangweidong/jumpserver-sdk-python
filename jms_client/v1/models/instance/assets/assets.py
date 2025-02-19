@@ -48,6 +48,7 @@ class AssetInstance(Instance):
         self.type = ''
         super().__init__(**kwargs)
 
+    @property
     def display(self):
         return f'{self.name}({self.address})'
 

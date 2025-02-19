@@ -92,3 +92,27 @@ class UserInstance(Instance):
         self.source: dict = {}
 
         super().__init__(**kwargs)
+
+
+class UserProfileInstance(UserInstance):
+    def __init__(self, **kwargs):
+        """
+        :attr audit_orgs: 审计可用组织
+        :attr console_orgs: 控制台可用组织
+        :attr workbench_orgs: 工作台可用组织
+        :attr guide_url: 引导链接
+        :attr perms: 拥有的权限
+        :attr receive_backends: 消息接收平台
+        :attr public_key_hash_md5: 公钥 Hash MD5
+        :attr public_key_comment: 公钥备注
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        self.audit_orgs: list = []
+        self.console_orgs: list = []
+        self.workbench_orgs: list = []
+        self.guide_url: list = []
+        self.perms: list = []
+        self.receive_backends: list = []
+        self.public_key_hash_md5: str = ''
+        self.public_key_comment: str = ''

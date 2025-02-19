@@ -23,8 +23,10 @@ class TestFunctionality(unittest.TestCase):
         config.read('config.ini')
         username = config['test']['username']
         password = config['test']['password']
+        web_url = config['test']['web_url']
+        version = config['test']['version']
         self.client: Client = get_client(
-            version='3.10', web_url='https://js-internal.fit2cloud.cn',
+            version=version, web_url=web_url,
             username=username, password=password
         )
 
