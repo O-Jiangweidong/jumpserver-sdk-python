@@ -17,7 +17,7 @@ class Response(object):
         return not bool(self.get_err_msg())
 
     def is_request_ok(self):
-        return self._http_status < 500
+        return self._http_status < 400
 
     def get_err_msg(self):
         return self._err_msg

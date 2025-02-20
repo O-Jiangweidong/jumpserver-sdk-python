@@ -1,5 +1,4 @@
 from jms_client.v1.models.instance.assets import PlatformInstance
-from ..common import Request, ProtocolParam
 from ..const import (
     PlatformType, SuMethod, AutomationMethod,
     LINUX_AUTOMATION, WINDOWS_AUTOMATION, UNIX_AUTOMATION,
@@ -8,6 +7,7 @@ from ..const import (
     POSTGRESQL_AUTOMATION, ORACLE_AUTOMATION, SQLSERVER_AUTOMATION,
     MONGODB_AUTOMATION,
 )
+from ..common import Request, ProtocolParam
 from ..mixins import (
     ExtraRequestMixin, DetailMixin, CreateMixin,
     UpdateMixin, DeleteMixin,
