@@ -397,3 +397,8 @@ MONGODB_AUTOMATION = {
         AutomationMethod.PUSH_ACCOUNT_MONGODB
     ]
 }
+
+
+class CommandGroupType(str, Enum):
+    COMMAND = 'command'
+    REGEX = 'regex'

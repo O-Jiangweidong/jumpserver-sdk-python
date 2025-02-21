@@ -20,12 +20,10 @@ class TestFunctionality(unittest.TestCase):
             version='3.10', web_url='https://js-internal.fit2cloud.cn',
             username=username, password=password
         )
+        self.client.set_org(self.client.default_org)
 
     def test_list_accounts(self):
         """ 测试获取账号列表 """
-        # 切换组织
-        self.client.set_org(self.client.default_org)
-
         request = DescribeAccountsRequest(limit=10, username='root')
         resp: Response = self.client.do(request, with_model=True)
 

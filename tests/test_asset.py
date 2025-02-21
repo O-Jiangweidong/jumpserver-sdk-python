@@ -46,6 +46,7 @@ class TestFunctionality(unittest.TestCase):
             version=version, web_url=web_url,
             username=username, password=password
         )
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
 
     # --------------------- 通用的 ---------------------
     def test_list_assets(self):
@@ -58,7 +59,6 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
-        print(resp.get_data())
 
     def test_retrieve_asset(self):
         """ 测试获取指定 ID 资产详情 """
@@ -94,7 +94,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_create_host(self):
         """ 测试创建主机类型资产 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = CreateHostRequest(
             name='sdk-host', address='1.1.1.1',
             domain='bf6682af-7056-413d-be80-302604129598',
@@ -111,7 +110,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_update_host(self):
         """ 测试更新指定 ID 主机资产属性 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = UpdateHostRequest(
             id_='c2e4dde4-c777-4b24-a084-a8b44e99b5a1',
             name='sdk-host-new', address='192.168.1.1',
@@ -146,7 +144,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_create_database(self):
         """ 测试创建数据库类型资产 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = CreateDatabaseRequest(
             name='sdk-db', address='1.1.1.1', db_name='db_name',
             domain='bf6682af-7056-413d-be80-302604129598',
@@ -163,7 +160,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_update_database(self):
         """ 测试更新指定 ID 数据库资产属性 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = UpdateDatabaseRequest(
             id_='2d677794-309c-4ed5-a6a3-3c4e8830aac7',
             name='sdk-db-new', address='192.168.1.1', db_name='new_db_name',
@@ -198,7 +194,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_create_device(self):
         """ 测试创建网络设备类型资产 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = CreateDeviceRequest(
             name='sdk-device', address='1.1.1.1',
             domain='bf6682af-7056-413d-be80-302604129598',
@@ -215,7 +210,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_update_device(self):
         """ 测试更新指定 ID 网络设备资产属性 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = UpdateDeviceRequest(
             id_='415682fa-e0ec-4153-9b2d-61f69bfd604d',
             name='sdk-device-new', address='192.168.1.1',
@@ -250,7 +244,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_create_cloud(self):
         """ 测试创建云服务类型资产 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = CreateCloudRequest(
             name='sdk-cloud', address='http://1.1.1.1/k8s',
             domain='bf6682af-7056-413d-be80-302604129598',
@@ -267,7 +260,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_update_cloud(self):
         """ 测试更新指定 ID 网络设备资产属性 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = UpdateCloudRequest(
             id_='23f78712-2732-4f6e-a762-757d17fdffc5',
             name='sdk-cloud-new', address='http://192.168.1.1/k8s',
@@ -302,7 +294,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_create_web(self):
         """ 测试创建 Web 类型资产 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = CreateWebRequest(
             name='sdk-web', address='http://1.1.1.1/web',
             domain='bf6682af-7056-413d-be80-302604129598',
@@ -321,7 +312,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_update_web(self):
         """ 测试更新指定 ID Web 资产属性 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         auto_script = Script()
         auto_script.add_script(
             value='{USERNAME}', target='id=username', command='type'
@@ -367,7 +357,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_create_gpt(self):
         """ 测试创建 GPT 类型资产 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = CreateGPTRequest(
             name='sdk-gpt', address='http://1.1.1.1/gpt',
             proxy='http://1.1.1.1/proxy',
@@ -385,7 +374,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_update_gpt(self):
         """ 测试更新指定 ID GPT 资产属性 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = UpdateGPTRequest(
             id_='970f281d-90ab-4410-b42e-b26662788301',
             name='sdk-gpt-new', address='http://192.168.1.1/gpt',

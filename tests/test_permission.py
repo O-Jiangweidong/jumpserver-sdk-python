@@ -29,28 +29,26 @@ class TestFunctionality(unittest.TestCase):
             version=version, web_url=web_url,
             username=username, password=password
         )
-
-    def test_list_organizations(self):
-        """ 测试获取授权列表 """
         self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+
+    def test_list_permissions(self):
+        """ 测试获取授权列表 """
         request = DescribePermissionsRequest(limit=1)
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
 
-    def test_retrieve_organization(self):
+    def test_retrieve_permission(self):
         """ 测试获取指定 ID 授权详情 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = DetailPermissionRequest(id_='d43c9898-1b73-46ab-91dd-ed0db1305817')
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), PermissionInstance)
 
-    def test_create_organization(self):
+    def test_create_permission(self):
         """ 测试创建授权 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         # 设置授权账号
         accounts = AccountParam()
         accounts.with_input().with_spec(['root', 'jms'])
@@ -75,9 +73,8 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), PermissionInstance)
 
-    def test_update_organization(self):
+    def test_update_permission(self):
         """ 测试更新指定 ID 授权属性 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         # 设置授权账号
         accounts = AccountParam()
         accounts.with_input().with_anon().with_user()
@@ -101,9 +98,8 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), PermissionInstance)
 
-    def test_delete_organization(self):
+    def test_delete_permission(self):
         """ 测试删除指定 ID 授权 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = DeletePermissionRequest(id_='e6bf4ebd-0962-4af3-a5fb-dec1bca2c5aa')
         resp: Response = self.client.do(request)
 

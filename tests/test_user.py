@@ -28,10 +28,10 @@ class TestFunctionality(unittest.TestCase):
             version=version, web_url=web_url,
             username=username, password=password
         )
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
 
     def test_list_users(self):
         """ 测试获取用户列表 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = DescribeUsersRequest(limit=2)
         resp: Response = self.client.do(request, with_model=True)
 
@@ -40,17 +40,14 @@ class TestFunctionality(unittest.TestCase):
 
     def test_retrieve_user(self):
         """ 测试获取指定 ID 用户详情 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = DetailUserRequest(id_='90c61428-5ff3-4ee7-b220-451de8a275c5')
         resp: Response = self.client.do(request, with_model=True)
 
-        print(resp.get_data())
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), UserInstance)
 
     def test_create_user(self):
         """ 测试创建用户 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         auth_strategy = AuthStrategyParam()
         auth_strategy.set_password('hello', need_update=False)
         request = CreateUserRequest(
@@ -67,7 +64,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_update_user(self):
         """ 测试更新指定 ID 用户属性 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = UpdateUserRequest(
             id_='90c61428-5ff3-4ee7-b220-451de8a275c1', username='sdk-user',
             name='sdk-user-new', email='sdk@test-new.com', comment='sdk-user-new-comment',
@@ -82,7 +78,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_delete_user(self):
         """ 测试删除指定 ID 用户 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = DeleteUserRequest(id_='90c61428-5ff3-4ee7-b220-451de8a275c1')
         resp: Response = self.client.do(request)
 

@@ -4,7 +4,7 @@ import unittest
 
 from jms_client.client import get_client
 from jms_client.v1.client import Client
-from jms_client.v1.models.request.permissions.user_login_acl import (
+from jms_client.v1.models.request.permissions.user_login_acls import (
     CreateUserLoginACLRequest, DescribeUserLoginACLsRequest,
     DetailUserLoginACLRequest, UpdateUserLoginACLRequest,
     DeleteUserLoginACLRequest, UserParam, RuleParam
@@ -12,7 +12,7 @@ from jms_client.v1.models.request.permissions.user_login_acl import (
 from jms_client.v1.models.instance.permissions import (
     UserLoginACLInstance,
 )
-from jms_client.v1.models.request.const import UserLoginACLAction
+from jms_client.v1.models.request.const import ACLAction
 from jms_client.v1.models.response import Response
 
 
@@ -59,7 +59,7 @@ class TestFunctionality(unittest.TestCase):
         request = CreateUserLoginACLRequest(
             id_='e6bf4ebd-0962-4af3-a5fb-dec1bca2c5cc',
             name='sdk-user-login-acl', users=users, priority=12,
-            action=UserLoginACLAction.NOTICE, reviewers=[
+            action=ACLAction.NOTICE, reviewers=[
                 '1de7ce70-3172-48b2-80ad-4ece0eafa846',
                 'f288c986-79b9-48c8-aa00-7dd8841f1017'
             ]
@@ -88,7 +88,7 @@ class TestFunctionality(unittest.TestCase):
         request = UpdateUserLoginACLRequest(
             id_='e6bf4ebd-0962-4af3-a5fb-dec1bca2c5cc', rules=rules,
             name='sdk-user-login-acl-new', users=users, priority=12,
-            action=UserLoginACLAction.REVIEW, reviewers=[
+            action=ACLAction.REVIEW, reviewers=[
                 '1de7ce70-3172-48b2-80ad-4ece0eafa846',
                 'f288c986-79b9-48c8-aa00-7dd8841f1017'
             ]

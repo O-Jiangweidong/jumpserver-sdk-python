@@ -31,6 +31,7 @@ class TestFunctionality(unittest.TestCase):
             version=version, web_url=web_url,
             username=username, password=password
         )
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
 
     def test_list_platforms(self):
         """ 测试获取平台列表 """
@@ -44,9 +45,9 @@ class TestFunctionality(unittest.TestCase):
 
     def test_retrieve_platform(self):
         """ 测试获取指定 ID 平台详情 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = DetailPlatformRequest(id_='207')
         resp: Response = self.client.do(request, with_model=True)
+
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), PlatformInstance)
 

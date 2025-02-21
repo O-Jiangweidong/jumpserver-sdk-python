@@ -28,10 +28,10 @@ class TestFunctionality(unittest.TestCase):
             version=version, web_url=web_url,
             username=username, password=password
         )
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
 
     def test_list_user_groups(self):
         """ 测试获取用户组列表 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = DescribeUserGroupsRequest(limit=2)
         resp: Response = self.client.do(request, with_model=True)
 
@@ -40,7 +40,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_retrieve_user_group(self):
         """ 测试获取指定 ID 用户组详情 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = DetailUserGroupRequest(id_='f8ed5d74-8e91-479b-a0eb-fccf16e3b1a4')
         resp: Response = self.client.do(request, with_model=True)
 
@@ -49,7 +48,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_create_user_group(self):
         """ 测试创建用户组 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = CreateUserGroupRequest(
             id_='f288c986-79b9-48c8-aa00-7dd8841f1018',
             name='sdk-user-group', comment='sdk-user-group-comment',
@@ -65,7 +63,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_update_user_group(self):
         """ 测试更新指定 ID 用户组属性 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = UpdateUserGroupRequest(
             id_='f288c986-79b9-48c8-aa00-7dd8841f1018',
             name='sdk-user-group-new',
@@ -80,7 +77,6 @@ class TestFunctionality(unittest.TestCase):
 
     def test_delete_user_group(self):
         """ 测试删除指定 ID 用户组 """
-        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         request = DeleteUserGroupRequest(id_='f288c986-79b9-48c8-aa00-7dd8841f1018')
         resp: Response = self.client.do(request)
 
