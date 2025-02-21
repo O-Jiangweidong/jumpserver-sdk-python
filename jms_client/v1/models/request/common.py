@@ -90,6 +90,7 @@ class ProtocolParam(object):
             'setting': {'old_ssh_version': old_ssh_version},
         }
         self._append(name='ssh', protocol=protocol)
+        return self
 
     def append_sftp(self, port=22, sftp_home='/tmp'):
         protocol = {
@@ -98,6 +99,7 @@ class ProtocolParam(object):
             'setting': {'sftp_home': sftp_home},
         }
         self._append(name='sftp', protocol=protocol)
+        return self
 
     def append_telnet(
             self,
@@ -116,6 +118,7 @@ class ProtocolParam(object):
             }
         }
         self._append(name='telnet', protocol=protocol)
+        return self
 
     def append_vnc(self, port=5900):
         protocol = {
@@ -123,6 +126,7 @@ class ProtocolParam(object):
             'secret_types': ['password'], 'setting': {},
         }
         self._append(name='vnc', protocol=protocol)
+        return self
 
     def append_rdp(
             self,
@@ -140,6 +144,7 @@ class ProtocolParam(object):
             },
         }
         self._append(name='rdp', protocol=protocol)
+        return self
 
     def append_winrm(self, port=5985, use_ssl=False):
         protocol = {
@@ -148,6 +153,7 @@ class ProtocolParam(object):
             'setting': {'use_ssl': use_ssl},
         }
         self._append(name='winrm', protocol=protocol)
+        return self
 
     def append_mysql(self, port=3306):
         protocol = {
@@ -156,6 +162,7 @@ class ProtocolParam(object):
             'secret_types': ['password'], 'setting': {},
         }
         self._append(name='mysql', protocol=protocol)
+        return self
 
     def append_mariadb(self, port=3306):
         protocol = {
@@ -164,6 +171,7 @@ class ProtocolParam(object):
             'secret_types': ['password'], 'setting': {},
         }
         self._append(name='mariadb', protocol=protocol)
+        return self
 
     def append_postgresql(self, port=5432):
         protocol = {
@@ -173,6 +181,7 @@ class ProtocolParam(object):
             'secret_types': ['password'], 'setting': {},
         }
         self._append(name='postgresql', protocol=protocol)
+        return self
 
     def append_oracle(self, port=1521, sysdba=False):
         protocol = {
@@ -184,6 +193,7 @@ class ProtocolParam(object):
             },
         }
         self._append(name='oracle', protocol=protocol)
+        return self
 
     def append_sqlserver(
             self,
@@ -199,6 +209,7 @@ class ProtocolParam(object):
             },
         }
         self._append(name='sqlserver', protocol=protocol)
+        return self
 
     def append_db2(self, port=5000):
         protocol = {
@@ -208,6 +219,7 @@ class ProtocolParam(object):
             'secret_types': ['password'], 'setting': {},
         }
         self._append(name='db2', protocol=protocol)
+        return self
 
     def append_dameng(self, port=5236):
         protocol = {
@@ -216,6 +228,7 @@ class ProtocolParam(object):
             'secret_types': ['password'], 'setting': {},
         }
         self._append(name='dameng', protocol=protocol)
+        return self
 
     def append_clickhouse(self, port=9000):
         protocol = {
@@ -225,6 +238,7 @@ class ProtocolParam(object):
             'secret_types': ['password'], 'setting': {},
         }
         self._append(name='clickhouse', protocol=protocol)
+        return self
 
     def append_mongodb(
             self,
@@ -241,6 +255,7 @@ class ProtocolParam(object):
             },
         }
         self._append(name='mongodb', protocol=protocol)
+        return self
 
     def append_redis(self, port=6379, auth_username=False):
         protocol = {
@@ -251,6 +266,7 @@ class ProtocolParam(object):
             },
         }
         self._append(name='redis', protocol=protocol)
+        return self
 
     def append_http(
             self,
@@ -274,15 +290,17 @@ class ProtocolParam(object):
             }
         }
         self._append(name='http', protocol=protocol)
+        return self
 
     def append_k8s(self, port=443, port_from_attr=True):
         protocol = {
-            'name': 'mariadb', 'port': port,
+            'name': 'k8s', 'port': port,
             'required': True, 'default': True, 'public': True,
             'port_from_attr': port_from_attr,
             'secret_types': ['token'], 'setting': {},
         }
         self._append(name='k8s', protocol=protocol)
+        return self
 
     def append_chatgpt(
             self,
@@ -291,7 +309,7 @@ class ProtocolParam(object):
             api_mode='gpt-4o-mini'  # gpt-4o-mini/gpt-4o/gpt-4-turbo
     ):
         protocol = {
-            'name': 'mariadb', 'port': port,
+            'name': 'chatgpt', 'port': port,
             'required': True, 'default': True, 'public': True,
             'port_from_attr': port_from_attr,
             'secret_types': ['api_key'], 'setting': {
@@ -299,3 +317,68 @@ class ProtocolParam(object):
             },
         }
         self._append(name='chatgpt', protocol=protocol)
+        return self
+
+
+class UserParam(object):
+    def __init__(self):
+        self._users = {}
+        self.set_all_users()
+
+    def get_users(self):
+        return self._users
+
+    def set_all_users(self):
+        self._users = {'type': 'all', 'username_group': ''}
+
+    def set_specify_users(self, users: list):
+        """
+        :param users: 指定用户，格式为 ['user1_id', 'user2_id']
+        """
+        self._users = {'type': 'ids', 'ids': users}
+
+    def set_attr_users(self, attrs: list):
+        """
+        :param attrs: 指定用户属性，格式为 [{'name': '', 'match': '', 'value': ''}]
+            以下为 'name' 为某个属性时，match 支持的内容 及 value 的内容格式
+            name: 用户名称、value: 值、match：
+                in：在...中
+                exact：等于
+                not：不等于
+                contains：包含
+                startswith：以...开头
+                endswith：以...结尾
+                regex：正则表达式
+            username: 用户名、value: 值、match：同上方 name 的 match 取值
+            email: 邮箱、value: 值、match：同上方 name 的 match 取值
+            comment: 备注、value: 值、match：同上方 name 的 match 取值
+            is_active: 是否激活、value: True/False、match：
+                exact：等于
+                not：不等于
+            is_first_login: 是否首次登录、value: True/False、match：同上方 is_active 的 match 取值
+            system_roles: 系统角色、value: ['id1', 'id2']、match：
+                m2m: 任意包含
+                m2m_all: 同时包含
+            org_roles: 组织角色、value: ['id1', 'id2']、match：同上方 system_roles 的 match 取值
+            groups: 组、value: ['id1', 'id2']、match：同上方 system_roles 的 match 取值
+        """
+        str_match = ('in', 'exact', 'not', 'contains', 'startswith', 'endswith', 'regex')
+        bool_match = ('exact', 'not')
+        m2m_match = ('m2m', 'm2m_all')
+        attr_rule_map = {
+            'name': {'match': str_match}, 'username': {'match': str_match},
+            'email': {'match': str_match}, 'comment': {'match': str_match},
+            'is_active': {'match': bool_match}, 'is_first_login': {'match': bool_match},
+            'system_roles': {'match': m2m_match}, 'org_roles': {'match': m2m_match},
+            'groups': {'match': m2m_match},
+        }
+        for attr in attrs:
+            name = attr.get('name')
+            if not name or name not in attr_rule_map.keys():
+                raise ValueError(f'Param attrs item name must be in {attr_rule_map.keys()}')
+
+            match_value = attr.get('match', '')
+            match_rule = attr_rule_map[name]['match']
+            if match_value not in match_rule:
+                raise ValueError(f'Param attrs [{name}] match must be in {match_rule}')
+        self._users = {'type': 'attrs', 'attrs': attrs}

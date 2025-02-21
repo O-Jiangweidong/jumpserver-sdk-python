@@ -53,8 +53,7 @@ class TestFunctionality(unittest.TestCase):
         self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
         # 设置授权账号
         accounts = AccountParam()
-        accounts.set_input()
-        accounts.set_spec(['root', 'jms'])
+        accounts.with_input().with_spec(['root', 'jms'])
         # 设置授权动作
         actions = ActionParam()
         actions.set_clipboard()

@@ -1,8 +1,8 @@
 import re
 
 from jms_client.v1.models.instance.permissions import UserLoginACLInstance
-from ..const import UserLoginACLAction as LoginACLAction
-from ..common import Request
+from ..const import ACLAction
+from ..common import Request, UserParam
 from ..mixins import (
     DetailMixin, CreateMixin, DeleteMixin, UpdateMixin, ExtraRequestMixin
 )
@@ -77,70 +77,6 @@ class RuleParam(object):
                 self._time_period[week].append(time_period)
 
 
-class UserParam(object):
-    def __init__(self):
-        self._users = {}
-        self.set_all_users()
-
-    def get_users(self):
-        return self._users
-
-    def set_all_users(self):
-        self._users = {'type': 'all', 'username_group': ''}
-
-    def set_specify_users(self, users: list):
-        """
-        :param users: 指定用户，格式为 ['user1_id', 'user2_id']
-        """
-        self._users = {'type': 'ids', 'ids': users}
-
-    def set_attr_users(self, attrs: list):
-        """
-        :param attrs: 指定用户属性，格式为 [{'name': '', 'match': '', 'value': ''}]
-            以下为 'name' 为某个属性时，match 支持的内容 及 value 的内容格式
-            name: 用户名称、value: 值、match：
-                in：在...中
-                exact：等于
-                not：不等于
-                contains：包含
-                startswith：以...开头
-                endswith：以...结尾
-                regex：正则表达式
-            username: 用户名、value: 值、match：同上方 name 的 match 取值
-            email: 邮箱、value: 值、match：同上方 name 的 match 取值
-            comment: 备注、value: 值、match：同上方 name 的 match 取值
-            is_active: 是否激活、value: True/False、match：
-                exact：等于
-                not：不等于
-            is_first_login: 是否首次登录、value: True/False、match：同上方 is_active 的 match 取值
-            system_roles: 系统角色、value: ['id1', 'id2']、match：
-                m2m: 任意包含
-                m2m_all: 同时包含
-            org_roles: 组织角色、value: ['id1', 'id2']、match：同上方 system_roles 的 match 取值
-            groups: 组、value: ['id1', 'id2']、match：同上方 system_roles 的 match 取值
-        """
-        str_match = ('in', 'exact', 'not', 'contains', 'startswith', 'endswith', 'regex')
-        bool_match = ('exact', 'not')
-        m2m_match = ('m2m', 'm2m_all')
-        attr_rule_map = {
-            'name': {'match': str_match}, 'username': {'match': str_match},
-            'email': {'match': str_match}, 'comment': {'match': str_match},
-            'is_active': {'match': bool_match}, 'is_first_login': {'match': bool_match},
-            'system_roles': {'match': m2m_match}, 'org_roles': {'match': m2m_match},
-            'groups': {'match': m2m_match},
-        }
-        for attr in attrs:
-            name = attr.get('name')
-            if not name or name not in attr_rule_map.keys():
-                raise ValueError(f'Param attrs item name must be in {attr_rule_map.keys()}')
-
-            match_value = attr.get('match', '')
-            match_rule = attr_rule_map[name]['match']
-            if match_value not in match_rule:
-                raise ValueError(f'Param attrs [{name}] match must be in {match_rule}')
-        self._users = {'type': 'attrs', 'attrs': attrs}
-
-
 class CreateUpdateUserLoginACLParamsMixin(object):
     _body: dict
 
@@ -148,7 +84,7 @@ class CreateUpdateUserLoginACLParamsMixin(object):
             self,
             name: str,
             comment: str = '',
-            action: str = LoginACLAction.REJECT,
+            action: str = ACLAction.REJECT,
             is_active: bool = True,
             priority: int = 50,
             reviewers: list = None,
@@ -162,16 +98,16 @@ class CreateUpdateUserLoginACLParamsMixin(object):
         :param action: 动作，支持 reject、accept、review、notice
         :param is_active: 是否激活
         :param priority: 优先级, 1-100
-        :param reviewers: 审批人，支持用户 ID、用户名、名称
+        :param reviewers: 审批人
         :param rules: 规则（IP 组、时段限制）
-        :param users: 通知人，格式为 ['user1_id', 'user2_id']
+        :param users: 受控制的人
         """
         super().__init__(**kwargs)
         self._body.update({
             'name': name, 'is_active': is_active, 'priority': priority,
-            'action': LoginACLAction(action),
+            'action': ACLAction(action),
         })
-        if action in (LoginACLAction.REVIEW, LoginACLAction.NOTICE) and not reviewers:
+        if action in (ACLAction.REVIEW, ACLAction.NOTICE) and not reviewers:
             raise ValueError('reviewers can not be empty')
         if int(priority) < 0 or int(priority) > 100:
             raise ValueError('priority must be in [0-100]')
