@@ -35,12 +35,12 @@
    - 删除
 
 ### **资产管理**
-   - 列表查询
-   - 详情查询
-   - 创建
-   - 更新
-   - 删除
-   - 批量删除
+   - 列表查询 (DescribeAssetsRequest) - [可按照分类查询]
+   - 详情查询 (DetailAssetRequest) - [可按照分类查询]
+   - 创建 (CreateHostRequest) - [`只`可按照分类查询]
+   - 更新 (UpdateHostRequest) -  [`只`可按照分类查询]
+   - 删除 (DeleteAssetRequest)
+   - 批量删除 (BulkDeleteAssetRequest)
 
 ### **平台管理**
    - 列表查询
@@ -122,6 +122,6 @@
 
 ## 安装与使用
 
-### 安装
+### 安装(未实现，1.0 版本发布时同步上线)
 ```bash
 pip install jumpserver-sdk
