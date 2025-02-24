@@ -21,11 +21,13 @@
    - 基于 账号/密码 认证
 
 ### **用户管理**
-   - 列表查询
-   - 详情查询
-   - 创建
-   - 更新
-   - 删除
+   - 列表查询 (DescribeUsersRequest)
+   - 详情查询 (DetailUserRequest)
+   - 创建 (CreateUserRequest)
+   - 更新 (UpdateUserRequest)
+   - 删除 (DeleteUserRequest)
+   - 邀请 (InviteUserRequest)
+   - 移除 (RemoveUserRequest)
 
 ### **用户组管理**
    - 列表查询
