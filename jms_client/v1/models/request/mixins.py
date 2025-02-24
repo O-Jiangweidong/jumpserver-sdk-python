@@ -31,6 +31,9 @@ class BulkDeleteMixin(object):
     url_prefix: str
 
     def __init__(self, spm: str, *args, **kwargs):
+        """
+        :param spm: 根据 CreateResourceCacheRequest 获取
+        """
         self._spm = spm
         super().__init__(*args, **kwargs)
 
