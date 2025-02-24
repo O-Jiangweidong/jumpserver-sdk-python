@@ -7,7 +7,7 @@ from jms_client.v1.client import Client
 from jms_client.v1.models.request.permissions.user_login_acls import (
     CreateUserLoginACLRequest, DescribeUserLoginACLsRequest,
     DetailUserLoginACLRequest, UpdateUserLoginACLRequest,
-    DeleteUserLoginACLRequest, UserParam, RuleParam
+    DeleteUserLoginACLRequest, UserManyFilterParam, RuleParam
 )
 from jms_client.v1.models.instance.permissions import (
     UserLoginACLInstance,
@@ -49,8 +49,8 @@ class TestFunctionality(unittest.TestCase):
     def test_create_login_user_acl(self):
         """ 测试创建用户登陆控制 """
         self.client.set_org(self.client.root_org)
-        users = UserParam()
-        users.set_attr_users([
+        users = UserManyFilterParam()
+        users.set_filter_attrs([
             {'name': 'name', 'match': 'contains', 'value': 'jms'},
             {'name': 'groups', 'match': 'm2m', 'value': [
                 '253ed525-291a-45f5-8e09-88e92577e913'
@@ -72,8 +72,8 @@ class TestFunctionality(unittest.TestCase):
     def test_update_login_user_acl(self):
         """ 测试更新指定 ID 用户登陆控制属性 """
         self.client.set_org(self.client.root_org)
-        users = UserParam()
-        users.set_attr_users([
+        users = UserManyFilterParam()
+        users.set_filter_attrs([
             {'name': 'name', 'match': 'contains', 'value': 'jms'},
             {'name': 'groups', 'match': 'm2m_all', 'value': [
                 '253ed525-291a-45f5-8e09-88e92577e913'

@@ -320,26 +320,56 @@ class ProtocolParam(object):
         return self
 
 
-class UserParam(object):
+class SimpleProtocolParam(ProtocolParam):
     def __init__(self):
-        self._users = {}
-        self.set_all_users()
+        super().__init__(type_=None)
+        self._pre_check = False
 
-    def get_users(self):
-        return self._users
 
-    def set_all_users(self):
-        self._users = {'type': 'all', 'username_group': ''}
+class ManyToManyFilterParam(object):
+    str_match = ('in', 'exact', 'not', 'contains', 'startswith', 'endswith', 'regex')
+    bool_match = ('exact', 'not')
+    m2m_match = ('m2m', 'm2m_all')
 
-    def set_specify_users(self, users: list):
+    def __init__(self):
+        self._results = {}
+        self.set_all()
+
+    def _get_attrs_rule_map(self):
+        return {}
+
+    def set_all(self):
+        self._results = {'type': 'all'}
+
+    def set_specify(self,  obj_ids: list):
         """
-        :param users: 指定用户，格式为 ['user1_id', 'user2_id']
+        :param obj_ids: 指定对象，格式为 ['obj1_id', 'obj2_id']
         """
-        self._users = {'type': 'ids', 'ids': users}
+        self._results = {'type': 'ids', 'ids': obj_ids}
 
-    def set_attr_users(self, attrs: list):
-        """
-        :param attrs: 指定用户属性，格式为 [{'name': '', 'match': '', 'value': ''}]
+    def set_filter_attrs(self, attrs: list):
+        attrs_rule_map = self._get_attrs_rule_map()
+        for attr in attrs:
+            name = attr.get('name')
+            if not name or name not in attrs_rule_map.keys():
+                raise ValueError(f'Param attrs item name must be in {attrs_rule_map.keys()}')
+
+            match_value = attr.get('match', '')
+            match_rule = attrs_rule_map[name]['match']
+            if match_value not in match_rule:
+                raise ValueError(f'Param attrs [{name}] match must be in {match_rule}')
+        self._results = {'type': 'attrs', 'attrs': attrs}
+
+    def get_result(self):
+        return self._results
+
+
+class UserManyFilterParam(ManyToManyFilterParam):
+    """
+     :method set_specify(obj_ids: list => [user1_id, user2_id]): 指定用户
+
+     :method set_filter_attrs(attrs: list => 具体用法看下方注释): 指定用户属性
+        attrs: 用户属性，格式为 [{'name': '', 'match': '', 'value': ''}]
             以下为 'name' 为某个属性时，match 支持的内容 及 value 的内容格式
             name: 用户名称、value: 值、match：
                 in：在...中
@@ -361,24 +391,113 @@ class UserParam(object):
                 m2m_all: 同时包含
             org_roles: 组织角色、value: ['id1', 'id2']、match：同上方 system_roles 的 match 取值
             groups: 组、value: ['id1', 'id2']、match：同上方 system_roles 的 match 取值
-        """
-        str_match = ('in', 'exact', 'not', 'contains', 'startswith', 'endswith', 'regex')
-        bool_match = ('exact', 'not')
-        m2m_match = ('m2m', 'm2m_all')
-        attr_rule_map = {
-            'name': {'match': str_match}, 'username': {'match': str_match},
-            'email': {'match': str_match}, 'comment': {'match': str_match},
-            'is_active': {'match': bool_match}, 'is_first_login': {'match': bool_match},
-            'system_roles': {'match': m2m_match}, 'org_roles': {'match': m2m_match},
-            'groups': {'match': m2m_match},
-        }
-        for attr in attrs:
-            name = attr.get('name')
-            if not name or name not in attr_rule_map.keys():
-                raise ValueError(f'Param attrs item name must be in {attr_rule_map.keys()}')
+    """
 
-            match_value = attr.get('match', '')
-            match_rule = attr_rule_map[name]['match']
-            if match_value not in match_rule:
-                raise ValueError(f'Param attrs [{name}] match must be in {match_rule}')
-        self._users = {'type': 'attrs', 'attrs': attrs}
+    def _get_attrs_rule_map(self):
+        return {
+            'name': {'match': self.str_match},
+            'username': {'match': self.str_match},
+            'email': {'match': self.str_match},
+            'comment': {'match': self.str_match},
+            'is_active': {'match': self.bool_match},
+            'is_first_login': {'match': self.bool_match},
+            'system_roles': {'match': self.m2m_match},
+            'org_roles': {'match': self.m2m_match},
+            'groups': {'match': self.m2m_match},
+        }
+
+
+class AssetManyFilterParam(ManyToManyFilterParam):
+    """
+     :method set_specify(obj_ids: list => [user1_id, user2_id]): 指定用户
+
+     :method set_filter_attrs(attrs: list => 具体用法看下方注释): 指定资产属性
+        attrs: 资产属性，格式为 [{'name': '', 'match': '', 'value': ''}]
+            以下为 'name' 为某个属性时，match 支持的内容 及 value 的内容格式
+            name: 用户名称、value: 值、match：
+                in：在...中
+                exact：等于
+                not：不等于
+                contains：包含
+                startswith：以...开头
+                endswith：以...结尾
+                regex：正则表达式
+            address: 地址、value: 值、match：同上方 name 的 match 取值
+            comment: 备注、value: 值、match：同上方 name 的 match 取值
+            nodes: 节点、value: ['id1', 'id2']、match：
+                m2m: 任意包含
+                m2m_all: 同时包含
+            platform: 平台、value: ['id1', 'id2']、match：同上方 nodes 的 match 取值
+            labels: 标签、value: ['id1', 'id2']、match：同上方 nodes 的 match 取值
+            category: 平台类别、value: 参考 PlatformCategory 、match：
+                in：在...中
+            type: 平台类型、value: 参考 PlatformType 、match：同上方 category 的 match 取值
+            protocols: 协议、value: 参考 ProtocolParam[only_name] 、match：同上方 category 的 match 取值
+    """
+
+    def _get_attrs_rule_map(self):
+        only_in = ('in',)
+        return {
+            'name': {'match': self.str_match},
+            'address': {'match': self.str_match},
+            'comment': {'match': self.str_match},
+            'platform': {'match': self.m2m_match},
+            'nodes': {'match': self.m2m_match},
+            'labels': {'match': self.m2m_match},
+            'category': {'match': only_in},
+            'type': {'match': only_in},
+            'protocols': {'match': only_in},
+        }
+
+
+class PriorityParam(object):
+    def __new__(cls, priority=50):
+        try:
+            priority = int(priority)
+        except ValueError:
+            raise ValueError('priority must be int')
+        if priority < 0 or priority > 100:
+            raise ValueError('priority must be in [0-100]')
+        return priority
+
+
+class AccountParam(object):
+    ALL = '@ALL'
+    INPUT = '@INPUT'
+    SPEC = '@SPEC'
+    ANON = '@ANON'
+    USER = '@USER'
+
+    def __init__(self):
+        self._accounts = []
+
+    def get_accounts(self):
+        if {self.ALL, self.SPEC}.issubset(set(self._accounts)):
+            raise ValueError('AccountParam 中不能同时包含 所有账号 和 指定账号')
+        return self._accounts
+
+    def with_all(self):
+        self._accounts.append(self.ALL)
+        return self
+
+    def with_input(self):
+        """ 设置手动账号 """
+        self._accounts.append(self.INPUT)
+        return self
+
+    def with_user(self):
+        """ 设置同名账号 """
+        self._accounts.append(self.USER)
+        return self
+
+    def with_spec(self, username: list):
+        """ 设置指定账号
+        :param username:
+        """
+        self._accounts.extend([self.SPEC, *username])
+        return self
+
+    def with_anon(self):
+        """ 设置匿名账号 """
+        self._accounts.append(self.ANON)
+        return self

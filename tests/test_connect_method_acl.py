@@ -4,10 +4,11 @@ import unittest
 
 from jms_client.client import get_client
 from jms_client.v1.client import Client
+from jms_client.v1.models.request.common import SimpleProtocolParam
 from jms_client.v1.models.request.permissions.connect_method_acls import (
     CreateConnectMethodACLRequest, DescribeConnectMethodACLsRequest,
     DetailConnectMethodACLRequest, UpdateConnectMethodACLRequest,
-    DeleteConnectMethodACLRequest, UserParam, ProtocolParam
+    DeleteConnectMethodACLRequest, UserManyFilterParam
 )
 from jms_client.v1.models.instance.permissions import (
     ConnectMethodACLInstance,
@@ -48,15 +49,14 @@ class TestFunctionality(unittest.TestCase):
 
     def test_create_connect_method_acl(self):
         """ 测试创建连接方式控制 """
-        users = UserParam()
-        users.set_attr_users([
+        users = UserManyFilterParam()
+        users.set_filter_attrs([
             {'name': 'name', 'match': 'contains', 'value': 'jms'},
             {'name': 'groups', 'match': 'm2m', 'value': [
                 '253ed525-291a-45f5-8e09-88e92577e913'
             ]}
         ])
-        methods = ProtocolParam()
-        methods.append_vnc().append_rdp()
+        methods = SimpleProtocolParam().append_vnc().append_rdp()
         request = CreateConnectMethodACLRequest(
             id_='e6bf4ebd-0962-4af3-a5fb-dec1bca2c5ff',
             name='sdk-connect-method-acl', users=users, priority=12,
@@ -69,15 +69,15 @@ class TestFunctionality(unittest.TestCase):
 
     def test_update_connect_method_acl(self):
         """ 测试更新指定 ID 连接方式控制属性 """
-        users = UserParam()
-        users.set_attr_users([
+        users = UserManyFilterParam()
+        users.set_filter_attrs([
             {'name': 'name', 'match': 'contains', 'value': 'jms'},
             {'name': 'groups', 'match': 'm2m_all', 'value': [
                 '253ed525-291a-45f5-8e09-88e92577e913'
             ]},
             {'name': 'is_first_login', 'match': 'exact', 'value': True}
         ])
-        methods = ProtocolParam()
+        methods = SimpleProtocolParam()
         methods.append_vnc().append_rdp().append_k8s()
         request = UpdateConnectMethodACLRequest(
             id_='e6bf4ebd-0962-4af3-a5fb-dec1bca2c5ff',

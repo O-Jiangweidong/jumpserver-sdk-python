@@ -1,5 +1,5 @@
 from jms_client.v1.models.instance.permissions import ConnectMethodACLInstance
-from ..common import Request, UserParam, ProtocolParam as BaseProtocolParam
+from ..common import Request, UserManyFilterParam, PriorityParam, SimpleProtocolParam
 from ..const import ACLAction
 from ..mixins import (
     DetailMixin, CreateMixin, DeleteMixin, UpdateMixin, ExtraRequestMixin
@@ -40,12 +40,6 @@ class DetailConnectMethodACLRequest(DetailMixin, BaseConnectMethodACLRequest):
     """ 获取指定 ID 的 连接方式ACL 详情 """
 
 
-class ProtocolParam(BaseProtocolParam):
-    def __init__(self):
-        super().__init__(type_=None)
-        self._pre_check = False
-
-
 class CreateUpdateConnectMethodACLParamsMixin(object):
     _body: dict
 
@@ -55,8 +49,8 @@ class CreateUpdateConnectMethodACLParamsMixin(object):
             comment: str = '',
             is_active: bool = True,
             priority: int = 50,
-            connect_methods: ProtocolParam = None,
-            users: UserParam = None,
+            connect_methods: SimpleProtocolParam = None,
+            users: UserManyFilterParam = None,
             **kwargs
     ):
         """
@@ -70,18 +64,16 @@ class CreateUpdateConnectMethodACLParamsMixin(object):
         """
         super().__init__(**kwargs)
         self._body.update({
-            'name': name, 'is_active': is_active, 'priority': priority,
-            'action': ACLAction.REJECT,
+            'name': name, 'is_active': is_active, 'action': ACLAction.REJECT,
+            'priority': PriorityParam(priority),
         })
-        if int(priority) < 0 or int(priority) > 100:
-            raise ValueError('priority must be in [0-100]')
         if comment:
             self._body['comment'] = comment
-        if isinstance(connect_methods, ProtocolParam):
+        if isinstance(connect_methods, SimpleProtocolParam):
             self._body['connect_methods'] = connect_methods.get_protocols(only_name=True)
-        if not isinstance(users, UserParam):
-            users = UserParam()
-        self._body['users'] = users.get_users()
+        if not isinstance(users, UserManyFilterParam):
+            users = UserManyFilterParam()
+        self._body['users'] = users.get_result()
 
 
 class CreateConnectMethodACLRequest(

@@ -1,10 +1,8 @@
-from datetime import datetime, timedelta
-
 from jms_client.v1.models.instance.permissions import (
     PermissionInstance
 )
 from jms_client.v1.utils import handle_range_datetime
-from ..common import Request, ProtocolParam as BaseProtocolParam
+from ..common import Request, AccountParam, SimpleProtocolParam
 from ..mixins import (
     DetailMixin, CreateMixin, DeleteMixin,
     UpdateMixin, ExtraRequestMixin
@@ -88,48 +86,6 @@ class DetailPermissionRequest(DetailMixin, BasePermissionRequest):
     """ 获取指定 ID 的授权详情 """
 
 
-class AccountParam(object):
-    ALL = '@ALL'
-    INPUT = '@INPUT'
-    SPEC = '@SPEC'
-    ANON = '@ANON'
-    USER = '@USER'
-
-    def __init__(self):
-        self._accounts = []
-
-    def get_accounts(self):
-        if {self.ALL, self.SPEC}.issubset(set(self._accounts)):
-            raise ValueError('AccountParam 中不能同时包含 所有账号 和 指定账号')
-        return self._accounts
-
-    def with_all(self):
-        self._accounts.append(self.ALL)
-        return self
-
-    def with_input(self):
-        """ 设置手动账号 """
-        self._accounts.append(self.INPUT)
-        return self
-
-    def with_user(self):
-        """ 设置同名账号 """
-        self._accounts.append(self.USER)
-        return self
-
-    def with_spec(self, username: list):
-        """ 设置指定账号
-        :param username:
-        """
-        self._accounts.extend([self.SPEC, *username])
-        return self
-
-    def with_anon(self):
-        """ 设置匿名账号 """
-        self._accounts.append(self.ANON)
-        return self
-
-
 class ActionParam(object):
     CONNECT = 'connect'
     UPLOAD = 'upload'
@@ -160,11 +116,7 @@ class ActionParam(object):
         self._actions.extend([self.COPY, self.PASTE])
 
 
-class ProtocolParam(BaseProtocolParam):
-    def __init__(self):
-        super().__init__(type_=None)
-        self._pre_check = False
-
+class ProtocolParam(SimpleProtocolParam):
     def append_all(self):
         self._protocols = [{'name': 'all'}]
 

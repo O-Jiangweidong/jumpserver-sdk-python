@@ -2,7 +2,7 @@ import re
 
 from jms_client.v1.models.instance.permissions import UserLoginACLInstance
 from ..const import ACLAction
-from ..common import Request, UserParam
+from ..common import Request, UserManyFilterParam, PriorityParam
 from ..mixins import (
     DetailMixin, CreateMixin, DeleteMixin, UpdateMixin, ExtraRequestMixin
 )
@@ -89,7 +89,7 @@ class CreateUpdateUserLoginACLParamsMixin(object):
             priority: int = 50,
             reviewers: list = None,
             rules: RuleParam = None,
-            users: UserParam = None,
+            users: UserManyFilterParam = None,
             **kwargs
     ):
         """
@@ -104,8 +104,8 @@ class CreateUpdateUserLoginACLParamsMixin(object):
         """
         super().__init__(**kwargs)
         self._body.update({
-            'name': name, 'is_active': is_active, 'priority': priority,
-            'action': ACLAction(action),
+            'name': name, 'is_active': is_active, 'action': ACLAction(action),
+            'priority': PriorityParam(priority),
         })
         if action in (ACLAction.REVIEW, ACLAction.NOTICE) and not reviewers:
             raise ValueError('reviewers can not be empty')
@@ -117,10 +117,10 @@ class CreateUpdateUserLoginACLParamsMixin(object):
             self._body['reviewers'] = reviewers
         if not isinstance(rules, RuleParam):
             rules = RuleParam()
-        if not isinstance(users, UserParam):
-            users = UserParam()
+        if not isinstance(users, UserManyFilterParam):
+            users = UserManyFilterParam()
         self._body['rules'] = rules.get_rule()
-        self._body['users'] = users.get_users()
+        self._body['users'] = users.get_result()
 
 
 class CreateUserLoginACLRequest(
