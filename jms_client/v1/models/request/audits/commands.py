@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.audits import CommandInstance
 from jms_client.v1.utils import handle_range_datetime
 from ..common import Request
-from ..mixins import ExtraRequestMixin, DetailMixin
+from ..mixins import ExtraRequestMixin, WithIDMixin
 
 
 class BaseCommandRequest(Request):
@@ -64,7 +64,7 @@ class DescribeCommandsRequest(ExtraRequestMixin, BaseCommandRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailCommandRequest(DetailMixin, BaseCommandRequest):
+class DetailCommandRequest(WithIDMixin, BaseCommandRequest):
     """ 获取命令详情 """
 
     def __init__(self, command_storage_id: str, **kwargs):

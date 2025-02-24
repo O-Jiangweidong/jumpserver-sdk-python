@@ -8,6 +8,7 @@ from jms_client.v1.models.request.const import Source, MFALevel
 from jms_client.v1.models.request.users import (
     DescribeUsersRequest, DetailUserRequest, AuthStrategyParam,
     CreateUserRequest, UpdateUserRequest, DeleteUserRequest,
+    RemoveUserRequest,
 )
 from jms_client.v1.models.instance.users import (
     UserInstance,
@@ -79,6 +80,13 @@ class TestFunctionality(unittest.TestCase):
     def test_delete_user(self):
         """ 测试删除指定 ID 用户 """
         request = DeleteUserRequest(id_='90c61428-5ff3-4ee7-b220-451de8a275c1')
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_remove_user(self):
+        """ 测试移除指定 ID 用户【非删除，只是把用户从某个组织移除】 """
+        request = RemoveUserRequest(id_='b58d578a-77c4-4a46-9b58-d1d8ac23b094')
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_request_ok())

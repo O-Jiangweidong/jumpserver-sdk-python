@@ -1,6 +1,6 @@
 from jms_client.v1.models.instance.accounts import AccountInstance
 from ..common import Request
-from ..mixins import DetailMixin, ExtraRequestMixin
+from ..mixins import WithIDMixin, ExtraRequestMixin
 
 
 class BaseAccountRequest(Request):
@@ -63,5 +63,5 @@ class DescribeAccountsRequest(ExtraRequestMixin, BaseAccountRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailAccountRequest(DetailMixin, BaseAccountRequest):
+class DetailAccountRequest(WithIDMixin, BaseAccountRequest):
     """ 获取指定 ID 的账号详情 """

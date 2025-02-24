@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.audits import UserSessionInstance
 from ..common import Request
 from ..mixins import (
-    ExtraRequestMixin, DetailMixin,
+    ExtraRequestMixin, WithIDMixin,
 )
 
 
@@ -44,5 +44,5 @@ class DescribeUserSessionsRequest(ExtraRequestMixin, BaseUserSessionRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailUserSessionRequest(DetailMixin, BaseUserSessionRequest):
+class DetailUserSessionRequest(WithIDMixin, BaseUserSessionRequest):
     """ 获取在线用户详情 """

@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.audits import LoginLogInstance
 from jms_client.v1.utils import handle_range_datetime
 from ..common import Request
-from ..mixins import ExtraRequestMixin, DetailMixin
+from ..mixins import ExtraRequestMixin, WithIDMixin
 
 
 class BaseLoginLogRequest(Request):
@@ -56,5 +56,5 @@ class DescribeLoginLogsRequest(ExtraRequestMixin, BaseLoginLogRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailLoginLogRequest(DetailMixin, BaseLoginLogRequest):
+class DetailLoginLogRequest(WithIDMixin, BaseLoginLogRequest):
     """ 获取登录日志详情 """

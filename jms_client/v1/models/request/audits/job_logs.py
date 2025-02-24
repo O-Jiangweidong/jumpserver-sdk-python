@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.audits import JobLogInstance
 from jms_client.v1.utils import handle_range_datetime
 from ..common import Request
-from ..mixins import ExtraRequestMixin, DetailMixin
+from ..mixins import ExtraRequestMixin, WithIDMixin
 
 
 class BaseJobLogRequest(Request):
@@ -36,5 +36,5 @@ class DescribeJobLogsRequest(ExtraRequestMixin, BaseJobLogRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailJobLogRequest(DetailMixin, BaseJobLogRequest):
+class DetailJobLogRequest(WithIDMixin, BaseJobLogRequest):
     """ 获取作业日志详情 """

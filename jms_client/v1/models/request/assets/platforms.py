@@ -9,7 +9,7 @@ from ..const import (
 )
 from ..common import Request, ProtocolParam
 from ..mixins import (
-    ExtraRequestMixin, DetailMixin, CreateMixin,
+    ExtraRequestMixin, WithIDMixin, CreateMixin,
     UpdateMixin, DeleteMixin,
 )
 
@@ -47,7 +47,7 @@ class DescribePlatformsRequest(ExtraRequestMixin, BasePlatformRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailPlatformRequest(DetailMixin, BasePlatformRequest):
+class DetailPlatformRequest(WithIDMixin, BasePlatformRequest):
     """
     获取平台详情
     """

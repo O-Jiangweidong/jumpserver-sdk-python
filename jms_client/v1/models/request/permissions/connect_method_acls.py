@@ -2,7 +2,7 @@ from jms_client.v1.models.instance.permissions import ConnectMethodACLInstance
 from ..common import Request, UserManyFilterParam, PriorityParam, SimpleProtocolParam
 from ..const import ACLAction
 from ..mixins import (
-    DetailMixin, CreateMixin, DeleteMixin, UpdateMixin, ExtraRequestMixin
+    WithIDMixin, CreateMixin, DeleteMixin, UpdateMixin, ExtraRequestMixin
 )
 
 
@@ -36,7 +36,7 @@ class DescribeConnectMethodACLsRequest(
         super().__init__(**query_params, **kwargs)
 
 
-class DetailConnectMethodACLRequest(DetailMixin, BaseConnectMethodACLRequest):
+class DetailConnectMethodACLRequest(WithIDMixin, BaseConnectMethodACLRequest):
     """ 获取指定 ID 的 连接方式ACL 详情 """
 
 

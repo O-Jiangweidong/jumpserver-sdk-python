@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.audits import SessionInstance
 from jms_client.v1.utils import handle_range_datetime
 from ..common import Request
-from ..mixins import ExtraRequestMixin, DetailMixin
+from ..mixins import ExtraRequestMixin, WithIDMixin
 
 
 class BaseSessionLogRequest(Request):
@@ -70,5 +70,5 @@ class DescribeSessionsRequest(ExtraRequestMixin, BaseSessionLogRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailSessionRequest(DetailMixin, BaseSessionLogRequest):
+class DetailSessionRequest(WithIDMixin, BaseSessionLogRequest):
     """ 获取会话记录详情 """

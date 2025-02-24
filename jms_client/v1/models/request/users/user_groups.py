@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.users import UserGroupInstance
 from ..common import Request
 from ..mixins import (
-    ExtraRequestMixin, DetailMixin, CreateMixin,
+    ExtraRequestMixin, WithIDMixin, CreateMixin,
     DeleteMixin, UpdateMixin,
 )
 
@@ -29,7 +29,7 @@ class DescribeUserGroupsRequest(ExtraRequestMixin, BaseUserGroupRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailUserGroupRequest(DetailMixin, BaseUserGroupRequest):
+class DetailUserGroupRequest(WithIDMixin, BaseUserGroupRequest):
     """ 获取用户组详情 """
 
 

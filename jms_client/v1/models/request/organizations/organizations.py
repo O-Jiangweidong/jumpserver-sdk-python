@@ -3,7 +3,7 @@ from jms_client.v1.models.instance.organizations import (
 )
 from ..common import Request
 from ..mixins import (
-    ExtraRequestMixin, DetailMixin, CreateMixin,
+    ExtraRequestMixin, WithIDMixin, CreateMixin,
     UpdateMixin, DeleteMixin
 )
 
@@ -31,7 +31,7 @@ class DescribeOrganizationsRequest(ExtraRequestMixin, BaseOrganizationRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailOrganizationRequest(DetailMixin, BaseOrganizationRequest):
+class DetailOrganizationRequest(WithIDMixin, BaseOrganizationRequest):
     """ 获取指定 ID 的组织详情 """
 
 

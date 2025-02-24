@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.assets import NodeInstance
 from ..common import Request
 from ..mixins import (
-    ExtraRequestMixin, DetailMixin, CreateMixin,
+    ExtraRequestMixin, WithIDMixin, CreateMixin,
     UpdateMixin, DeleteMixin,
 )
 
@@ -35,7 +35,7 @@ class DescribeNodesRequest(ExtraRequestMixin, BaseNodeRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailNodeRequest(DetailMixin, BaseNodeRequest):
+class DetailNodeRequest(WithIDMixin, BaseNodeRequest):
     """ 获取节点详情 """
 
 

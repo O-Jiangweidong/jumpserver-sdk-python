@@ -4,7 +4,7 @@ from jms_client.v1.models.instance.permissions import (
 from jms_client.v1.utils import handle_range_datetime
 from ..common import Request, AccountParam, SimpleProtocolParam
 from ..mixins import (
-    DetailMixin, CreateMixin, DeleteMixin,
+    WithIDMixin, CreateMixin, DeleteMixin,
     UpdateMixin, ExtraRequestMixin
 )
 
@@ -82,7 +82,7 @@ class DescribePermissionsRequest(ExtraRequestMixin, BasePermissionRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailPermissionRequest(DetailMixin, BasePermissionRequest):
+class DetailPermissionRequest(WithIDMixin, BasePermissionRequest):
     """ 获取指定 ID 的授权详情 """
 
 

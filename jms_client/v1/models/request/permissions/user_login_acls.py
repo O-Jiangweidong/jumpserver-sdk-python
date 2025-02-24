@@ -4,7 +4,7 @@ from jms_client.v1.models.instance.permissions import UserLoginACLInstance
 from ..const import ACLAction
 from ..common import Request, UserManyFilterParam, PriorityParam, RuleParam
 from ..mixins import (
-    DetailMixin, CreateMixin, DeleteMixin, UpdateMixin, ExtraRequestMixin
+    WithIDMixin, CreateMixin, DeleteMixin, UpdateMixin, ExtraRequestMixin
 )
 
 
@@ -40,7 +40,7 @@ class DescribeUserLoginACLsRequest(ExtraRequestMixin, BaseUserLoginACLRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailUserLoginACLRequest(DetailMixin, BaseUserLoginACLRequest):
+class DetailUserLoginACLRequest(WithIDMixin, BaseUserLoginACLRequest):
     """ 获取指定 ID 的用户登录 ACL 详情 """
 
 

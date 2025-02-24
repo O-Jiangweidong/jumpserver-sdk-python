@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.audits import FTPLogInstance
 from jms_client.v1.utils import handle_range_datetime
 from ..common import Request
-from ..mixins import ExtraRequestMixin, DetailMixin
+from ..mixins import ExtraRequestMixin, WithIDMixin
 
 
 class BaseFTPLogRequest(Request):
@@ -50,5 +50,5 @@ class DescribeFTPLogsRequest(ExtraRequestMixin, BaseFTPLogRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailFTPLogRequest(DetailMixin, BaseFTPLogRequest):
+class DetailFTPLogRequest(WithIDMixin, BaseFTPLogRequest):
     """ 获取 FTP日志 详情 """

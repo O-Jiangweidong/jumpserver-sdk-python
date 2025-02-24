@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.labels import LabelInstance
 from ..common import Request
 from ..mixins import (
-    ExtraRequestMixin, DetailMixin, CreateMixin, UpdateMixin, DeleteMixin
+    ExtraRequestMixin, WithIDMixin, CreateMixin, UpdateMixin, DeleteMixin
 )
 
 
@@ -32,7 +32,7 @@ class DescribeLabelsRequest(ExtraRequestMixin, BaseLabelRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailLabelRequest(DetailMixin, BaseLabelRequest):
+class DetailLabelRequest(WithIDMixin, BaseLabelRequest):
     """ 获取指定 ID 的标签详情 """
 
 

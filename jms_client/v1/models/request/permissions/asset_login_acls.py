@@ -7,7 +7,7 @@ from ..common import (
     UserManyFilterParam, AssetManyFilterParam,
 )
 from ..mixins import (
-    DetailMixin, CreateMixin, DeleteMixin, UpdateMixin, ExtraRequestMixin
+    WithIDMixin, CreateMixin, DeleteMixin, UpdateMixin, ExtraRequestMixin
 )
 
 
@@ -43,7 +43,7 @@ class DescribeAssetLoginACLsRequest(ExtraRequestMixin, BaseAssetLoginACLRequest)
         super().__init__(**query_params, **kwargs)
 
 
-class DetailAssetLoginACLRequest(DetailMixin, BaseAssetLoginACLRequest):
+class DetailAssetLoginACLRequest(WithIDMixin, BaseAssetLoginACLRequest):
     """ 获取指定 ID 的资产登录 ACL 详情 """
 
 

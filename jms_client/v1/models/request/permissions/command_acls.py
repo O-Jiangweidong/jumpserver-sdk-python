@@ -7,7 +7,7 @@ from ..common import (
 )
 from ..const import CommandGroupType, ACLAction
 from ..mixins import (
-    DetailMixin, CreateMixin, DeleteMixin,
+    WithIDMixin, CreateMixin, DeleteMixin,
     UpdateMixin, ExtraRequestMixin
 )
 
@@ -38,7 +38,7 @@ class DescribeCommandGroupsRequest(ExtraRequestMixin, BaseCommandGroupRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailCommandGroupRequest(DetailMixin, BaseCommandGroupRequest):
+class DetailCommandGroupRequest(WithIDMixin, BaseCommandGroupRequest):
     """ 获取指定 ID 的命令过滤命令组详情 """
 
 
@@ -112,7 +112,7 @@ class DescribeCommandFiltersRequest(ExtraRequestMixin, BaseCommandFilterRequest)
         super().__init__(**query_params, **kwargs)
 
 
-class DetailCommandFilterRequest(DetailMixin, BaseCommandFilterRequest):
+class DetailCommandFilterRequest(WithIDMixin, BaseCommandFilterRequest):
     """ 获取指定 ID 的命令过滤详情 """
 
 

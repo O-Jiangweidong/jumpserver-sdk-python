@@ -3,7 +3,7 @@ from urllib.parse import urlencode
 from .const import FIELDS_MINI, FIELDS_SMALL
 
 
-class DetailMixin(object):
+class WithIDMixin(object):
     URL: str
     url_prefix: str
     instance: object = None
@@ -17,10 +17,14 @@ class DetailMixin(object):
         super().__init__(*args, **kwargs)
 
     def get_url(self):
-        return f'{self.url_prefix}{self.URL}{self.id}/?{urlencode(self.other)}'
+        if '{id}' in self.URL:
+            url = self.URL.format(id=self.id)
+        else:
+            url = f'{self.URL}{self.id}/'
+        return f'{self.url_prefix}{url}?{urlencode(self.other)}'
 
 
-class DeleteMixin(DetailMixin):
+class DeleteMixin(WithIDMixin):
     @staticmethod
     def get_method():
         return 'delete'
@@ -45,7 +49,7 @@ class BulkDeleteMixin(object):
         return 'delete'
 
 
-class UpdateMixin(DetailMixin):
+class UpdateMixin(WithIDMixin):
     @staticmethod
     def get_method():
         return 'put'

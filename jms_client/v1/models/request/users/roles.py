@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.users import RoleInstance
 from ..common import Request
 from ..mixins import (
-    ExtraRequestMixin, DetailMixin, CreateMixin,
+    ExtraRequestMixin, WithIDMixin, CreateMixin,
     DeleteMixin, UpdateMixin,
 )
 
@@ -37,7 +37,7 @@ class DescribeRolesRequest(ExtraRequestMixin, BaseRoleRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailRoleRequest(DetailMixin, BaseRoleRequest):
+class DetailRoleRequest(WithIDMixin, BaseRoleRequest):
     """ 获取角色详情 """
 
 

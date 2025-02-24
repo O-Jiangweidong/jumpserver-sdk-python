@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.audits import ChangePasswordLogInstance
 from jms_client.v1.utils import handle_range_datetime
 from ..common import Request
-from ..mixins import ExtraRequestMixin, DetailMixin
+from ..mixins import ExtraRequestMixin, WithIDMixin
 
 
 class BaseChangePasswordLogRequest(Request):
@@ -42,5 +42,5 @@ class DescribeChangePasswordLogsRequest(
         super().__init__(**query_params, **kwargs)
 
 
-class DetailChangePasswordLogRequest(DetailMixin, BaseChangePasswordLogRequest):
+class DetailChangePasswordLogRequest(WithIDMixin, BaseChangePasswordLogRequest):
     """ 获取用户改密日志详情 """

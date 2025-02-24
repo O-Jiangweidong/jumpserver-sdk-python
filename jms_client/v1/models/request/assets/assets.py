@@ -4,7 +4,7 @@ from jms_client.v1.models.instance.assets import (
 )
 from ..common import Request
 from ..mixins import (
-    DetailMixin, ExtraRequestMixin, CreateMixin,
+    WithIDMixin, ExtraRequestMixin, CreateMixin,
     UpdateMixin, DeleteMixin, BulkDeleteMixin,
 )
 
@@ -96,7 +96,7 @@ class DescribeAssetsRequest(ExtraRequestMixin, BaseAssetRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailAssetRequest(DetailMixin, BaseAssetRequest):
+class DetailAssetRequest(WithIDMixin, BaseAssetRequest):
     """
     此方法获取的资产是通用类型，顾返回的资产只包含通用类型的字段
     如数据库中的 dbname 则不存在，若想获取不同类型独特的字段，则需要更改请求模型
@@ -194,7 +194,7 @@ class DescribeHostsRequest(BaseHostRequest, DescribeAssetsRequest):
     """
 
 
-class DetailHostRequest(DetailMixin, BaseHostRequest):
+class DetailHostRequest(WithIDMixin, BaseHostRequest):
     """
     查询资产类型为 主机 的详情
     """
@@ -223,7 +223,7 @@ class DescribeDatabasesRequest(BaseDatabaseRequest, DescribeAssetsRequest):
     """
 
 
-class DetailDatabaseRequest(DetailMixin, BaseDatabaseRequest):
+class DetailDatabaseRequest(WithIDMixin, BaseDatabaseRequest):
     """
     查询资产类型为 数据库 的详情
     """
@@ -265,7 +265,7 @@ class DescribeDevicesRequest(BaseDeviceRequest, DescribeAssetsRequest):
     """
 
 
-class DetailDeviceRequest(DetailMixin, BaseDeviceRequest):
+class DetailDeviceRequest(WithIDMixin, BaseDeviceRequest):
     """
     查询资产类型为 网络设备 的详情
     """
@@ -294,7 +294,7 @@ class DescribeCloudsRequest(BaseCloudRequest, DescribeAssetsRequest):
     """
 
 
-class DetailCloudRequest(DetailMixin, BaseCloudRequest):
+class DetailCloudRequest(WithIDMixin, BaseCloudRequest):
     """
     查询资产类型为 云服务 的详情
     """
@@ -323,7 +323,7 @@ class DescribeWebsRequest(BaseWebRequest, DescribeAssetsRequest):
     """
 
 
-class DetailWebRequest(DetailMixin, BaseWebRequest):
+class DetailWebRequest(WithIDMixin, BaseWebRequest):
     """
     查询资产类型为 Web 的详情
     """
@@ -399,7 +399,7 @@ class DescribeGPTsRequest(BaseGPTRequest, DescribeAssetsRequest):
     """
 
 
-class DetailGPTRequest(DetailMixin, BaseGPTRequest):
+class DetailGPTRequest(WithIDMixin, BaseGPTRequest):
     """
     查询资产类型为 GPT 的详情
     """
@@ -438,7 +438,7 @@ class DescribeCustomsRequest(DescribeAssetsRequest):
     InstanceClass = CustomInstance
 
 
-class DetailCustomRequest(DetailMixin, DescribeCustomsRequest):
+class DetailCustomRequest(WithIDMixin, DescribeCustomsRequest):
     """
     查询资产类型为 自定义资产 的详情
     """

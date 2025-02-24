@@ -5,7 +5,7 @@ from jms_client.v1.models.instance.users import (
 from ..const import Source, MFALevel
 from ..common import Request
 from ..mixins import (
-    ExtraRequestMixin, DetailMixin, CreateMixin,
+    ExtraRequestMixin, WithIDMixin, CreateMixin,
     DeleteMixin, UpdateMixin,
 )
 
@@ -73,7 +73,7 @@ class DescribeUsersRequest(ExtraRequestMixin, BaseUserRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailUserRequest(DetailMixin, BaseUserRequest):
+class DetailUserRequest(WithIDMixin, BaseUserRequest):
     """ 获取用户详情 """
 
 
@@ -191,3 +191,12 @@ class DeleteUserRequest(DeleteMixin, BaseUserRequest):
 class UserProfileRequest(Request):
     URL = 'users/profile/'
     InstanceClass = UserProfileInstance
+
+
+class RemoveUserRequest(WithIDMixin, BaseUserRequest):
+    """ 从某个组中中移除用户【非删除】 """
+    URL = 'users/users/{id}/remove/'
+    
+    @staticmethod
+    def get_method():
+        return 'post'

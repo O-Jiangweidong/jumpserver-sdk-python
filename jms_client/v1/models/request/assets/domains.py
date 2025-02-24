@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.assets import DomainInstance
 from ..common import Request
 from ..mixins import (
-    ExtraRequestMixin, DetailMixin, CreateMixin,
+    ExtraRequestMixin, WithIDMixin, CreateMixin,
     DeleteMixin, UpdateMixin,
 )
 
@@ -29,7 +29,7 @@ class DescribeDomainsRequest(ExtraRequestMixin, BaseDomainRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailDomainRequest(DetailMixin, BaseDomainRequest):
+class DetailDomainRequest(WithIDMixin, BaseDomainRequest):
     """ 获取网域详情 """
 
 

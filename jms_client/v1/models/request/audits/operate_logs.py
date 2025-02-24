@@ -1,7 +1,7 @@
 from jms_client.v1.models.instance.audits import OperateLogInstance
 from jms_client.v1.utils import handle_range_datetime
 from ..common import Request
-from ..mixins import ExtraRequestMixin, DetailMixin
+from ..mixins import ExtraRequestMixin, WithIDMixin
 
 
 class BaseOperateLogRequest(Request):
@@ -48,5 +48,5 @@ class DescribeOperateLogsRequest(ExtraRequestMixin, BaseOperateLogRequest):
         super().__init__(**query_params, **kwargs)
 
 
-class DetailOperateLogRequest(DetailMixin, BaseOperateLogRequest):
+class DetailOperateLogRequest(WithIDMixin, BaseOperateLogRequest):
     """ 获取操作日志详情 """
