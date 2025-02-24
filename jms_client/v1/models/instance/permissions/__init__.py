@@ -1,3 +1,4 @@
+from .asset_login_acl import *
 from .command_acls import *
 from .connect_method_acls import *
 from .permissions import *

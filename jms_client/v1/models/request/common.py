@@ -1,3 +1,5 @@
+import re
+
 from urllib.parse import urlencode
 
 from .const import PlatformType
@@ -501,3 +503,36 @@ class AccountParam(object):
         """ 设置匿名账号 """
         self._accounts.append(self.ANON)
         return self
+
+
+class RuleParam(object):
+    def __init__(self):
+        self._time_pattern = re.compile(
+            r'^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])~(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$'
+        )
+        self._time_period = {0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: []}
+        self._rule = {'ip_group': ['*']}
+
+    def get_rule(self):
+        self._rule['time_period'] = [
+            {'id': k, 'value': '、'.join(v)} for k, v in self._time_period.items()
+        ]
+        return self._rule
+
+    def set_ip_group(self, ip_groups: list):
+        self._rule['ip_group'] = ip_groups
+
+    def set_time_period(self, weeks: list[int], time_periods: list):
+        """
+        :param weeks: 星期，取值范围 0-6、分别代表星期日至星期六
+        :param time_periods: 时间段，元素格式为 00:00~00:00
+        """
+        for week in weeks:
+            if week not in self._time_period.keys():
+                raise ValueError('week must be in [0-6]')
+
+        for time_period in time_periods:
+            if not self._time_pattern.match(time_period):
+                raise ValueError('time_period must be in format 00:00~00:00')
+            for week in weeks:
+                self._time_period[week].append(time_period)
