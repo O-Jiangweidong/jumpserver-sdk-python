@@ -5,7 +5,7 @@ from jms_client.v1.models.instance.assets import (
 from ..common import Request
 from ..mixins import (
     DetailMixin, ExtraRequestMixin, CreateMixin,
-    UpdateMixin, DeleteMixin,
+    UpdateMixin, DeleteMixin, BulkDeleteMixin,
 )
 
 
@@ -105,9 +105,11 @@ class DetailAssetRequest(DetailMixin, BaseAssetRequest):
 
 
 class DeleteAssetRequest(DeleteMixin, BaseAssetRequest):
-    """
-    删除指定 ID 的资产
-    """
+    """ 删除指定 ID 的资产 """
+
+
+class BulkDeleteAssetRequest(BulkDeleteMixin, BaseAssetRequest):
+    """ 批量删除资产 """
 
 
 class CreateUpdateAssetParamsMixin(object):

@@ -26,6 +26,22 @@ class DeleteMixin(DetailMixin):
         return 'delete'
 
 
+class BulkDeleteMixin(object):
+    URL: str
+    url_prefix: str
+
+    def __init__(self, spm: str, *args, **kwargs):
+        self._spm = spm
+        super().__init__(*args, **kwargs)
+
+    def get_url(self):
+        return f'{self.url_prefix}{self.URL}?spm={self._spm}'
+
+    @staticmethod
+    def get_method():
+        return 'delete'
+
+
 class UpdateMixin(DetailMixin):
     @staticmethod
     def get_method():

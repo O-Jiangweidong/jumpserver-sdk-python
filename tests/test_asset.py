@@ -4,8 +4,11 @@ import unittest
 
 from jms_client.client import get_client
 from jms_client.v1.client import Client
+from jms_client.v1.models.instance.general import ResourceCacheInstance
+from jms_client.v1.models.request.general import CreateResourceCacheRequest
 from jms_client.v1.models.request.assets import (
-    DescribeAssetsRequest, DetailAssetRequest, DeleteAssetRequest,
+    DescribeAssetsRequest, DetailAssetRequest,
+    DeleteAssetRequest, BulkDeleteAssetRequest,
 
     DescribeHostsRequest, DetailHostRequest,
     CreateHostRequest, UpdateHostRequest,
@@ -71,6 +74,21 @@ class TestFunctionality(unittest.TestCase):
     def test_delete_asset(self):
         """ 测试删除指定 ID 资产 """
         request = DeleteAssetRequest(id_='ede0b1c1-9e2f-4355-acbf-7af9550a616b')
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_bulk_delete_asset(self):
+        """ 测试批量删除资产 """
+        request = CreateResourceCacheRequest(
+            resources=[
+                'cad36b75-ea99-40ae-b627-1cc1c830873d',
+                'c47d12ec-cbce-4968-955b-feb203d0b4a2'
+            ]
+        )
+        resp = self.client.do(request, with_model=True)
+        instance: ResourceCacheInstance = resp.get_data()
+        request = BulkDeleteAssetRequest(spm=instance.spm)
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_request_ok())
