@@ -3,12 +3,13 @@ import configparser
 import unittest
 
 from jms_client.client import get_client
+from jms_client.const import ORG_USER, ORG_AUDITOR
 from jms_client.v1.client import Client
 from jms_client.v1.models.request.const import Source, MFALevel
 from jms_client.v1.models.request.users import (
     DescribeUsersRequest, DetailUserRequest, AuthStrategyParam,
     CreateUserRequest, UpdateUserRequest, DeleteUserRequest,
-    RemoveUserRequest,
+    RemoveUserRequest, InviteUserRequest,
 )
 from jms_client.v1.models.instance.users import (
     UserInstance,
@@ -84,9 +85,22 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_request_ok())
 
+    def test_invite_users(self):
+        """ 测试邀请用户到当前组织 """
+        request = InviteUserRequest(
+            users=[
+                'b58d578a-77c4-4a46-9b58-d1d8ac23b094',
+                'e3eae720-e41e-4a2c-ae26-222d4024666e'
+            ],
+            org_roles=[ORG_USER, ORG_AUDITOR]
+        )
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
     def test_remove_user(self):
         """ 测试移除指定 ID 用户【非删除，只是把用户从某个组织移除】 """
-        request = RemoveUserRequest(id_='b58d578a-77c4-4a46-9b58-d1d8ac23b094')
+        request = RemoveUserRequest(id_='f89bfaf0-c823-4fb7-9bed-0e4a5c5b2c50')
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_request_ok())

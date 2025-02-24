@@ -193,7 +193,30 @@ class UserProfileRequest(Request):
     InstanceClass = UserProfileInstance
 
 
-class RemoveUserRequest(WithIDMixin, BaseUserRequest):
+class InviteUserRequest(CreateMixin, Request):
+    URL = 'users/users/invite/'
+
+    def __init__(
+            self,
+            org_roles: list,
+            users: list,
+            **kwargs
+    ):
+        """
+        :param org_roles: 组织角色列表，格式为 ['role1_id', 'role2_id']
+        :param users: 用户列表，格式为 ['user1_id', 'user2_id']
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        self._body.update({
+            'org_roles': org_roles, 'users': users
+        })
+
+    def get_method(self):
+        return 'post'
+
+
+class RemoveUserRequest(WithIDMixin, Request):
     """ 从某个组中中移除用户【非删除】 """
     URL = 'users/users/{id}/remove/'
     
