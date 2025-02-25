@@ -5,12 +5,13 @@ import unittest
 from jms_client.const import SYSTEM_ADMIN
 from jms_client.client import get_client
 from jms_client.v1.client import Client
-from jms_client.v1.models.request.users import (
+from jms_client.v1.models.request.users.roles import (
     DescribeRolesRequest, DetailRoleRequest,
     CreateRoleRequest, UpdateRoleRequest, DeleteRoleRequest,
-    DescribeUsersWithRoleRequest,
+    DescribeUsersWithRoleRequest, AppendUserToRoleRequest,
+    RemoveUserFromRoleRequest
 )
-from jms_client.v1.models.instance.users import RoleInstance
+from jms_client.v1.models.instance.users import RoleInstance, RoleUserInstance
 from jms_client.v1.models.response import Response
 
 
@@ -77,9 +78,48 @@ class TestFunctionality(unittest.TestCase):
     def test_list_role_relation_users(self):
         """ 测试获取指定角色关联的用户列表 """
         self.client.set_org(self.client.root_org)
-        request = DescribeUsersWithRoleRequest(role_id=SYSTEM_ADMIN, limit=3)
+        request = DescribeUsersWithRoleRequest(
+            role_id=SYSTEM_ADMIN, scope='org', limit=3
+        )
         resp: Response = self.client.do(request, with_model=True)
 
+        self.assertTrue(resp.is_request_ok())
+        self.assertIsInstance(resp.get_data(), list)
+
+    def test_append_user_to_role(self):
+        """ 测试向指定角色批量添加用户 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        request = AppendUserToRoleRequest(
+            role_id='06554ef8-674f-4d9d-aaaf-3b370832a8e2',
+            scope='org',
+            users=[
+                'f288c986-79b9-48c8-aa00-7dd8841f1017',
+                'afe6fabe-ba16-42e8-80bc-2f5faab84f72',
+            ]
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), list)
+
+    def test_remove_user_from_role(self):
+        """ 测试从指定角色移除用户 """
+        self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
+        # 先查询出用户和角色的关联 ID
+        role_id = '06554ef8-674f-4d9d-aaaf-3b370832a8e2'
+        scope = 'org'
+        request = DescribeUsersWithRoleRequest(
+            role_id=role_id, scope=scope, limit=1
+        )
+        resp: Response = self.client.do(request, with_model=True)
+        if resp.total < 1:
+            return
+
+        relation_obj: RoleUserInstance = resp.get_data()[0]
+        request = RemoveUserFromRoleRequest(
+            relation_id=relation_obj.id, scope=scope, role_id=role_id
+        )
+        resp: Response = self.client.do(request)
         self.assertTrue(resp.is_request_ok())
 
 

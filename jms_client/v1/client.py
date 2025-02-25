@@ -44,6 +44,7 @@ class Client(object):
             method=request_instance.get_method(),
             headers=request_instance.get_headers(),
             data=request_instance.get_data(),
+            params=request_instance.get_params(),
         )
         init_data = {'net_response': response}
         if with_model:

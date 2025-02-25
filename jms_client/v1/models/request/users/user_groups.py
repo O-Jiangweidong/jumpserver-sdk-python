@@ -81,7 +81,6 @@ class DeleteUserGroupRequest(DeleteMixin, BaseUserGroupRequest):
 
 
 class BaseRelationRequest(Request):
-    """ 获取用户组与用户的关联关系 """
     URL = 'users/users-groups-relations/'
 
 

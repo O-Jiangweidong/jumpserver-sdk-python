@@ -49,6 +49,8 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 更新     | `UpdateRoleRequest`            | -  |
 | 删除     | `DeleteRoleRequest`            | -  |
 | 关联用户查询 | `DescribeUsersWithRoleRequest` | -  |
+| 追加用户   | `AppendUserToRoleRequest`      | -  |
+| 移除用户   | `DescribeUsersWithRoleRequest` | -  |
 
 ### 用户组管理
 

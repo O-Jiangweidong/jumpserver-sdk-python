@@ -79,10 +79,22 @@ class DeleteRoleRequest(DeleteMixin, BaseRoleRequest):
     """ 删除指定 ID 的角色 """
 
 
-class DescribeUsersWithRoleRequest(ExtraRequestMixin, Request):
-    URL = 'rbac/org-role-bindings'
+class BaseRoleRelationRequest(Request):
     InstanceClass = RoleUserInstance
 
+    def __init__(
+            self,
+            scope: str = '',
+            **kwargs
+    ):
+        """
+        :param scope: 范围，取值 system/org
+        """
+        self.URL = f'rbac/{scope}-role-bindings/'
+        super().__init__(**kwargs)
+
+
+class DescribeUsersWithRoleRequest(ExtraRequestMixin, BaseRoleRelationRequest):
     def __init__(
             self,
             role_id: str,
@@ -93,3 +105,41 @@ class DescribeUsersWithRoleRequest(ExtraRequestMixin, Request):
         :param kwargs: 其他参数
         """
         super().__init__(role=role_id, **kwargs)
+
+
+class AppendUserToRoleRequest(BaseRoleRelationRequest):
+    """ 向指定角色批量添加用户 """
+    def __init__(
+            self,
+            users: list,
+            role_id: str,
+            **kwargs
+    ):
+        """
+        :param users: 用户 ID，格式 ['user1_id', 'user2_id']
+        :param role_id: 用户角色 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        scope = kwargs.get('scope')
+        self._body = [{'user': u, 'role': role_id, 'scope': scope} for u in users]
+
+    @staticmethod
+    def get_method():
+        return 'post'
+
+
+class RemoveUserFromRoleRequest(DeleteMixin, BaseRoleRelationRequest):
+    """ 从角色移除用户 """
+    def __init__(
+            self,
+            relation_id: str,
+            role_id: str,
+            **kwargs
+    ):
+        """
+        :param relation_id: 用户和角色的关联 ID
+        :param role_id: 角色 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(id_=relation_id, role=role_id, **kwargs)

@@ -23,7 +23,7 @@ class WithIDMixin(object):
             url = self.URL.format(id=self.id)
         else:
             url = f'{self.URL}{self.id}/'
-        return f'{self.url_prefix}{url}?{urlencode(self.other)}'
+        return f'{self.url_prefix}{url}'
 
 
 class DeleteMixin(WithIDMixin):
@@ -66,16 +66,13 @@ class ExtraRequestMixin(object):
             search='',
             **kwargs
     ):
-        self._other = {'limit': limit, 'offset': offset}
+        other = {'limit': limit, 'offset': offset}
         if fields_size in (FIELDS_MINI, FIELDS_SMALL):
-            self._other['fields_size'] = fields_size
+            other['fields_size'] = fields_size
         if search:
-            self._other['search'] = search
+            other['search'] = search
 
-        super().__init__(**kwargs)
-
-    def get_params(self):
-        return self._other
+        super().__init__(**other, **kwargs)
 
 
 class CreateMixin(object):

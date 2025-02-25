@@ -19,7 +19,7 @@ class SessionClient(object):
         self.org_id = org_id
 
     @record_time
-    def request(self, url, method, headers=None, data=None, **kwargs):
+    def request(self, url, method, headers=None, data=None, params=None, **kwargs):
         headers, data = headers or {}, data or {}
         request_headers = {
             'X-JMS-ORG': self.org_id,
@@ -33,7 +33,7 @@ class SessionClient(object):
         action = getattr(requests, method, 'get')
         return action(
             f'{self.web_url}/{url}', auth=self.session.ak_auth,
-            headers=request_headers, json=data, verify=False
+            headers=request_headers, json=data, params=params, verify=False
         )
 
 

@@ -25,9 +25,7 @@ class Request(object):
         return self.other
 
     def get_url(self):
-        params = self.get_params()
-        params.update(self.other)
-        return f'{self.url_prefix}{self.URL}?{urlencode(params)}'
+        return f'{self.url_prefix}{self.URL}'
 
     def get_data(self):
         return self._body
