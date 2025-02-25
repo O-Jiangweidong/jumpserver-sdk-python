@@ -2,11 +2,13 @@ import configparser
 
 import unittest
 
+from jms_client.const import SYSTEM_ADMIN
 from jms_client.client import get_client
 from jms_client.v1.client import Client
 from jms_client.v1.models.request.users import (
     DescribeRolesRequest, DetailRoleRequest,
     CreateRoleRequest, UpdateRoleRequest, DeleteRoleRequest,
+    DescribeUsersWithRoleRequest,
 )
 from jms_client.v1.models.instance.users import RoleInstance
 from jms_client.v1.models.response import Response
@@ -69,6 +71,14 @@ class TestFunctionality(unittest.TestCase):
         """ 测试删除指定 ID 角色 """
         request = DeleteRoleRequest(id_='f288c986-79b9-48c8-aa00-7dd8841f1aaa')
         resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_list_role_relation_users(self):
+        """ 测试获取指定角色关联的用户列表 """
+        self.client.set_org(self.client.root_org)
+        request = DescribeUsersWithRoleRequest(role_id=SYSTEM_ADMIN, limit=3)
+        resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_request_ok())
 

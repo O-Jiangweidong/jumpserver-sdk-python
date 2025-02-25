@@ -1,4 +1,4 @@
-from jms_client.v1.models.instance.users import RoleInstance
+from jms_client.v1.models.instance.users import RoleInstance, RoleUserInstance
 from ..common import Request
 from ..mixins import (
     ExtraRequestMixin, WithIDMixin, CreateMixin,
@@ -77,3 +77,19 @@ class UpdateRoleRequest(
 
 class DeleteRoleRequest(DeleteMixin, BaseRoleRequest):
     """ 删除指定 ID 的角色 """
+
+
+class DescribeUsersWithRoleRequest(ExtraRequestMixin, Request):
+    URL = 'rbac/org-role-bindings'
+    InstanceClass = RoleUserInstance
+
+    def __init__(
+            self,
+            role_id: str,
+            **kwargs
+    ):
+        """
+        :param role_id: 角色 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(role=role_id, **kwargs)

@@ -39,6 +39,17 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 邀请   | `InviteUserRequest`    | -  |
 | 移除   | `RemoveUserRequest`    | -  |
 
+### 用户角色管理
+
+| 请求类型   | 请求名称                           | 备注 |
+|--------|--------------------------------|----|
+| 列表查询   | `DescribeRolesRequest`         | -  |
+| 详情查询   | `DetailRoleRequest`            | -  |
+| 创建     | `CreateRoleRequest`            | -  |
+| 更新     | `UpdateRoleRequest`            | -  |
+| 删除     | `DeleteRoleRequest`            | -  |
+| 关联用户查询 | `DescribeUsersWithRoleRequest` | -  |
+
 ### 用户组管理
 
 | 请求类型   | 请求名称                          | 备注 |
@@ -181,12 +192,12 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 
 ### 其他常用页面功能接口查询
 
-| 请求类型              | 请求名称                                            | 备注 |
-|-------------------|-------------------------------------------------|----|
-| 根据`用户`查询对应的资产授权规则 | `DescribePermissionsRequest(user_id='user_id')` | -  |
-| 根据`用户`查询对应的用户登陆规则 | `DescribeUserLoginACLsRequest(user='user_id')`  | -  |
-| 根据`用户`查询对应的用户会话   | `DescribeSessionsRequest(user_id='user_id')`    | -  |
-| 根据`用户组`查询对应的用户    | `DescribeUsersRequest(group_id='group_id')`     | -  |
+| 请求类型            | 请求名称                                            | 备注 |
+|-----------------|-------------------------------------------------|----|
+| 查询`用户`对应的资产授权   | `DescribePermissionsRequest(user_id='user_id')` | -  |
+| 查询`用户`对应的用户登陆规则 | `DescribeUserLoginACLsRequest(user='user_id')`  | -  |
+| 查询`用户`连接的资产会话   | `DescribeSessionsRequest(user_id='user_id')`    | -  |
+| 查询`用户组`下的用户列表   | `DescribeUsersRequest(group_id='group_id')`     | -  |
 
 ## 安装与使用
 
