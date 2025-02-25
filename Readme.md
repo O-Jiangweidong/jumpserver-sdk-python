@@ -117,30 +117,30 @@
    - 删除 `DeleteLabelRequest`
 
 ### **用户登陆限制管理**
-   - 列表查询
-   - 详情查询
-   - 创建
-   - 更新
-   - 删除
+   - 列表查询 `DescribeUserLoginACLsRequest`
+   - 详情查询 `DetailUserLoginACLRequest`
+   - 创建 `CreateUserLoginACLRequest`
+   - 更新 `UpdateUserLoginACLRequest`
+   - 删除 `DeleteUserLoginACLRequest`
 
 ### **登陆方法限制管理**
-   - 列表查询
-   - 详情查询
-   - 创建
-   - 更新
-   - 删除
+   - 列表查询 `DescribeConnectMethodACLsRequest`
+   - 详情查询 `DetailConnectMethodACLRequest`
+   - 创建 `CreateConnectMethodACLRequest`
+   - 更新 `UpdateConnectMethodACLRequest`
+   - 删除 `DeleteConnectMethodACLRequest`
 
 ### **命令过滤管理**
-   - 命令过滤列表查询
-   - 命令过滤详情查询
-   - 命令过滤创建
-   - 命令过滤更新
-   - 命令过滤删除
-   - 命令组列表查询
-   - 命令组详情查询
-   - 命令组创建
-   - 命令组更新
-   - 命令组删除
+   - 命令过滤列表查询 `DescribeCommandFiltersRequest`
+   - 命令过滤详情查询 `DetailCommandFilterRequest`
+   - 命令过滤创建 `CreateCommandFilterRequest`
+   - 命令过滤更新 `UpdateCommandFilterRequest`
+   - 命令过滤删除 `DeleteCommandFilterRequest`
+   - 命令组列表查询 `DescribeCommandGroupsRequest`
+   - 命令组详情查询 `DetailCommandGroupRequest`
+   - 命令组创建 `CreateCommandGroupRequest`
+   - 命令组更新 `UpdateCommandGroupRequest`
+   - 命令组删除 `DeleteCommandGroupRequest`
 
 ### **其他常用页面功能接口查询**
    - 根据`用户`查询对应的资产授权规则 `DescribePermissionsRequest(user_id='user_id')`
