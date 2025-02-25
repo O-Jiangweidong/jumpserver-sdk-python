@@ -70,35 +70,51 @@
    - 删除 `DeleteNodeRequest`
 
 ### **组织管理**
-   - 列表查询
-   - 详情查询
-   - 创建
-   - 更新
-   - 删除
+   - 列表查询 `DescribeOrganizationsRequest`
+   - 详情查询 `DetailOrganizationRequest`
+   - 创建 `CreateOrganizationRequest`
+   - 更新 `UpdateOrganizationRequest`
+   - 删除 `DeleteOrganizationRequest`
 
 ### **权限管理**
-   - 列表查询
-   - 详情查询
-   - 创建
-   - 更新
-   - 删除
+   - 列表查询 `DescribePermissionsRequest`
+   - 详情查询 `DetailPermissionRequest`
+   - 创建 `CreatePermissionRequest`
+   - 更新 `UpdatePermissionRequest`
+   - 删除 `DeletePermissionRequest`
 
 ### **审计管理**
-   - 在线用户查询
+   - 在线用户查询 
+     - 列表 `DescribeUserSessionsRequest`
+     - 详情 `DetailUserSessionRequest`
    - 登录日志
+     - 列表 `DescribeLoginLogsRequest`
+     - 详情 `DetailLoginLogRequest`
    - 操作日志
+     - 列表 `DescribeOperateLogsRequest`
+     - 详情 `DetailOperateLogRequest`
    - 用户改密日志
+     - 列表 `DescribeChangePasswordLogsRequest`
+     - 详情 `DetailChangePasswordLogRequest`
    - 作业日志
+     - 列表 `DescribeJobLogsRequest`
+     - 详情 `DetailJobLogRequest`
    - FTP记录
+     - 列表 `DescribeFTPLogsRequest`
+     - 详情 `DetailFTPLogRequest`
    - 会话记录
+     - 列表 `DescribeSessionsRequest`
+     - 详情 `DetailSessionRequest`
    - 命令记录
+     - 列表 `DescribeCommandsRequest`
+     - 详情 `DetailCommandRequest`
 
 ### **标签管理**
-   - 列表查询
-   - 详情查询
-   - 创建
-   - 更新
-   - 删除
+   - 列表查询 `DescribeLabelsRequest`  
+   - 详情查询 `DetailLabelRequest`
+   - 创建 `CreateLabelRequest`
+   - 更新 `UpdateLabelRequest`
+   - 删除 `DeleteLabelRequest`
 
 ### **用户登陆限制管理**
    - 列表查询
