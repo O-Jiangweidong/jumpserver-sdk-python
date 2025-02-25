@@ -21,13 +21,13 @@
    - 基于 账号/密码 认证
 
 ### **用户管理**
-   - 列表查询 (DescribeUsersRequest)
-   - 详情查询 (DetailUserRequest)
-   - 创建 (CreateUserRequest)
-   - 更新 (UpdateUserRequest)
-   - 删除 (DeleteUserRequest)
-   - 邀请 (InviteUserRequest)
-   - 移除 (RemoveUserRequest)
+   - 列表查询 `DescribeUsersRequest`
+   - 详情查询 `DetailUserRequest`
+   - 创建 `CreateUserRequest`
+   - 更新 `UpdateUserRequest`
+   - 删除 `DeleteUserRequest`
+   - 邀请 `InviteUserRequest`
+   - 移除 `RemoveUserRequest`
 
 ### **用户组管理**
    - 列表查询
@@ -37,33 +37,33 @@
    - 删除
 
 ### **资产管理**
-   - 列表查询 (DescribeAssetsRequest) - [可按照分类查询]
-   - 详情查询 (DetailAssetRequest) - [可按照分类查询]
-   - 创建 (CreateHostRequest) - [`只`可按照分类查询]
-   - 更新 (UpdateHostRequest) -  [`只`可按照分类查询]
-   - 删除 (DeleteAssetRequest)
-   - 批量删除 (BulkDeleteAssetRequest)
+   - 列表查询 `DescribeAssetsRequest` - [可按照分类查询，Asset 可更换为 Host/Database/Cloud/Device/Web/GPT/Custom]
+   - 详情查询 `DetailAssetRequest` - [可按照分类查询，同上]
+   - 创建 `CreateHostRequest` - [`只`可按照具体分类查询，Host 可更换为 Database/Cloud/Device/Web/GPT/Custom]
+   - 更新 `UpdateHostRequest` -  [`只`可按照具体分类查询，同上]
+   - 删除 `DeleteAssetRequest`
+   - 批量删除 `BulkDeleteAssetRequest`
 
 ### **平台管理**
-   - 列表查询
-   - 详情查询
-   - 创建
-   - 更新
-   - 删除
+   - 列表查询 `DescribePlatformsRequest`
+   - 详情查询 `DetailPlatformRequest`
+   - 创建 `CreatePlatformRequest`
+   - 更新 `UpdatePlatformRequest`
+   - 删除 `DeletePlatformRequest`
 
 ### **网域管理**
-   - 列表查询
-   - 详情查询
-   - 创建
-   - 更新
-   - 删除
+   - 列表查询 `DescribeDomainsRequest`
+   - 详情查询 `DetailDomainRequest`
+   - 创建 `CreateDomainRequest`
+   - 更新 `UpdateDomainRequest`
+   - 删除 `DeleteDomainRequest`
 
 ### **节点管理**
-   - 列表查询
-   - 详情查询
-   - 创建
-   - 更新
-   - 删除
+   - 列表查询 `DescribeNodesRequest`
+   - 详情查询 `DetailNodeRequest`
+   - 创建 `CreateNodeRequest`
+   - 更新 `CreateNodeRequest`
+   - 删除 `DeleteNodeRequest`
 
 ### **组织管理**
    - 列表查询
@@ -121,6 +121,12 @@
    - 命令组创建
    - 命令组更新
    - 命令组删除
+
+### **其他常用页面功能接口查询**
+   - 根据`用户`查询对应的资产授权规则 `DescribePermissionsRequest(user_id='user_id')`
+   - 根据`用户`查询对应的用户登陆规则 `DescribeUserLoginACLsRequest(user='user_id')`
+   - 根据`用户`查询对应的用户会话 `DescribeSessionsRequest(user_id='user_id')`
+   - 根据`用户组`查询对应的用户 `DescribeUsersRequest(group_id='group_id')`
 
 ## 安装与使用
 
