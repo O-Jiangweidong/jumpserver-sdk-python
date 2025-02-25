@@ -30,11 +30,13 @@
    - 移除 `RemoveUserRequest`
 
 ### **用户组管理**
-   - 列表查询
-   - 详情查询
-   - 创建
-   - 更新
-   - 删除
+   - 列表查询 `DescribeUserGroupsRequest`
+   - 详情查询 `DetailUserGroupRequest`
+   - 创建 `CreateUserGroupRequest`
+   - 更新 `UpdateUserGroupRequest`
+   - 删除 `DeleteUserGroupRequest`
+   - 追加用户 `AppendUserToGroupRequest`
+   - 移除用户 `RemoveUserFromGroupRequest`
 
 ### **资产管理**
    - 列表查询 `DescribeAssetsRequest`

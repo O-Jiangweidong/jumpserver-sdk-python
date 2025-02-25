@@ -7,7 +7,8 @@ from jms_client.v1.client import Client
 from jms_client.v1.models.request.users import (
     DescribeUserGroupsRequest, DetailUserGroupRequest,
     CreateUserGroupRequest, UpdateUserGroupRequest,
-    DeleteUserGroupRequest,
+    DeleteUserGroupRequest, AppendUserToGroupRequest,
+    RemoveUserFromGroupRequest,
 )
 from jms_client.v1.models.instance.users import (
     UserGroupInstance,
@@ -78,6 +79,29 @@ class TestFunctionality(unittest.TestCase):
     def test_delete_user_group(self):
         """ 测试删除指定 ID 用户组 """
         request = DeleteUserGroupRequest(id_='f288c986-79b9-48c8-aa00-7dd8841f1018')
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_add_user_to_user_group(self):
+        """ 测试向指定用户组批量添加用户 """
+        request = AppendUserToGroupRequest(
+            group_id='f8ed5d74-8e91-479b-a0eb-fccf16e3b1a4',
+            users=[
+                'afe6fabe-ba16-42e8-80bc-2f5faab84f72',
+                '1fd111c4-d8e4-4183-8317-6197ea52f77a'
+            ]
+        )
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_remove_user_from_user_group(self):
+        """ 测试从指定用户组移除用户 """
+        request = RemoveUserFromGroupRequest(
+            user_id='1fd111c4-d8e4-4183-8317-6197ea52f77a',
+            group_id='f8ed5d74-8e91-479b-a0eb-fccf16e3b1a4'
+        )
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_request_ok())

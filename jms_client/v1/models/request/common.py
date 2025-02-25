@@ -21,9 +21,8 @@ class Request(object):
     def get_method():
         return 'get'
 
-    @staticmethod
-    def get_params():
-        return {}
+    def get_params(self):
+        return self.other
 
     def get_url(self):
         params = self.get_params()

@@ -5,6 +5,13 @@ from ..mixins import (
     DeleteMixin, UpdateMixin,
 )
 
+__all__ = [
+    'DescribeUserGroupsRequest', 'DetailUserGroupRequest',
+    'CreateUserGroupRequest', 'UpdateUserGroupRequest',
+    'DeleteUserGroupRequest', 'AppendUserToGroupRequest',
+    'RemoveUserFromGroupRequest'
+]
+
 
 class BaseUserGroupRequest(Request):
     URL = 'users/groups/'
@@ -71,3 +78,50 @@ class UpdateUserGroupRequest(
 
 class DeleteUserGroupRequest(DeleteMixin, BaseUserGroupRequest):
     """ 删除指定 ID 的用户组 """
+
+
+class BaseRelationRequest(Request):
+    """ 获取用户组与用户的关联关系 """
+    URL = 'users/users-groups-relations/'
+
+
+class AppendUserToGroupRequest(BaseRelationRequest):
+    """ 向指定用户组批量添加用户 """
+    def __init__(
+            self,
+            users: list,
+            group_id: str,
+            **kwargs
+    ):
+        """
+        :param users: 用户 ID，格式 ['user1_id', 'user2_id']
+        :param group_id: 用户组 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        self._body = [{'user': u, 'usergroup': group_id} for u in users]
+
+    @staticmethod
+    def get_method():
+        return 'post'
+
+
+class RemoveUserFromGroupRequest(BaseRelationRequest):
+    """ 从用户组移除用户 """
+    def __init__(
+            self,
+            user_id: str,
+            group_id: str,
+            **kwargs
+    ):
+        """
+        :param user_id: 用户 ID
+        :param group_id: 用户组 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        self.other.update({'user': user_id, 'usergroup': group_id})
+
+    @staticmethod
+    def get_method():
+        return 'delete'
