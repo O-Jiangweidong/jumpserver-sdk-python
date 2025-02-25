@@ -37,10 +37,14 @@
    - 删除
 
 ### **资产管理**
-   - 列表查询 `DescribeAssetsRequest` - [可按照分类查询，Asset 可更换为 Host/Database/Cloud/Device/Web/GPT/Custom]
-   - 详情查询 `DetailAssetRequest` - [可按照分类查询，同上]
-   - 创建 `CreateHostRequest` - [`只`可按照具体分类查询，Host 可更换为 Database/Cloud/Device/Web/GPT/Custom]
-   - 更新 `UpdateHostRequest` -  [`只`可按照具体分类查询，同上]
+   - 列表查询 `DescribeAssetsRequest`
+     - [可按照分类查询，Asset 可更换为 Host/Database/Cloud/Device/Web/GPT/Custom]
+   - 详情查询 `DetailAssetRequest`
+     - [可按照分类查询，同上]
+   - 创建 `CreateHostRequest`
+     - [`只`可按照具体分类查询，Host 可更换为 Database/Cloud/Device/Web/GPT/Custom]
+   - 更新 `UpdateHostRequest`
+     - [`只`可按照具体分类查询，同上]
    - 删除 `DeleteAssetRequest`
    - 批量删除 `BulkDeleteAssetRequest`
 
