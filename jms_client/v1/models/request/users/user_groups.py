@@ -9,7 +9,7 @@ __all__ = [
     'DescribeUserGroupsRequest', 'DetailUserGroupRequest',
     'CreateUserGroupRequest', 'UpdateUserGroupRequest',
     'DeleteUserGroupRequest', 'AppendUserToGroupRequest',
-    'RemoveUserFromGroupRequest'
+    'RemoveUserFromGroupRequest', 'AppendAllUserToGroupRequest'
 ]
 
 
@@ -125,3 +125,23 @@ class RemoveUserFromGroupRequest(BaseRelationRequest):
     @staticmethod
     def get_method():
         return 'delete'
+
+
+class AppendAllUserToGroupRequest(WithIDMixin, Request):
+    """ 向指定用户组添加所有用户（当前组织下的用户） """
+    URL = 'users/groups/{id}/add-all-users/'
+
+    def __init__(
+            self,
+            group_id: str,
+            **kwargs
+    ):
+        """
+        :param group_id: 用户组 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(id_=group_id, **kwargs)
+
+    @staticmethod
+    def get_method():
+        return 'post'

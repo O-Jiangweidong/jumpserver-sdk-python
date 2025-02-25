@@ -8,7 +8,7 @@ from jms_client.v1.models.request.users import (
     DescribeUserGroupsRequest, DetailUserGroupRequest,
     CreateUserGroupRequest, UpdateUserGroupRequest,
     DeleteUserGroupRequest, AppendUserToGroupRequest,
-    RemoveUserFromGroupRequest,
+    RemoveUserFromGroupRequest, AppendAllUserToGroupRequest
 )
 from jms_client.v1.models.instance.users import (
     UserGroupInstance,
@@ -100,6 +100,15 @@ class TestFunctionality(unittest.TestCase):
         """ 测试从指定用户组移除用户 """
         request = RemoveUserFromGroupRequest(
             user_id='1fd111c4-d8e4-4183-8317-6197ea52f77a',
+            group_id='f8ed5d74-8e91-479b-a0eb-fccf16e3b1a4'
+        )
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_append_user_from_user_group(self):
+        """ 测试向指定用户组添加全部用户(当前组织全部用户) """
+        request = AppendAllUserToGroupRequest(
             group_id='f8ed5d74-8e91-479b-a0eb-fccf16e3b1a4'
         )
         resp: Response = self.client.do(request)
