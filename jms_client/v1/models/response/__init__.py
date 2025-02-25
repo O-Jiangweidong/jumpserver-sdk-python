@@ -44,6 +44,7 @@ class Response(object):
             data = response.json()
             if isinstance(data, list):
                 self.total = len(data)
+                data = [self.to_obj(d) for d in data]
             else:
                 self.total = data.get('count', 0)
                 self._previous_url = data.get('previous') or ''

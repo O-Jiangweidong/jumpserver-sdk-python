@@ -9,26 +9,28 @@ from jms_client.v1.models.request.general import CreateResourceCacheRequest
 from jms_client.v1.models.request.assets import (
     DescribeAssetsRequest, DetailAssetRequest,
     DeleteAssetRequest, BulkDeleteAssetRequest,
-
+    # Host
     DescribeHostsRequest, DetailHostRequest,
     CreateHostRequest, UpdateHostRequest,
-
+    # Database
     DescribeDatabasesRequest, DetailDatabaseRequest,
     CreateDatabaseRequest, UpdateDatabaseRequest,
-
+    # Device
     DescribeDevicesRequest, DetailDeviceRequest,
     CreateDeviceRequest, UpdateDeviceRequest,
-
+    # Cloud
     DescribeCloudsRequest, DetailCloudRequest,
     CreateCloudRequest, UpdateCloudRequest,
-
+    # Web
     DescribeWebsRequest, DetailWebRequest,
     CreateWebRequest, UpdateWebRequest, Script,
-
+    # GPT
     DescribeGPTsRequest, DetailGPTRequest,
     CreateGPTRequest, UpdateGPTRequest,
-
-    DescribeCustomsRequest, DetailCustomRequest
+    # Custom
+    DescribeCustomsRequest, DetailCustomRequest,
+    # Other
+    DescribeUserPermAssetsRequest,
 )
 from jms_client.v1.models.instance.assets import (
     AssetInstance,
@@ -424,6 +426,18 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), AssetInstance)
+
+    def test_describe_user_perm_assets(self):
+        """ 测试获取指定用户 ID 拥有权限的资产列表 """
+        request = DescribeUserPermAssetsRequest(
+            id_='17dfb3ba-45da-4861-882d-2ba7e22be3c6', limit=3
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        print(resp.get_data())
+        print(len(resp.get_data()))
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), list)
 
 
 if __name__ == '__main__':

@@ -7,6 +7,7 @@ class WithIDMixin(object):
     URL: str
     url_prefix: str
     instance: object = None
+    get_params: callable
 
     def __init__(self, id_, *args, **kwargs):
         if not id_:
@@ -17,6 +18,7 @@ class WithIDMixin(object):
         super().__init__(*args, **kwargs)
 
     def get_url(self):
+        self.other.update(self.get_params())
         if '{id}' in self.URL:
             url = self.URL.format(id=self.id)
         else:

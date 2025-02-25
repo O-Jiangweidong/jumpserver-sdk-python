@@ -442,3 +442,7 @@ class DetailCustomRequest(WithIDMixin, DescribeCustomsRequest):
     """
     查询资产类型为 自定义资产 的详情
     """
+
+
+class DescribeUserPermAssetsRequest(ExtraRequestMixin, WithIDMixin, BaseAssetRequest):
+    URL = 'perms/users/{id}/assets/'
