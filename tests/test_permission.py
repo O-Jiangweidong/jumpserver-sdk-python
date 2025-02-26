@@ -7,7 +7,7 @@ from jms_client.v1.client import Client
 from jms_client.v1.models.request.permissions import (
     CreatePermissionRequest, DescribePermissionsRequest,
     DetailPermissionRequest, UpdatePermissionRequest,
-    DeletePermissionRequest,
+    DeletePermissionRequest, DescribePermsForAssetAndUserRequest,
     AccountParam, ActionParam, ProtocolParam
 )
 from jms_client.v1.models.instance.permissions import (
@@ -104,6 +104,17 @@ class TestFunctionality(unittest.TestCase):
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_request_ok())
+
+    def test_list_authorized_perms_for_asset_and_user_request(self):
+        request = DescribePermsForAssetAndUserRequest(
+            asset_id='e0bdf9e2-3184-43b1-b80e-ce3edbd50253',
+            user_id='90c61428-5ff3-4ee7-b220-451de8a275c5'
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        print(resp.get_data())
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), list)
 
 
 if __name__ == '__main__':

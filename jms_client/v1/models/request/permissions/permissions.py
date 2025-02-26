@@ -9,6 +9,14 @@ from ..mixins import (
 )
 
 
+__all__ = [
+    'CreatePermissionRequest', 'UpdatePermissionRequest', 'DeletePermissionRequest',
+    'DescribePermissionsRequest', 'DetailPermissionRequest',
+    'DescribePermsForAssetAndUserRequest',
+    'ActionParam', 'ProtocolParam',
+]
+
+
 class BasePermissionRequest(Request):
     URL = 'perms/asset-permissions/'
     InstanceClass = PermissionInstance
@@ -181,3 +189,22 @@ class UpdatePermissionRequest(
 
 class DeletePermissionRequest(DeleteMixin, BasePermissionRequest):
     """ 删除指定 ID 的授权 """
+
+
+class DescribePermsForAssetAndUserRequest(ExtraRequestMixin, BasePermissionRequest):
+    """ 获取指定资产和用户被授权的授权列表"""
+    URL = 'assets/assets/{asset_id}/perm-users/{user_id}/permissions/'
+
+    def __init__(
+            self,
+            asset_id: str,
+            user_id: str,
+            **kwargs
+    ):
+        """
+        :param asset_id: 资产 ID
+        :param user_id: 用户 ID
+        :param kwargs: 其他参数
+        """
+        self.URL = self.URL.format(asset_id=asset_id, user_id=user_id)
+        super().__init__(**kwargs)
