@@ -79,13 +79,14 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 
 ### 平台管理
 
-| 请求类型 | 请求名称                       | 备注 |
-|------|----------------------------|----|
-| 列表查询 | `DescribePlatformsRequest` | -  |
-| 详情查询 | `DetailPlatformRequest`    | -  |
-| 创建   | `CreatePlatformRequest`    | -  |
-| 更新   | `UpdatePlatformRequest`    | -  |
-| 删除   | `DeletePlatformRequest`    | -  |
+| 请求类型    | 请求名称                           | 备注 |
+|---------|--------------------------------|----|
+| 列表查询    | `DescribePlatformsRequest`     | -  |
+| 详情查询    | `DetailPlatformRequest`        | -  |
+| 创建      | `CreatePlatformRequest`        | -  |
+| 更新      | `UpdatePlatformRequest`        | -  |
+| 删除      | `DeletePlatformRequest`        | -  |
+| 同步协议到资产 | `SyncProtocolsToAssetsRequest` | -  |
 
 ### 网域管理
 

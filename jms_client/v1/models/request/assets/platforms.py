@@ -226,3 +226,23 @@ class UpdatePlatformRequest(
 
 class DeletePlatformRequest(DeleteMixin, BasePlatformRequest):
     """ 删除指定 ID 的平台 """
+
+
+class SyncProtocolsToAssetsRequest(Request):
+    """ 同步协议到平台关联的所有资产 """
+    URL = 'assets/assets/sync-platform-protocols/'
+
+    def __init__(
+            self,
+            platform_id: str,
+            **kwargs
+    ):
+        """
+        :param platform_id: 平台 ID
+        """
+        super().__init__(**kwargs)
+        self._body = {'platform_id': platform_id}
+
+    @staticmethod
+    def get_method():
+        return 'post'

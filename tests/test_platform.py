@@ -10,6 +10,7 @@ from jms_client.v1.models.request.const import (
 from jms_client.v1.models.request.assets import (
     DescribePlatformsRequest, DetailPlatformRequest,
     CreatePlatformRequest, UpdatePlatformRequest, DeletePlatformRequest,
+    SyncProtocolsToAssetsRequest,
     AutomationParam, ProtocolParam, SuParam
 )
 from jms_client.v1.models.instance.assets import (
@@ -100,6 +101,13 @@ class TestFunctionality(unittest.TestCase):
     def test_delete_platform(self):
         """ 测试删除指定 ID 平台 """
         request = DeletePlatformRequest(id_='200')
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_sync_protocols_to_assets(self):
+        """ 测试同步协议到平台关联的所有资产 """
+        request = SyncProtocolsToAssetsRequest(platform_id='35')
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_request_ok())
