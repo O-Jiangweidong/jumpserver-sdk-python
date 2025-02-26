@@ -434,8 +434,6 @@ class TestFunctionality(unittest.TestCase):
         )
         resp: Response = self.client.do(request, with_model=True)
 
-        print(resp.get_data())
-        print(len(resp.get_data()))
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
 

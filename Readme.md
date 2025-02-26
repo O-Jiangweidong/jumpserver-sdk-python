@@ -197,15 +197,16 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 
 ### 其他常用页面功能接口查询
 
-| 请求类型            | 请求名称                                            | 备注 |
-|-----------------|-------------------------------------------------|----|
-| 查询`用户`对应的资产授权   | `DescribePermissionsRequest(user_id='user_id')` | -  |
-| 查询`用户`对应的用户登陆规则 | `DescribeUserLoginACLsRequest(user='user_id')`  | -  |
-| 查询`用户`连接的资产会话   | `DescribeSessionsRequest(user_id='user_id')`    | -  |
-| 查询`用户组`下的用户列表   | `DescribeUsersRequest(group_id='group_id')`     | -  |
-| 查询`资产`下的账号列表    | `DescribeAccountsRequest(asset='asset_id')`     | -  |
-| 查询`资产`下的会话记录    | `DescribeSessionsRequest(asset_id='asset_id')`  | -  |
-| 查询`资产`下的命令记录    | `DescribeCommandsRequest(asset_id='asset_id')`  | -  |
+| 请求类型            | 请求名称                                                                    | 备注 |
+|-----------------|-------------------------------------------------------------------------|----|
+| 查询`用户`对应的资产授权   | `DescribePermissionsRequest(user_id='user_id')`                         | -  |
+| 查询`用户`对应的用户登陆规则 | `DescribeUserLoginACLsRequest(user='user_id')`                          | -  |
+| 查询`用户`连接的资产会话   | `DescribeSessionsRequest(user_id='user_id')`                            | -  |
+| 查询`用户组`下的用户列表   | `DescribeUsersRequest(group_id='group_id')`                             | -  |
+| 查询`资产`下的账号列表    | `DescribeAccountsRequest(asset='asset_id')`                             | -  |
+| 查询`资产`下的会话记录    | `DescribeSessionsRequest(asset_id='asset_id')`                          | -  |
+| 查询`资产`下的命令记录    | `DescribeCommandsRequest(asset_id='asset_id')`                          | -  |
+| 查询`网域`下的资产      | `DescribeAssetsRequest(domain='domain_id', exclude_platform='Gateway')` | -  |
 
 ## 安装与使用
 
