@@ -39,6 +39,7 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 邀请           | `InviteUserRequest`                      | -  |
 | 移除           | `RemoveUserRequest`                      | -  |
 | 获取`资产`被授权的用户 | `DescribeAuthorizedUsersForAssetRequest` | -  |
+| 获取`授权`的用户    | `DescribeUsersForPermissionRequest`      | -  |
 
 ### 用户角色管理
 
@@ -150,6 +151,7 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 会话记录 - 详情   | `DetailSessionRequest`              | -  |
 | 命令记录 - 列表   | `DescribeCommandsRequest`           | -  |
 | 命令记录 - 详情   | `DetailCommandRequest`              | -  |
+| 活动记录 - 列表   | `DescribeResourceActivitiesRequest` | -  |
 
 ### 标签管理
 

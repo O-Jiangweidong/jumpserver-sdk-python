@@ -1,5 +1,5 @@
 from jms_client.v1.models.instance.permissions import (
-    PermissionInstance
+    PermissionInstance, PermUserInstance
 )
 from jms_client.v1.utils import handle_range_datetime
 from ..common import Request, AccountParam, SimpleProtocolParam

@@ -9,7 +9,8 @@ from jms_client.v1.models.request.const import Source, MFALevel
 from jms_client.v1.models.request.users import (
     DescribeUsersRequest, DetailUserRequest, AuthStrategyParam,
     CreateUserRequest, UpdateUserRequest, DeleteUserRequest,
-    RemoveUserRequest, InviteUserRequest, DescribeAuthorizedUsersForAssetRequest
+    RemoveUserRequest, InviteUserRequest, DescribeAuthorizedUsersForAssetRequest,
+    DescribeUsersForPermissionRequest,
 )
 from jms_client.v1.models.instance.users import (
     UserInstance,
@@ -108,6 +109,15 @@ class TestFunctionality(unittest.TestCase):
     def test_list_authorized_users_for_asset_request(self):
         request = DescribeAuthorizedUsersForAssetRequest(
             asset_id='e0bdf9e2-3184-43b1-b80e-ce3edbd50253'
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), list)
+
+    def test_list_users_for_permission(self):
+        request = DescribeUsersForPermissionRequest(
+            id_='d43c9898-1b73-46ab-91dd-ed0db1305817',
         )
         resp: Response = self.client.do(request, with_model=True)
 

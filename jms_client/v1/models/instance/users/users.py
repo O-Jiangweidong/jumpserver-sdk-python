@@ -116,3 +116,20 @@ class UserProfileInstance(UserInstance):
         self.receive_backends: list = []
         self.public_key_hash_md5: str = ''
         self.public_key_comment: str = ''
+
+
+class PermUserInstance(Instance):
+    TYPE = 'PermUser'
+
+    def __init__(self, **kwargs):
+        """
+        :param user: 用户ID
+        :param user_display: 用户显示名
+        """
+        self.user: str = ''
+        self.user_display: str = ''
+        super().__init__(**kwargs)
+
+    @property
+    def display(self):
+        return self.user_display

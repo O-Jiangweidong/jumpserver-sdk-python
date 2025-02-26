@@ -1,6 +1,6 @@
 from jms_client.const import USER, ORG_USER
 from jms_client.v1.models.instance.users import (
-    UserInstance, UserProfileInstance,
+    UserInstance, UserProfileInstance, PermUserInstance,
 )
 from ..const import Source, MFALevel
 from ..common import Request
@@ -14,6 +14,7 @@ __all__ = [
     'CreateUserRequest', 'UpdateUserRequest', 'DeleteUserRequest',
     'DescribeUsersRequest', 'DetailUserRequest', 'UserProfileRequest',
     'DescribeAuthorizedUsersForAssetRequest', 'RemoveUserRequest',
+    'DescribeUsersForPermissionRequest',
     'InviteUserRequest',
     'AuthStrategyParam',
 ]
@@ -248,3 +249,9 @@ class DescribeAuthorizedUsersForAssetRequest(ExtraRequestMixin, WithIDMixin, Bas
         :param kwargs: 其他参数
         """
         super().__init__(id_=asset_id, **kwargs)
+
+
+class DescribeUsersForPermissionRequest(WithIDMixin, Request):
+    """ 获取指定授权下的用户 """
+    URL = 'perms/asset-permissions/{id}/users/all/'
+    InstanceClass = PermUserInstance
