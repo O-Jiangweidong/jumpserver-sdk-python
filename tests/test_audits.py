@@ -13,6 +13,7 @@ from jms_client.v1.models.request.audits import (
     DescribeSessionsRequest, DetailSessionRequest,
     DescribeFTPLogsRequest, DetailFTPLogRequest,
     DescribeCommandsRequest, DetailCommandRequest,
+    DescribeResourceActivitiesRequest,
 )
 from jms_client.v1.models.instance.audits import (
     UserSessionInstance, LoginLogInstance, OperateLogInstance,
@@ -197,6 +198,14 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), CommandInstance)
+
+    def test_list_resource_activities(self):
+        """ 获取指定资源的活动记录，30 条 """
+        request = DescribeResourceActivitiesRequest(resource_id='267')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), list)
 
 
 if __name__ == '__main__':

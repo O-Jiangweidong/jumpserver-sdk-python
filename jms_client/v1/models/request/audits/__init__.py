@@ -1,3 +1,4 @@
+from .activities import *
 from .change_password_logs import *
 from .commands import *
 from .ftp_logs import *
