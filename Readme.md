@@ -37,7 +37,7 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 更新           | `UpdateUserRequest`                      | -  |
 | 删除           | `DeleteUserRequest`                      | -  |
 | 邀请           | `InviteUserRequest`                      | -  |
-| 移除           | `RemoveUserRequest`                      | -  |
+| 移除指定         | `RemoveUserRequest`                      | -  |
 | 获取`资产`被授权的用户 | `DescribeAuthorizedUsersForAssetRequest` | -  |
 | 获取`授权`的用户    | `DescribeUsersForPermissionRequest`      | -  |
 
@@ -51,8 +51,8 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 更新     | `UpdateRoleRequest`            | -  |
 | 删除     | `DeleteRoleRequest`            | -  |
 | 关联用户查询 | `DescribeUsersWithRoleRequest` | -  |
-| 追加用户   | `AppendUsersToRoleRequest`     | -  |
-| 移除用户   | `DescribeUsersWithRoleRequest` | -  |
+| 追加指定用户 | `AppendUsersToRoleRequest`     | -  |
+| 移除指定用户 | `DescribeUsersWithRoleRequest` | -  |
 
 ### 用户组管理
 
@@ -63,9 +63,9 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 创建     | `CreateUserGroupRequest`      | -  |
 | 更新     | `UpdateUserGroupRequest`      | -  |
 | 删除     | `DeleteUserGroupRequest`      | -  |
-| 追加用户   | `AppendUserToGroupRequest`    | -  |
+| 追加指定用户 | `AppendUserToGroupRequest`    | -  |
 | 追加全部用户 | `AppendAllUserToGroupRequest` | -  |
-| 移除用户   | `RemoveUserFromGroupRequest`  | -  |
+| 移除指定用户 | `RemoveUserFromGroupRequest`  | -  |
 
 ### 资产管理
 
@@ -131,14 +131,14 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 删除              | `DeletePermissionRequest`                  | -                               |
 | 查询`用户和资产`对应的授权  | `DescribePermsForAssetAndUserRequest`      | DescribePermissionsRequest 也可实现 |
 | 查询`用户组和资产`对应的授权 | `DescribePermsForAssetAndUserGroupRequest` | DescribePermissionsRequest 也可实现 |
-| 追加用户            | `AppendUsersToPermissionRequest`           |                                 |
-| 移除用户            | `RemoveUserFromPermissionRequest`          |                                 |
-| 追加用户组           | `AppendUserGroupsToPermissionRequest`      |                                 |
-| 移除用户组           | `RemoveUserGroupFromPermissionRequest`     |                                 |
-| 追加资产            | `AppendAssetsToPermissionRequest`          |                                 |
-| 移除资产            | `RemoveAssetFromPermissionRequest`         |                                 |
-| 追加节点            | `AppendNodesToPermissionRequest`           |                                 |
-| 移除节点            | `RemoveNodeFromPermissionRequest`          |                                 |
+| 追加指定用户          | `AppendUsersToPermissionRequest`           |                                 |
+| 移除指定用户          | `RemoveUserFromPermissionRequest`          |                                 |
+| 追加指定用户组         | `AppendUserGroupsToPermissionRequest`      |                                 |
+| 移除指定用户组         | `RemoveUserGroupFromPermissionRequest`     |                                 |
+| 追加指定资产          | `AppendAssetsToPermissionRequest`          |                                 |
+| 移除指定资产          | `RemoveAssetFromPermissionRequest`         |                                 |
+| 追加指定节点          | `AppendNodesToPermissionRequest`           |                                 |
+| 移除指定节点          | `RemoveNodeFromPermissionRequest`          |                                 |
 
 ### 审计管理
 
