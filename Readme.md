@@ -29,15 +29,16 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 
 ### 用户管理
 
-| 请求类型 | 请求名称                   | 备注 |
-|------|------------------------|----|
-| 列表查询 | `DescribeUsersRequest` | -  |
-| 详情查询 | `DetailUserRequest`    | -  |
-| 创建   | `CreateUserRequest`    | -  |
-| 更新   | `UpdateUserRequest`    | -  |
-| 删除   | `DeleteUserRequest`    | -  |
-| 邀请   | `InviteUserRequest`    | -  |
-| 移除   | `RemoveUserRequest`    | -  |
+| 请求类型         | 请求名称                                     | 备注 |
+|--------------|------------------------------------------|----|
+| 列表查询         | `DescribeUsersRequest`                   | -  |
+| 详情查询         | `DetailUserRequest`                      | -  |
+| 创建           | `CreateUserRequest`                      | -  |
+| 更新           | `UpdateUserRequest`                      | -  |
+| 删除           | `DeleteUserRequest`                      | -  |
+| 邀请           | `InviteUserRequest`                      | -  |
+| 移除           | `RemoveUserRequest`                      | -  |
+| 获取`资产`被授权的用户 | `DescribeAuthorizedUsersForAssetRequest` | -  |
 
 ### 用户角色管理
 
@@ -49,7 +50,7 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 更新     | `UpdateRoleRequest`            | -  |
 | 删除     | `DeleteRoleRequest`            | -  |
 | 关联用户查询 | `DescribeUsersWithRoleRequest` | -  |
-| 追加用户   | `AppendUserToRoleRequest`      | -  |
+| 追加用户   | `AppendUsersToRoleRequest`     | -  |
 | 移除用户   | `DescribeUsersWithRoleRequest` | -  |
 
 ### 用户组管理
@@ -200,6 +201,7 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 查询`用户`对应的用户登陆规则 | `DescribeUserLoginACLsRequest(user='user_id')`  | -  |
 | 查询`用户`连接的资产会话   | `DescribeSessionsRequest(user_id='user_id')`    | -  |
 | 查询`用户组`下的用户列表   | `DescribeUsersRequest(group_id='group_id')`     | -  |
+| 查询`资产`下的账号列表    | `DescribeAccountsRequest(asset='asset_id')`     | -  |
 
 ## 安装与使用
 

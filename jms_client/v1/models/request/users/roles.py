@@ -107,7 +107,7 @@ class DescribeUsersWithRoleRequest(ExtraRequestMixin, BaseRoleRelationRequest):
         super().__init__(role=role_id, **kwargs)
 
 
-class AppendUserToRoleRequest(BaseRoleRelationRequest):
+class AppendUsersToRoleRequest(BaseRoleRelationRequest):
     """ 向指定角色批量添加用户 """
     def __init__(
             self,

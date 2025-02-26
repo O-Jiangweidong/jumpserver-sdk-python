@@ -8,7 +8,7 @@ from jms_client.v1.client import Client
 from jms_client.v1.models.request.users.roles import (
     DescribeRolesRequest, DetailRoleRequest,
     CreateRoleRequest, UpdateRoleRequest, DeleteRoleRequest,
-    DescribeUsersWithRoleRequest, AppendUserToRoleRequest,
+    DescribeUsersWithRoleRequest, AppendUsersToRoleRequest,
     RemoveUserFromRoleRequest
 )
 from jms_client.v1.models.instance.users import RoleInstance, RoleUserInstance
@@ -89,7 +89,7 @@ class TestFunctionality(unittest.TestCase):
     def test_append_user_to_role(self):
         """ 测试向指定角色批量添加用户 """
         self.client.set_org('7de34b6e-3319-49c2-ad8a-f8c3e4c470d2')
-        request = AppendUserToRoleRequest(
+        request = AppendUsersToRoleRequest(
             role_id='06554ef8-674f-4d9d-aaaf-3b370832a8e2',
             scope='org',
             users=[

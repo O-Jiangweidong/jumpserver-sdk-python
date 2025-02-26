@@ -10,6 +10,15 @@ from ..mixins import (
 )
 
 
+__all__ = [
+    'CreateUserRequest', 'UpdateUserRequest', 'DeleteUserRequest',
+    'DescribeUsersRequest', 'DetailUserRequest', 'UserProfileRequest',
+    'DescribeAuthorizedUsersForAssetRequest', 'RemoveUserRequest',
+    'InviteUserRequest',
+    'AuthStrategyParam',
+]
+
+
 class BaseUserRequest(Request):
     URL = 'users/users/'
     InstanceClass = UserInstance
@@ -223,3 +232,19 @@ class RemoveUserRequest(WithIDMixin, Request):
     @staticmethod
     def get_method():
         return 'post'
+
+
+class DescribeAuthorizedUsersForAssetRequest(ExtraRequestMixin, WithIDMixin, BaseUserRequest):
+    """ 获取指定资产被授权的用户列表"""
+    URL = 'assets/assets/{id}/perm-users/'
+
+    def __init__(
+            self,
+            asset_id: str,
+            **kwargs
+    ):
+        """
+        :param asset_id: 资产 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(id_=asset_id, **kwargs)
