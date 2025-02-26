@@ -12,7 +12,7 @@ from ..mixins import (
 __all__ = [
     'CreatePermissionRequest', 'UpdatePermissionRequest', 'DeletePermissionRequest',
     'DescribePermissionsRequest', 'DetailPermissionRequest',
-    'DescribePermsForAssetAndUserRequest',
+    'DescribePermsForAssetAndUserRequest', 'DescribePermsForAssetAndUserGroupRequest',
     'ActionParam', 'ProtocolParam',
 ]
 
@@ -208,3 +208,23 @@ class DescribePermsForAssetAndUserRequest(DescribePermissionsRequest):
         """
         self.URL = self.URL.format(asset_id=asset_id, user_id=user_id)
         super().__init__(**kwargs)
+
+
+class DescribePermsForAssetAndUserGroupRequest(DescribePermissionsRequest):
+    """ 获取指定资产及用户组被授权的授权列表"""
+    URL = 'assets/assets/{asset_id}/perm-user-groups/{user_group_id}/permissions/'
+
+    def __init__(
+            self,
+            asset_id: str,
+            user_group_id: str,
+            **kwargs
+    ):
+        """
+        :param asset_id: 资产 ID
+        :param user_group_id: 用户组 ID
+        :param kwargs: 其他参数
+        """
+        self.URL = self.URL.format(asset_id=asset_id, user_group_id=user_group_id)
+        super().__init__(**kwargs)
+

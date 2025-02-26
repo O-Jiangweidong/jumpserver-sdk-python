@@ -119,14 +119,15 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 
 ### 权限管理
 
-| 请求类型         | 请求名称                                  | 备注 |
-|--------------|---------------------------------------|----|
-| 列表查询         | `DescribePermissionsRequest`          | -  |
-| 详情查询         | `DetailPermissionRequest`             | -  |
-| 创建           | `CreatePermissionRequest`             | -  |
-| 更新           | `UpdatePermissionRequest`             | -  |
-| 删除           | `DeletePermissionRequest`             | -  |
-| 查询用户和资产对应的授权 | `DescribePermsForAssetAndUserRequest` | -  |
+| 请求类型            | 请求名称                                       | 备注                              |
+|-----------------|--------------------------------------------|---------------------------------|
+| 列表查询            | `DescribePermissionsRequest`               | -                               |
+| 详情查询            | `DetailPermissionRequest`                  | -                               |
+| 创建              | `CreatePermissionRequest`                  | -                               |
+| 更新              | `UpdatePermissionRequest`                  | -                               |
+| 删除              | `DeletePermissionRequest`                  | -                               |
+| 查询`用户和资产`对应的授权  | `DescribePermsForAssetAndUserRequest`      | DescribePermissionsRequest 也可实现 |
+| 查询`用户组和资产`对应的授权 | `DescribePermsForAssetAndUserGroupRequest` | DescribePermissionsRequest 也可实现 |
 
 ### 审计管理
 
