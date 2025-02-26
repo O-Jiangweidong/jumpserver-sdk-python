@@ -204,6 +204,8 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 查询`用户`连接的资产会话   | `DescribeSessionsRequest(user_id='user_id')`    | -  |
 | 查询`用户组`下的用户列表   | `DescribeUsersRequest(group_id='group_id')`     | -  |
 | 查询`资产`下的账号列表    | `DescribeAccountsRequest(asset='asset_id')`     | -  |
+| 查询`资产`下的会话记录    | `DescribeSessionsRequest(asset_id='asset_id')`  | -  |
+| 查询`资产`下的命令记录    | `DescribeCommandsRequest(asset_id='asset_id')`  | -  |
 
 ## 安装与使用
 
