@@ -191,8 +191,8 @@ class DeletePermissionRequest(DeleteMixin, BasePermissionRequest):
     """ 删除指定 ID 的授权 """
 
 
-class DescribePermsForAssetAndUserRequest(ExtraRequestMixin, BasePermissionRequest):
-    """ 获取指定资产和用户被授权的授权列表"""
+class DescribePermsForAssetAndUserRequest(DescribePermissionsRequest):
+    """ 获取指定资产及用户被授权的授权列表"""
     URL = 'assets/assets/{asset_id}/perm-users/{user_id}/permissions/'
 
     def __init__(
