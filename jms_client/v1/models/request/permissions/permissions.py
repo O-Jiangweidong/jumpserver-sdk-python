@@ -1,5 +1,5 @@
 from jms_client.v1.models.instance.permissions import (
-    PermissionInstance, PermUserInstance
+    PermissionInstance
 )
 from jms_client.v1.utils import handle_range_datetime
 from ..common import Request, AccountParam, SimpleProtocolParam
@@ -13,6 +13,8 @@ __all__ = [
     'CreatePermissionRequest', 'UpdatePermissionRequest', 'DeletePermissionRequest',
     'DescribePermissionsRequest', 'DetailPermissionRequest',
     'DescribePermsForAssetAndUserRequest', 'DescribePermsForAssetAndUserGroupRequest',
+    'AppendUserToPermissionRequest', 'RemoveUserFromPermissionRequest',
+    'AppendUserGroupToPermissionRequest', 'RemoveUserGroupFromPermissionRequest',
     'ActionParam', 'ProtocolParam',
 ]
 
@@ -227,4 +229,96 @@ class DescribePermsForAssetAndUserGroupRequest(DescribePermissionsRequest):
         """
         self.URL = self.URL.format(asset_id=asset_id, user_group_id=user_group_id)
         super().__init__(**kwargs)
+
+
+class BaseUserRelationRequest(Request):
+    URL = 'perms/asset-permissions-users-relations/'
+
+
+class AppendUserToPermissionRequest(BaseUserRelationRequest):
+    """ 向指定授权批量添加用户 """
+    def __init__(
+            self,
+            users: list,
+            permission_id: str,
+            **kwargs
+    ):
+        """
+        :param users: 用户 ID，格式 ['user1_id', 'user2_id']
+        :param permission_id: 授权 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        self._body = [{'user': u, 'assetpermission': permission_id} for u in users]
+
+    @staticmethod
+    def get_method():
+        return 'post'
+
+
+class RemoveUserFromPermissionRequest(BaseUserRelationRequest):
+    """ 从授权移除用户 """
+    def __init__(
+            self,
+            user_id: str,
+            permission_id: str,
+            **kwargs
+    ):
+        """
+        :param user_id: 用户 ID
+        :param permission_id: 授权 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        self.other.update({'user': user_id, 'assetpermission': permission_id})
+
+    @staticmethod
+    def get_method():
+        return 'delete'
+
+
+class BaseUserGroupRelationRequest(Request):
+    URL = 'perms/asset-permissions-user-groups-relations/'
+
+
+class AppendUserGroupToPermissionRequest(BaseUserGroupRelationRequest):
+    """ 向指定授权批量添加用户组 """
+    def __init__(
+            self,
+            user_groups: list,
+            permission_id: str,
+            **kwargs
+    ):
+        """
+        :param user_groups: 用户组 ID，格式 ['user_group1_id', 'user_group2_id']
+        :param permission_id: 授权 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        self._body = [{'usergroup': ug, 'assetpermission': permission_id} for ug in user_groups]
+
+    @staticmethod
+    def get_method():
+        return 'post'
+
+
+class RemoveUserGroupFromPermissionRequest(BaseUserGroupRelationRequest):
+    """ 从授权移除用户组 """
+    def __init__(
+            self,
+            user_group_id: str,
+            permission_id: str,
+            **kwargs
+    ):
+        """
+        :param user_group_id: 用户组 ID
+        :param permission_id: 授权 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        self.other.update({'usergroup': user_group_id, 'assetpermission': permission_id})
+
+    @staticmethod
+    def get_method():
+        return 'delete'
 

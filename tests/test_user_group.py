@@ -106,7 +106,7 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_request_ok())
 
-    def test_append_user_from_user_group(self):
+    def test_append_all_user_to_user_group(self):
         """ 测试向指定用户组添加全部用户(当前组织全部用户) """
         request = AppendAllUserToGroupRequest(
             group_id='f8ed5d74-8e91-479b-a0eb-fccf16e3b1a4'

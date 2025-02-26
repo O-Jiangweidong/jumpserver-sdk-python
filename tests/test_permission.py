@@ -9,6 +9,8 @@ from jms_client.v1.models.request.permissions import (
     DetailPermissionRequest, UpdatePermissionRequest,
     DeletePermissionRequest, DescribePermsForAssetAndUserRequest,
     DescribePermsForAssetAndUserGroupRequest,
+    AppendUserToPermissionRequest, RemoveUserFromPermissionRequest,
+    AppendUserGroupToPermissionRequest, RemoveUserGroupFromPermissionRequest,
     AccountParam, ActionParam, ProtocolParam
 )
 from jms_client.v1.models.instance.permissions import (
@@ -125,6 +127,52 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
+
+    def test_add_user_to_permission(self):
+        """ 测试向指定授权批量添加用户 """
+        request = AppendUserToPermissionRequest(
+            permission_id='d43c9898-1b73-46ab-91dd-ed0db1305817',
+            users=[
+                'b8f95980-f4c9-424a-8f79-025f2a0171a7',
+                '17dfb3ba-45da-4861-882d-2ba7e22be3c6'
+            ]
+        )
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_remove_user_from_permission(self):
+        """ 测试从指定授权移除用户 """
+        request = RemoveUserFromPermissionRequest(
+            user_id='17dfb3ba-45da-4861-882d-2ba7e22be3c6',
+            permission_id='d43c9898-1b73-46ab-91dd-ed0db1305817'
+        )
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_add_user_group_to_user_group(self):
+        """ 测试向指定授权批量添加用户组 """
+        request = AppendUserGroupToPermissionRequest(
+            permission_id='d43c9898-1b73-46ab-91dd-ed0db1305817',
+            user_groups=[
+                '70df0624-246f-43b0-b18a-9b3f58da9030',
+                '253ed525-291a-45f5-8e09-88e92577e913'
+            ]
+        )
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_remove_user_from_user_group(self):
+        """ 测试从指定授权移除用户组 """
+        request = RemoveUserGroupFromPermissionRequest(
+            user_group_id='253ed525-291a-45f5-8e09-88e92577e913',
+            permission_id='d43c9898-1b73-46ab-91dd-ed0db1305817'
+        )
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
 
 
 if __name__ == '__main__':
