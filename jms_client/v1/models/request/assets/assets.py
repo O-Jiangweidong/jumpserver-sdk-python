@@ -445,4 +445,16 @@ class DetailCustomRequest(WithIDMixin, DescribeCustomsRequest):
 
 
 class DescribeUserPermAssetsRequest(ExtraRequestMixin, WithIDMixin, BaseAssetRequest):
+    """ 查询用户权限下的资产 """
     URL = 'perms/users/{id}/assets/'
+
+    def __init__(
+            self,
+            user_id: str,
+            **kwargs
+    ):
+        """
+        :param user_id: 用户 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(id_=user_id, **kwargs)

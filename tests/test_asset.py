@@ -430,7 +430,7 @@ class TestFunctionality(unittest.TestCase):
     def test_describe_user_perm_assets(self):
         """ 测试获取指定用户 ID 拥有权限的资产列表 """
         request = DescribeUserPermAssetsRequest(
-            id_='17dfb3ba-45da-4861-882d-2ba7e22be3c6', limit=3
+            user_id='17dfb3ba-45da-4861-882d-2ba7e22be3c6', limit=3
         )
         resp: Response = self.client.do(request, with_model=True)
 
