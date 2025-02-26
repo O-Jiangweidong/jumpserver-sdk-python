@@ -13,8 +13,10 @@ __all__ = [
     'CreatePermissionRequest', 'UpdatePermissionRequest', 'DeletePermissionRequest',
     'DescribePermissionsRequest', 'DetailPermissionRequest',
     'DescribePermsForAssetAndUserRequest', 'DescribePermsForAssetAndUserGroupRequest',
-    'AppendUserToPermissionRequest', 'RemoveUserFromPermissionRequest',
-    'AppendUserGroupToPermissionRequest', 'RemoveUserGroupFromPermissionRequest',
+    'AppendUsersToPermissionRequest', 'RemoveUserFromPermissionRequest',
+    'AppendUserGroupsToPermissionRequest', 'RemoveUserGroupFromPermissionRequest',
+    'AppendAssetsToPermissionRequest', 'RemoveAssetFromPermissionRequest',
+    'AppendNodesToPermissionRequest', 'RemoveNodeFromPermissionRequest',
     'ActionParam', 'ProtocolParam',
 ]
 
@@ -235,7 +237,7 @@ class BaseUserRelationRequest(Request):
     URL = 'perms/asset-permissions-users-relations/'
 
 
-class AppendUserToPermissionRequest(BaseUserRelationRequest):
+class AppendUsersToPermissionRequest(BaseUserRelationRequest):
     """ 向指定授权批量添加用户 """
     def __init__(
             self,
@@ -281,7 +283,7 @@ class BaseUserGroupRelationRequest(Request):
     URL = 'perms/asset-permissions-user-groups-relations/'
 
 
-class AppendUserGroupToPermissionRequest(BaseUserGroupRelationRequest):
+class AppendUserGroupsToPermissionRequest(BaseUserGroupRelationRequest):
     """ 向指定授权批量添加用户组 """
     def __init__(
             self,
@@ -322,3 +324,94 @@ class RemoveUserGroupFromPermissionRequest(BaseUserGroupRelationRequest):
     def get_method():
         return 'delete'
 
+
+class BaseAssetRelationRequest(Request):
+    URL = 'perms/asset-permissions-assets-relations/'
+
+
+class AppendAssetsToPermissionRequest(BaseAssetRelationRequest):
+    """ 向指定授权批量添加资产 """
+    def __init__(
+            self,
+            assets: list,
+            permission_id: str,
+            **kwargs
+    ):
+        """
+        :param assets: 资产 ID，格式 ['asset1_id', 'asset2_id']
+        :param permission_id: 授权 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        self._body = [{'asset': a, 'assetpermission': permission_id} for a in assets]
+
+    @staticmethod
+    def get_method():
+        return 'post'
+
+
+class RemoveAssetFromPermissionRequest(BaseAssetRelationRequest):
+    """ 从授权移除资产 """
+    def __init__(
+            self,
+            asset_id: str,
+            permission_id: str,
+            **kwargs
+    ):
+        """
+        :param asset_id: 资产 ID
+        :param permission_id: 授权 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        self.other.update({'asset': asset_id, 'assetpermission': permission_id})
+
+    @staticmethod
+    def get_method():
+        return 'delete'
+
+
+class BaseNodeRelationRequest(Request):
+    URL = 'perms/asset-permissions-nodes-relations/'
+
+
+class AppendNodesToPermissionRequest(BaseNodeRelationRequest):
+    """ 向指定授权批量添加节点 """
+    def __init__(
+            self,
+            nodes: list,
+            permission_id: str,
+            **kwargs
+    ):
+        """
+        :param nodes: 节点 ID，格式 ['node1_id', 'node2_id']
+        :param permission_id: 授权 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        self._body = [{'node': n, 'assetpermission': permission_id} for n in nodes]
+
+    @staticmethod
+    def get_method():
+        return 'post'
+
+
+class RemoveNodeFromPermissionRequest(BaseNodeRelationRequest):
+    """ 从授权移除节点 """
+    def __init__(
+            self,
+            node_id: str,
+            permission_id: str,
+            **kwargs
+    ):
+        """
+        :param node_id: 节点 ID
+        :param permission_id: 授权 ID
+        :param kwargs: 其他参数
+        """
+        super().__init__(**kwargs)
+        self.other.update({'node': node_id, 'assetpermission': permission_id})
+
+    @staticmethod
+    def get_method():
+        return 'delete'

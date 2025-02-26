@@ -9,8 +9,10 @@ from jms_client.v1.models.request.permissions import (
     DetailPermissionRequest, UpdatePermissionRequest,
     DeletePermissionRequest, DescribePermsForAssetAndUserRequest,
     DescribePermsForAssetAndUserGroupRequest,
-    AppendUserToPermissionRequest, RemoveUserFromPermissionRequest,
-    AppendUserGroupToPermissionRequest, RemoveUserGroupFromPermissionRequest,
+    AppendUsersToPermissionRequest, RemoveUserFromPermissionRequest,
+    AppendUserGroupsToPermissionRequest, RemoveUserGroupFromPermissionRequest,
+    AppendAssetsToPermissionRequest, RemoveAssetFromPermissionRequest,
+    AppendNodesToPermissionRequest, RemoveNodeFromPermissionRequest,
     AccountParam, ActionParam, ProtocolParam
 )
 from jms_client.v1.models.instance.permissions import (
@@ -128,9 +130,9 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
 
-    def test_add_user_to_permission(self):
+    def test_add_users_to_permission(self):
         """ 测试向指定授权批量添加用户 """
-        request = AppendUserToPermissionRequest(
+        request = AppendUsersToPermissionRequest(
             permission_id='d43c9898-1b73-46ab-91dd-ed0db1305817',
             users=[
                 'b8f95980-f4c9-424a-8f79-025f2a0171a7',
@@ -151,9 +153,9 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_request_ok())
 
-    def test_add_user_group_to_user_group(self):
+    def test_add_user_groups_to_permission(self):
         """ 测试向指定授权批量添加用户组 """
-        request = AppendUserGroupToPermissionRequest(
+        request = AppendUserGroupsToPermissionRequest(
             permission_id='d43c9898-1b73-46ab-91dd-ed0db1305817',
             user_groups=[
                 '70df0624-246f-43b0-b18a-9b3f58da9030',
@@ -164,10 +166,56 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_request_ok())
 
-    def test_remove_user_from_user_group(self):
+    def test_remove_user_group_from_permission(self):
         """ 测试从指定授权移除用户组 """
         request = RemoveUserGroupFromPermissionRequest(
             user_group_id='253ed525-291a-45f5-8e09-88e92577e913',
+            permission_id='d43c9898-1b73-46ab-91dd-ed0db1305817'
+        )
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_add_assets_to_permission(self):
+        """ 测试向指定授权批量添加资产 """
+        request = AppendAssetsToPermissionRequest(
+            permission_id='d43c9898-1b73-46ab-91dd-ed0db1305817',
+            assets=[
+                'e1db4ccc-89a6-4af6-8244-2ded48b4f5ff',
+                '663aea5c-7e6a-4aea-8bf2-9e1633b54126'
+            ]
+        )
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_remove_asset_from_permission(self):
+        """ 测试从指定授权移除资产 """
+        request = RemoveAssetFromPermissionRequest(
+            asset_id='663aea5c-7e6a-4aea-8bf2-9e1633b54126',
+            permission_id='d43c9898-1b73-46ab-91dd-ed0db1305817'
+        )
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_add_nodes_to_permission(self):
+        """ 测试向指定授权批量添加节点 """
+        request = AppendNodesToPermissionRequest(
+            permission_id='d43c9898-1b73-46ab-91dd-ed0db1305817',
+            nodes=[
+                '1c9fbd6a-d797-4554-b4d5-3a1b70cb48ae',
+                'e35127a3-c6fb-4a20-820a-77e88ca94f71'
+            ]
+        )
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_remove_node_from_permission(self):
+        """ 测试从指定授权移除节点 """
+        request = RemoveNodeFromPermissionRequest(
+            node_id='e35127a3-c6fb-4a20-820a-77e88ca94f71',
             permission_id='d43c9898-1b73-46ab-91dd-ed0db1305817'
         )
         resp: Response = self.client.do(request)
