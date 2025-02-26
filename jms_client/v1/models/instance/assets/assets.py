@@ -131,3 +131,20 @@ class CustomInstance(AssetInstance):
         """
         self.custom_info: dict = {}
         super().__init__(**kwargs)
+
+
+class PermNodeInstance(Instance):
+    TYPE = 'PermAsset'
+
+    def __init__(self, **kwargs):
+        """
+        :param asset: 资产 ID
+        :param asset_display: 资产显示名
+        """
+        self.asset: str = ''
+        self.asset_display: str = ''
+        super().__init__(**kwargs)
+
+    @property
+    def display(self):
+        return self.asset_display

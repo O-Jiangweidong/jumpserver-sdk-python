@@ -69,14 +69,15 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 
 ### 资产管理
 
-| 请求类型 | 请求名称                     | 备注                                                           |
-|------|--------------------------|--------------------------------------------------------------|
-| 列表查询 | `DescribeAssetsRequest`  | 可按照分类查询，Asset 可更换为 Host/Database/Cloud/Device/Web/GPT/Custom |
-| 详情查询 | `DetailAssetRequest`     | 可按照分类查询，同上                                                   |
-| 创建   | `CreateHostRequest`      | 只可按照具体分类查询，Host 可更换为 Database/Cloud/Device/Web/GPT/Custom    |
-| 更新   | `UpdateHostRequest`      | 只可按照具体分类查询，同上                                                |
-| 删除   | `DeleteAssetRequest`     | -                                                            |
-| 批量删除 | `BulkDeleteAssetRequest` | -                                                            |
+| 请求类型      | 请求名称                                 | 备注                                                           |
+|-----------|--------------------------------------|--------------------------------------------------------------|
+| 列表查询      | `DescribeAssetsRequest`              | 可按照分类查询，Asset 可更换为 Host/Database/Cloud/Device/Web/GPT/Custom |
+| 详情查询      | `DetailAssetRequest`                 | 可按照分类查询，同上                                                   |
+| 创建        | `CreateHostRequest`                  | 只可按照具体分类查询，Host 可更换为 Database/Cloud/Device/Web/GPT/Custom    |
+| 更新        | `UpdateHostRequest`                  | 只可按照具体分类查询，同上                                                |
+| 删除        | `DeleteAssetRequest`                 | -                                                            |
+| 批量删除      | `BulkDeleteAssetRequest`             | -                                                            |
+| 获取`授权`的资产 | `DescribeAssetsForPermissionRequest` | -                                                            |
 
 ### 平台管理
 

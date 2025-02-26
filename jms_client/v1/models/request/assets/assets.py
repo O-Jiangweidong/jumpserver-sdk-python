@@ -1,6 +1,7 @@
 from jms_client.v1.models.instance.assets import (
     AssetInstance, HostInstance, DatabaseInstance, DeviceInstance,
-    CloudInstance, WebInstance, GPTInstance, CustomInstance
+    CloudInstance, WebInstance, GPTInstance, CustomInstance,
+    PermNodeInstance,
 )
 from ..common import Request
 from ..mixins import (
@@ -458,3 +459,9 @@ class DescribeUserPermAssetsRequest(ExtraRequestMixin, WithIDMixin, BaseAssetReq
         :param kwargs: 其他参数
         """
         super().__init__(id_=user_id, **kwargs)
+
+
+class DescribeAssetsForPermissionRequest(WithIDMixin, Request):
+    """ 获取指定授权下的资产 """
+    URL = 'perms/asset-permissions/{id}/assets/all/'
+    InstanceClass = PermNodeInstance

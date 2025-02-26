@@ -123,7 +123,7 @@ class PermUserInstance(Instance):
 
     def __init__(self, **kwargs):
         """
-        :param user: 用户ID
+        :param user: 用户 ID
         :param user_display: 用户显示名
         """
         self.user: str = ''

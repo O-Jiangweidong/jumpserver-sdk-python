@@ -30,7 +30,7 @@ from jms_client.v1.models.request.assets import (
     # Custom
     DescribeCustomsRequest, DetailCustomRequest,
     # Other
-    DescribeUserPermAssetsRequest,
+    DescribeUserPermAssetsRequest, DescribeAssetsForPermissionRequest,
 )
 from jms_client.v1.models.instance.assets import (
     AssetInstance,
@@ -431,6 +431,15 @@ class TestFunctionality(unittest.TestCase):
         """ 测试获取指定用户 ID 拥有权限的资产列表 """
         request = DescribeUserPermAssetsRequest(
             user_id='17dfb3ba-45da-4861-882d-2ba7e22be3c6', limit=3
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), list)
+
+    def test_list_assets_for_permission(self):
+        request = DescribeAssetsForPermissionRequest(
+            id_='d43c9898-1b73-46ab-91dd-ed0db1305817',
         )
         resp: Response = self.client.do(request, with_model=True)
 
