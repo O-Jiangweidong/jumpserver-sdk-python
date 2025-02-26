@@ -131,10 +131,14 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 删除              | `DeletePermissionRequest`                  | -                               |
 | 查询`用户和资产`对应的授权  | `DescribePermsForAssetAndUserRequest`      | DescribePermissionsRequest 也可实现 |
 | 查询`用户组和资产`对应的授权 | `DescribePermsForAssetAndUserGroupRequest` | DescribePermissionsRequest 也可实现 |
-| 追加用户            | `AppendUsersToPermissionRequest`            | DescribePermissionsRequest 也可实现 |
-| 移除用户            | `RemoveUserFromPermissionRequest`          | DescribePermissionsRequest 也可实现 |
-| 追加用户组           | `AppendUserGroupsToPermissionRequest`       | DescribePermissionsRequest 也可实现 |
-| 移除用户组           | `RemoveUserGroupFromPermissionRequest`     | DescribePermissionsRequest 也可实现 |
+| 追加用户            | `AppendUsersToPermissionRequest`           |                                 |
+| 移除用户            | `RemoveUserFromPermissionRequest`          |                                 |
+| 追加用户组           | `AppendUserGroupsToPermissionRequest`      |                                 |
+| 移除用户组           | `RemoveUserGroupFromPermissionRequest`     |                                 |
+| 追加资产            | `AppendAssetsToPermissionRequest`          |                                 |
+| 移除资产            | `RemoveAssetFromPermissionRequest`         |                                 |
+| 追加节点            | `AppendNodesToPermissionRequest`           |                                 |
+| 移除节点            | `RemoveNodeFromPermissionRequest`          |                                 |
 
 ### 审计管理
 
