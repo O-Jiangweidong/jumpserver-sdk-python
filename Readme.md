@@ -164,13 +164,17 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 
 ### 标签管理
 
-| 请求类型 | 请求名称                    | 备注 |
-|------|-------------------------|----|
-| 列表查询 | `DescribeLabelsRequest` | -  |
-| 详情查询 | `DetailLabelRequest`    | -  |
-| 创建   | `CreateLabelRequest`    | -  |
-| 更新   | `UpdateLabelRequest`    | -  |
-| 删除   | `DeleteLabelRequest`    | -  |
+| 请求类型      | 请求名称                                | 备注            |
+|-----------|-------------------------------------|---------------|
+| 列表查询      | `DescribeLabelsRequest`             | -             |
+| 详情查询      | `DetailLabelRequest`                | -             |
+| 创建        | `CreateLabelRequest`                | -             |
+| 更新        | `UpdateLabelRequest`                | -             |
+| 删除        | `DeleteLabelRequest`                | -             |
+| 查询资源类型    | `DescribeLabelResourceTypesRequest` | 绑定资源需要资源类型 ID |
+| 绑定资源      | `BindLabelForResourceRequest`       | -             |
+| 获取标签绑定的资源 | `DescribeLabelResourceRequest`      | -             |
+| 解除绑定      | `UnBindLabelForResourceRequest`     | -             |
 
 ### 用户登陆限制管理
 

@@ -10,8 +10,8 @@ from ..mixins import (
 __all__ = [
     'DescribeLabelsRequest', 'DetailLabelRequest',
     'CreateLabelRequest', 'UpdateLabelRequest', 'DeleteLabelRequest',
-    'BindLabelForResourceRequest', 'DescribeLabelResourceTypes',
-    'DescribeLabelResourceRequest'
+    'BindLabelForResourceRequest', 'DescribeLabelResourceTypesRequest',
+    'DescribeLabelResourceRequest', 'UnBindLabelForResourceRequest'
 ]
 
 
@@ -83,10 +83,30 @@ class DeleteLabelRequest(DeleteMixin, BaseLabelRequest):
     """ 删除指定 ID 的标签 """
 
 
-class DescribeLabelResourceTypes(Request):
+class DescribeLabelResourceTypesRequest(Request):
     """ 获取资源类型列表(绑定标签使用) """
     URL = 'labels/resource-types/'
     InstanceClass = ResourceTypeInstance
+
+
+class BaseLabelResourceRequest(Request):
+    URL = 'labels/labeled-resources/'
+    InstanceClass = LabelResourceInstance
+
+    def __init__(
+            self,
+            label_id: str,
+            **kwargs
+    ):
+        super().__init__(label=label_id, **kwargs)
+
+
+class DescribeLabelResourceRequest(ExtraRequestMixin, BaseLabelResourceRequest):
+    """ 获取标签绑定的资源列表 """
+
+
+class UnBindLabelForResourceRequest(DeleteMixin, BaseLabelResourceRequest):
+    """ 给指定资源解除绑定某标签 """
 
 
 class BindLabelForResourceRequest(UpdateMixin, Request):
@@ -106,16 +126,3 @@ class BindLabelForResourceRequest(UpdateMixin, Request):
         self.URL = 'labels/labels/{id}/resource-types/' + f'{resource_type_id}/resources/'
         super().__init__(id_=label_id, **kwargs)
         self._body.update({'res_ids': resource_ids})
-
-
-class DescribeLabelResourceRequest(ExtraRequestMixin, Request):
-    """ 获取标签绑定的资源列表 """
-    URL = 'labels/labeled-resources/'
-    InstanceClass = LabelResourceInstance
-
-    def __init__(
-            self,
-            label_id: str,
-            **kwargs
-    ):
-        super().__init__(label=label_id, **kwargs)

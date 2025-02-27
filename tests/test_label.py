@@ -8,7 +8,8 @@ from jms_client.v1.models.request.const import ResourceType
 from jms_client.v1.models.request.labels import (
     CreateLabelRequest, DescribeLabelsRequest, DetailLabelRequest,
     UpdateLabelRequest, DeleteLabelRequest, DescribeLabelResourceRequest,
-    BindLabelForResourceRequest, DescribeLabelResourceTypes
+    BindLabelForResourceRequest, DescribeLabelResourceTypesRequest,
+    UnBindLabelForResourceRequest,
 )
 from jms_client.v1.models.instance.labels import LabelInstance, ResourceTypeInstance
 from jms_client.v1.models.response import Response
@@ -76,7 +77,7 @@ class TestFunctionality(unittest.TestCase):
 
     def test_bind_label_for_resource(self):
         """ 测试绑定标签到资源 """
-        request = DescribeLabelResourceTypes()
+        request = DescribeLabelResourceTypesRequest()
         resp: Response = self.client.do(request, with_model=True)
         types: list[ResourceTypeInstance] = resp.get_data()
         resource_type_id = ''
@@ -108,6 +109,16 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
+
+    def test_unbind_label_for_resource(self):
+        """ 测试给指定资源解除绑定某标签 """
+        request = UnBindLabelForResourceRequest(
+            id_='edd04dc0-1500-44e3-b2c0-85d45ef5d228',  # DescribeLabelResourceRequest 查询的 ID
+            label_id='f605f0d9-52e3-40c1-89d2-25f88d45473e'
+        )
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
 
 
 if __name__ == '__main__':
