@@ -4,11 +4,13 @@ import unittest
 
 from jms_client.client import get_client
 from jms_client.v1.client import Client
+from jms_client.v1.models.request.const import ResourceType
 from jms_client.v1.models.request.labels import (
-    CreateLabelRequest, DescribeLabelsRequest,
-    DetailLabelRequest, UpdateLabelRequest, DeleteLabelRequest
+    CreateLabelRequest, DescribeLabelsRequest, DetailLabelRequest,
+    UpdateLabelRequest, DeleteLabelRequest,
+    BindLabelForResourceRequest, DescribeLabelResourceTypes
 )
-from jms_client.v1.models.instance.labels import LabelInstance
+from jms_client.v1.models.instance.labels import LabelInstance, ResourceTypeInstance
 from jms_client.v1.models.response import Response
 
 
@@ -68,6 +70,31 @@ class TestFunctionality(unittest.TestCase):
     def test_delete_label(self):
         """ 测试删除指定 ID 标签 """
         request = DeleteLabelRequest(id_='dab06175-204e-403a-93ad-3f02754713aa')
+        resp: Response = self.client.do(request)
+
+        self.assertTrue(resp.is_request_ok())
+
+    def test_bind_label_for_resource(self):
+        """ 测试绑定标签到资源 """
+        request = DescribeLabelResourceTypes()
+        resp: Response = self.client.do(request, with_model=True)
+        types: list[ResourceTypeInstance] = resp.get_data()
+        resource_type_id = ''
+        for type_ in types:
+            if type_.model == ResourceType.ACCOUNT_TEMPLATE:
+                resource_type_id = type_.id
+                break
+
+        self.assertNotEqual(resource_type_id, '')
+
+        request = BindLabelForResourceRequest(
+            label_id='f605f0d9-52e3-40c1-89d2-25f88d45473e',
+            resource_type_id=resource_type_id,
+            resource_ids=[
+                '00f03df3-1dc7-402f-80cc-083eab931e39',
+                '4ca51972-3ab1-45da-a834-79f19274340f'
+            ],
+        )
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_request_ok())

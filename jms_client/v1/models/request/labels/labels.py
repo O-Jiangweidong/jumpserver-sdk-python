@@ -1,8 +1,15 @@
-from jms_client.v1.models.instance.labels import LabelInstance
+from jms_client.v1.models.instance.labels import LabelInstance, ResourceTypeInstance
 from ..common import Request
 from ..mixins import (
     ExtraRequestMixin, WithIDMixin, CreateMixin, UpdateMixin, DeleteMixin
 )
+
+
+__all__ = [
+    'DescribeLabelsRequest', 'DetailLabelRequest',
+    'CreateLabelRequest', 'UpdateLabelRequest', 'DeleteLabelRequest',
+    'BindLabelForResourceRequest', 'DescribeLabelResourceTypes'
+]
 
 
 class BaseLabelRequest(Request):
@@ -71,3 +78,28 @@ class UpdateLabelRequest(
 
 class DeleteLabelRequest(DeleteMixin, BaseLabelRequest):
     """ 删除指定 ID 的标签 """
+
+
+class DescribeLabelResourceTypes(Request):
+    """ 获取资源类型列表(绑定标签使用) """
+    URL = 'labels/resource-types/'
+    InstanceClass = ResourceTypeInstance
+
+
+class BindLabelForResourceRequest(UpdateMixin, Request):
+    """ 给绑定资源标签 """
+    def __init__(
+            self,
+            label_id: str,
+            resource_type_id: str,
+            resource_ids: list,
+            **kwargs
+    ):
+        """
+        :param label_id: 标签 ID
+        :param resource_type_id: 资源类型 ID，如平台 ID
+        :param resource_ids: 资源 ID，格式为 ['obj1_id', 'obj2_id']
+        """
+        self.URL = 'labels/labels/{id}/resource-types/' + f'{resource_type_id}/resources/'
+        super().__init__(id_=label_id, **kwargs)
+        self._body.update({'res_ids': resource_ids})

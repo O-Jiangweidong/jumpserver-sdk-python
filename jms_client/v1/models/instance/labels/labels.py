@@ -30,3 +30,22 @@ class LabelInstance(Instance):
     @property
     def display(self):
         return f'{self.name}:{self.value}'
+
+
+class ResourceTypeInstance(Instance):
+    TYPE = 'ResourceType'
+
+    def __init__(self, **kwargs):
+        """
+        :attr id: ID
+        :attr name: 名称
+        :attr app_label: 应用标签
+        :attr app_display: 应用标签显示名
+        :attr model: 模型
+        """
+        self.id: str = ''
+        self.name: str = ''
+        self.app_label: str = ''
+        self.app_display: str = ''
+        self.model: str = ''
+        super().__init__(**kwargs)
