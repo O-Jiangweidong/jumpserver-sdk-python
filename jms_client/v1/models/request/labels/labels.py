@@ -1,4 +1,6 @@
-from jms_client.v1.models.instance.labels import LabelInstance, ResourceTypeInstance
+from jms_client.v1.models.instance.labels import (
+    LabelInstance, ResourceTypeInstance, LabelResourceInstance
+)
 from ..common import Request
 from ..mixins import (
     ExtraRequestMixin, WithIDMixin, CreateMixin, UpdateMixin, DeleteMixin
@@ -8,7 +10,8 @@ from ..mixins import (
 __all__ = [
     'DescribeLabelsRequest', 'DetailLabelRequest',
     'CreateLabelRequest', 'UpdateLabelRequest', 'DeleteLabelRequest',
-    'BindLabelForResourceRequest', 'DescribeLabelResourceTypes'
+    'BindLabelForResourceRequest', 'DescribeLabelResourceTypes',
+    'DescribeLabelResourceRequest'
 ]
 
 
@@ -103,3 +106,16 @@ class BindLabelForResourceRequest(UpdateMixin, Request):
         self.URL = 'labels/labels/{id}/resource-types/' + f'{resource_type_id}/resources/'
         super().__init__(id_=label_id, **kwargs)
         self._body.update({'res_ids': resource_ids})
+
+
+class DescribeLabelResourceRequest(ExtraRequestMixin, Request):
+    """ 获取标签绑定的资源列表 """
+    URL = 'labels/labeled-resources/'
+    InstanceClass = LabelResourceInstance
+
+    def __init__(
+            self,
+            label_id: str,
+            **kwargs
+    ):
+        super().__init__(label=label_id, **kwargs)

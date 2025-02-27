@@ -7,7 +7,7 @@ from jms_client.v1.client import Client
 from jms_client.v1.models.request.const import ResourceType
 from jms_client.v1.models.request.labels import (
     CreateLabelRequest, DescribeLabelsRequest, DetailLabelRequest,
-    UpdateLabelRequest, DeleteLabelRequest,
+    UpdateLabelRequest, DeleteLabelRequest, DescribeLabelResourceRequest,
     BindLabelForResourceRequest, DescribeLabelResourceTypes
 )
 from jms_client.v1.models.instance.labels import LabelInstance, ResourceTypeInstance
@@ -97,7 +97,17 @@ class TestFunctionality(unittest.TestCase):
         )
         resp: Response = self.client.do(request)
 
-        self.assertTrue(resp.is_request_ok())
+        self.assertTrue(resp.is_success())
+
+    def test_list_resource_for_label(self):
+        """ 测试获取标签绑定的资源列表 """
+        request = DescribeLabelResourceRequest(
+            label_id='f605f0d9-52e3-40c1-89d2-25f88d45473e'
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), list)
 
 
 if __name__ == '__main__':
