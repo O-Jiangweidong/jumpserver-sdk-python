@@ -1,6 +1,10 @@
 from jms_client.v1.models.instance.accounts import AccountInstance
+from ..const.account import SecretType, Source, OnInvalidType
 from ..common import Request
-from ..mixins import WithIDMixin, ExtraRequestMixin
+from ..mixins import (
+    WithIDMixin, ExtraRequestMixin,
+    CreateMixin, UpdateMixin, DeleteMixin
+)
 
 
 class BaseAccountRequest(Request):
@@ -65,3 +69,70 @@ class DescribeAccountsRequest(ExtraRequestMixin, BaseAccountRequest):
 
 class DetailAccountRequest(WithIDMixin, BaseAccountRequest):
     """ 获取指定 ID 的账号详情 """
+
+
+class CreateUpdateAccountParamsMixin(object):
+    _body: dict
+
+    def __init__(
+            self,
+            username: str,
+            asset: str,
+            name: str = '',
+            secret_type: str = SecretType.PASSWORD,
+            secret: str = '',
+            comment: str = '',
+            su_from: str = '',
+            is_active: bool = True,
+            push_now: bool = False,
+            privileged: bool = False,
+            **kwargs
+    ):
+        """
+        :param username: 用户名
+        :param asset: 资产 ID
+        :param name: 名称
+        :param secret_type: 密文类型，支持 password、ssh_key、access_key、token、api_key
+        :param secret: 密码
+        :param comment: 备注
+        :param su_from: 切换自 ID
+        :param is_active: 是否激活
+        :param privileged: 特权账号
+        :param push_now: 是否推送账号至资产
+        """
+        super().__init__(**kwargs)
+        self._body.update({
+            'is_active': is_active, 'username': username,
+            'secret_type': SecretType(secret_type),
+            'push_now': push_now, 'asset': asset
+        })
+        if isinstance(self, CreateAccountRequest):
+            if not name:
+                raise ValueError("创建账号时，name 是必填项。")
+            self._body['name'] = name
+        if isinstance(privileged, bool):
+            self._body['privileged'] = privileged
+        if isinstance(push_now, bool):
+            self._body['push_now'] = push_now
+        if secret:
+            self._body['secret'] = secret
+        if comment:
+            self._body['comment'] = comment
+        if su_from:
+            self._body['su_from'] = su_from
+
+
+class CreateAccountRequest(
+    CreateUpdateAccountParamsMixin, CreateMixin, BaseAccountRequest
+):
+    """ 创建账号 """
+
+
+class UpdateAccountRequest(
+    CreateUpdateAccountParamsMixin, UpdateMixin, BaseAccountRequest
+):
+    """ 更新指定 ID 的账号信息 """
+
+
+class DeleteAccountRequest(DeleteMixin, BaseAccountRequest):
+    """ 删除指定 ID 的账号 """
