@@ -211,6 +211,44 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 命令组更新    | `UpdateCommandGroupRequest`     | -  |
 | 命令组删除    | `DeleteCommandGroupRequest`     | -  |
 
+### 系统设置管理
+
+| 请求类型                      | 请求名称                                     | 备注 |
+|---------------------------|------------------------------------------|----|
+| 查询 `基本设置 - 基本`            | `DetailBasicSettingRequest`              | -  |
+| 查询 `组件设置 - 基本设置`          | `DetailTerminalSettingRequest`           | -  |
+| 查询 `安全设置 - 认证安全`          | `DetailSecurityAuthSettingRequest`       | -  |
+| 查询 `安全设置 - 会话安全`          | `DetailSecuritySessionSettingRequest`    | -  |
+| 查询 `安全设置 - 密码安全`          | `DetailSecurityPasswordSettingRequest`   | -  |
+| 查询 `安全设置 - 登录限制`          | `DetailSecurityLoginLimitSettingRequest` | -  |
+| 查询 `消息通知 - 邮件设置`          | `DetailEmailSettingRequest`              | -  |
+| 查询 `消息通知 - 邮件设置 - 邮件内容定制` | `DetailEmailContentSettingRequest`       | -  |
+| 查询 `认证设置 - 基本`            | `DetailBasicAuthSettingRequest`          | -  |
+| 查询 `认证设置 - LDAP`          | `DetailLDAPSettingRequest`               | -  |
+| 查询 `认证设置 - 企业微信`          | `DetailWecomSettingRequest`              | -  |
+| 查询 `认证设置 - SAML2`         | `DetailSAML2SettingRequest`              | -  |
+| 查询 `认证设置 - 钉钉`            | `DetailDingTalkSettingRequest`           | -  |
+| 查询 `认证设置 - 飞书`            | `DetailFeiShuSettingRequest`             | -  |
+| 查询 `认证设置 - Slack`         | `DetailSlackSettingRequest`              | -  |
+| 查询 `认证设置 - OIDC`          | `DetailOIDCSettingRequest`               | -  |
+| 查询 `认证设置 - RADIUS`        | `DetailRadiusSettingRequest`             | -  |
+| 查询 `认证设置 - CAS`           | `DetailCASSettingRequest`                | -  |
+| 查询 `认证设置 - OAuth2`        | `DetailOAuth2SettingRequest`             | -  |
+| 查询 `认证设置 - Passkey`       | `DetailPasskeySettingRequest`            | -  |
+| 查询 `系统任务 - 定期清理`          | `DetailCleanSettingRequest`              | -  |
+| 查询 `消息通知 - 短信设置`          | `DetailSMSSettingRequest`                | -  |
+| 查询 `消息通知 - 短信设置 - 阿里云`    | `DetailAlibabaSMSSettingRequest`         | -  |
+| 查询 `消息通知 - 短信设置 - 腾讯云`    | `DetailTencentSMSSettingRequest`         | -  |
+| 查询 `消息通知 - 短信设置 - 华为云`    | `DetailHuaweiSMSSettingRequest`          | -  |
+| 查询 `消息通知 - 短信设置 - CMPP2`  | `DetailCMPP2SMSSettingRequest`           | -  |
+| 查询 `消息通知 - 短信设置 - 自定义`    | `DetailCustomSMSSettingRequest`          | -  |
+| 查询 `功能设置 - 账号存储`          | `DetailVaultSettingRequest`              | -  |
+| 查询 `功能设置 - 智能问答`          | `DetailChatSettingRequest`               | -  |
+| 查询 `功能设置 - 公告`            | `DetailAnnouncementSettingRequest`       | -  |
+| 查询 `功能设置 - 工单`            | `DetailTicketSettingRequest`             | -  |
+| 查询 `功能设置 - 任务中心`          | `DetailOPSSettingRequest`                | -  |
+| 查询 `功能设置 - 虚拟应用`          | `DetailVirtualAPPSettingRequest`         | -  |
+
 ### 其他常用页面功能接口查询
 
 | 请求类型            | 请求名称                                                                    | 备注 |

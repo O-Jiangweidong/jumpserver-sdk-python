@@ -13,7 +13,8 @@ class Instance(object):
         return getattr(self, 'name', 'Unknown')
 
     def __str__(self):
-        return f'<{self.TYPE}>: {self.display}'
+        display = f': {self.display}' if self.display else ''
+        return f'<{self.TYPE}>{display}'
 
     def __repr__(self):
         return self.__str__()
