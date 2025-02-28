@@ -74,6 +74,16 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 | 删除   | `DeleteAssetRequest`     | -                                                            |
 | 批量删除 | `BulkDeleteAssetRequest` | -                                                            |
 
+### 账号管理
+
+| 请求类型 | 请求名称                      | 备注 |
+|------|---------------------------|----|
+| 列表查询 | `DescribeAccountsRequest` | -  |
+| 详情查询 | `DetailAccountRequest`    | -  |
+| 创建   | `CreateAccountRequest`    | -  |
+| 更新   | `UpdateAccountRequest`    | -  |
+| 删除   | `DeleteAccountRequest`    | -  |
+
 ### 平台管理
 
 | 请求类型 | 请求名称                       | 备注 |

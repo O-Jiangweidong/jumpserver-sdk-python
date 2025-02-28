@@ -78,7 +78,7 @@ class CreateUpdateAccountParamsMixin(object):
             self,
             username: str,
             asset: str,
-            name: str = '',
+            name: str,
             secret_type: str = SecretType.PASSWORD,
             secret: str = '',
             comment: str = '',
@@ -104,12 +104,8 @@ class CreateUpdateAccountParamsMixin(object):
         self._body.update({
             'is_active': is_active, 'username': username,
             'secret_type': SecretType(secret_type),
-            'push_now': push_now, 'asset': asset
+            'push_now': push_now, 'asset': asset, 'name': name
         })
-        if isinstance(self, CreateAccountRequest):
-            if not name:
-                raise ValueError("创建账号时，name 是必填项。")
-            self._body['name'] = name
         if isinstance(privileged, bool):
             self._body['privileged'] = privileged
         if isinstance(push_now, bool):
