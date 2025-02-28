@@ -2,7 +2,8 @@ import re
 
 from jms_client.v1.models.instance.permissions import UserLoginACLInstance
 from ..const import ACLAction
-from ..common import Request, UserManyFilterParam, PriorityParam, RuleParam
+from ..common import Request
+from ..params import UserManyFilterParam, PriorityParam, RuleParam
 from ..mixins import (
     WithIDMixin, CreateMixin, DeleteMixin, UpdateMixin, ExtraRequestMixin
 )

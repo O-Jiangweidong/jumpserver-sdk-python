@@ -4,7 +4,7 @@ import unittest
 
 from jms_client.client import get_client
 from jms_client.v1.client import Client
-from jms_client.v1.models.request.common import (
+from jms_client.v1.models.request.params import (
     UserManyFilterParam, AssetManyFilterParam, AccountParam, SimpleProtocolParam
 )
 from jms_client.v1.models.request.permissions import (

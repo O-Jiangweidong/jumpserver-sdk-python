@@ -7,7 +7,8 @@ from ..const import (
     POSTGRESQL_AUTOMATION, ORACLE_AUTOMATION, SQLSERVER_AUTOMATION,
     MONGODB_AUTOMATION,
 )
-from ..common import Request, ProtocolParam
+from ..common import Request
+from ..params import ProtocolParam
 from ..mixins import (
     ExtraRequestMixin, WithIDMixin, CreateMixin,
     UpdateMixin, DeleteMixin,

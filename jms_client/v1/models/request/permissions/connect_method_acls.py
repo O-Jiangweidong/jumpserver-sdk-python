@@ -1,5 +1,6 @@
 from jms_client.v1.models.instance.permissions import ConnectMethodACLInstance
-from ..common import Request, UserManyFilterParam, PriorityParam, SimpleProtocolParam
+from ..common import Request
+from ..params import UserManyFilterParam, PriorityParam, SimpleProtocolParam
 from ..const import ACLAction
 from ..mixins import (
     WithIDMixin, CreateMixin, DeleteMixin, UpdateMixin, ExtraRequestMixin

@@ -6,15 +6,15 @@ class AccountInstance(Instance):
 
     def __init__(self, **kwargs):
         """
+        :attr id: ID
         :attr name: 账号名称
         :attr username: 账号用户名
         :attr secret_type: 密码类型
-        :attr id_: 账号 ID
         :attr source: 账号来源
         :attr comment: 备注
         :attr asset: 资产信息
         :attr privileged: 特权账号
-        :attr is_active: 活跃性
+        :attr is_active: 是否激活
         :attr connectivity: 可连接性
         :attr created_by: 创建者
         :attr date_created: 创建日期
@@ -25,7 +25,7 @@ class AccountInstance(Instance):
         :attr labels: 标签
         :attr source_id: 账号模板 ID
         :attr su_from: 切换自（从其他账号切换到该账号下）
-        :attr version: 账号版本号（初始值为1，修改一次加1）
+        :attr version: 版本号
         """
         self.id: str = ''
         self.asset: dict = {}

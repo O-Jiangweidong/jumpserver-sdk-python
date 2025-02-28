@@ -1,8 +1,9 @@
 from jms_client.v1.models.instance.permissions import (
     CommandGroupInstance, CommandFilterInstance,
 )
-from ..common import (
-    Request, AccountParam, PriorityParam,
+from ..common import Request
+from ..params import (
+    AccountParam, PriorityParam,
     UserManyFilterParam, AssetManyFilterParam
 )
 from ..const import CommandGroupType, ACLAction

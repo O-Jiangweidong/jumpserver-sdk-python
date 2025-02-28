@@ -1,12 +1,9 @@
-from urllib.parse import urlencode
-
 from .const import FIELDS_MINI, FIELDS_SMALL
 
 
 class WithIDMixin(object):
     URL: str
     url_prefix: str
-    instance: object = None
     get_params: callable
 
     def __init__(self, id_, *args, **kwargs):

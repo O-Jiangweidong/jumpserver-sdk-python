@@ -9,7 +9,7 @@ from jms_client.v1.models.request.permissions.asset_login_acls import (
     DetailAssetLoginACLRequest, UpdateAssetLoginACLRequest,
     DeleteAssetLoginACLRequest,
 )
-from jms_client.v1.models.request.common import (
+from jms_client.v1.models.request.params import (
     UserManyFilterParam, RuleParam, AccountParam, AssetManyFilterParam
 )
 from jms_client.v1.models.instance.permissions import (

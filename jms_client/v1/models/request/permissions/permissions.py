@@ -2,7 +2,8 @@ from jms_client.v1.models.instance.permissions import (
     PermissionInstance
 )
 from jms_client.v1.utils import handle_range_datetime
-from ..common import Request, AccountParam, SimpleProtocolParam
+from ..common import Request
+from ..params import AccountParam, SimpleProtocolParam
 from ..mixins import (
     WithIDMixin, CreateMixin, DeleteMixin,
     UpdateMixin, ExtraRequestMixin

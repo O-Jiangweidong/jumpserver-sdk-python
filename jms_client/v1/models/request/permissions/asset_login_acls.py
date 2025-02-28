@@ -2,8 +2,9 @@ import re
 
 from jms_client.v1.models.instance.permissions import AssetLoginACLInstance
 from ..const import ACLAction
-from ..common import (
-    Request, PriorityParam, AccountParam, RuleParam,
+from ..common import Request
+from ..params import (
+    PriorityParam, AccountParam, RuleParam,
     UserManyFilterParam, AssetManyFilterParam,
 )
 from ..mixins import (
