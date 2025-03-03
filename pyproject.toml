@@ -1,12 +1,16 @@
 [tool.poetry]
 name = "jumpserver-sdk"
-version = "0.9.0"
+version = "0.8.0"
 description = "JumpServer Python SDK"
 authors = ["jiangweidong <1053570670@qq.com>"]
 readme = "README.md"
+homepage = "https://github.com/O-Jiangweidong/jumpserver-sdk-python"
 packages = [
     { include = "jms_client" }
 ]
+
+[tool.poetry.urls]
+"Repository" = "https://github.com/O-Jiangweidong/jumpserver-sdk-python"
 
 [tool.poetry.dependencies]
 python = "^3.8"
