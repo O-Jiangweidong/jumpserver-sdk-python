@@ -32,8 +32,8 @@ class SessionClient(object):
 
         action = getattr(requests, method, 'get')
         return action(
-            f'{self.web_url}/{url}', auth=self.session.ak_auth,
-            headers=request_headers, json=data, params=params, verify=False
+            f'{self.web_url}/{url}', auth=self.session.ak_auth, verify=False,
+            headers=request_headers, json=data, params=params, **kwargs
         )
 
 
