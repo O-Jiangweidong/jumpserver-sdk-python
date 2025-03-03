@@ -8,7 +8,7 @@ from jms_client.v1.models.request.accounts.account_templates import (
     DescribeAccountTemplatesRequest, DetailAccountTemplateRequest,
     CreateAccountTemplateRequest, UpdateAccountTemplateRequest,
     DeleteAccountTemplateRequest, SyncAccountTemplateInfoRequest,
-    SecretParam, ProtocolParam, PushParams
+    SecretParam, ProtocolParam, PushParam
 )
 from jms_client.v1.models.instance.accounts.account_templates import (
     AccountTemplateInstance
@@ -40,14 +40,6 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
 
-    def test_retrieve_account_template(self):
-        """ 测试获取指定 ID 账号模板详情 """
-        request = DetailAccountTemplateRequest(id_='079ec32d-1b9e-459a-85d9-cf0ccec01dab')
-        resp: Response = self.client.do(request, with_model=True)
-
-        self.assertTrue(resp.is_success())
-        self.assertIsInstance(resp.get_data(), AccountTemplateInstance)
-
     def test_create_account_template(self):
         """ 测试创建账号模板 """
         secret = SecretParam()
@@ -62,11 +54,19 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), AccountTemplateInstance)
 
+    def test_retrieve_account_template(self):
+        """ 测试获取指定 ID 账号模板详情 """
+        request = DetailAccountTemplateRequest(id_='bf6682af-7056-413d-be80-302604129666')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AccountTemplateInstance)
+
     def test_update_account_template(self):
         """ 测试更新指定 ID 账号模板属性 """
         secret = SecretParam()
         secret.random_gen_secret(length=10, exclude_symbols='@#$', digit=False)
-        push_params = PushParams()
+        push_params = PushParam()
         push_params.set_aix_params(groups=['dev', 'jms'], shell='/bin/sh')
         request = UpdateAccountTemplateRequest(
             id_='bf6682af-7056-413d-be80-302604129666',
@@ -80,16 +80,16 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), AccountTemplateInstance)
 
-    def test_delete_account_template(self):
-        """ 测试删除指定 ID 账号模板 """
-        request = DeleteAccountTemplateRequest(id_='079ec32d-1b9e-459a-85d9-cf0ccec01dab')
+    def test_sync_account_template_info_to_accounts(self):
+        """ 同步账号模板信息到关联账号 """
+        request = SyncAccountTemplateInfoRequest(id_='00f03df3-1dc7-402f-80cc-083eab931e39')
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_request_ok())
 
-    def test_sync_account_template_info_to_accounts(self):
-        """ 同步账号模板信息到关联账号 """
-        request = SyncAccountTemplateInfoRequest(id_='00f03df3-1dc7-402f-80cc-083eab931e39')
+    def test_delete_account_template(self):
+        """ 测试删除指定 ID 账号模板 """
+        request = DeleteAccountTemplateRequest(id_='079ec32d-1b9e-459a-85d9-cf0ccec01dab')
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_request_ok())

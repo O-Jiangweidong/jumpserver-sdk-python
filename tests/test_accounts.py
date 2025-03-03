@@ -36,14 +36,6 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
 
-    def test_retrieve_account(self):
-        """ 测试获取指定 ID 账号详情 """
-        request = DetailAccountRequest(id_='db11d871-d7d8-4b32-a3b7-cfb87f49c336')
-        resp: Response = self.client.do(request, with_model=True)
-
-        self.assertTrue(resp.is_success())
-        self.assertIsInstance(resp.get_data(), AccountInstance)
-
     def test_create_account(self):
         """ 测试创建账号 """
         request = CreateAccountRequest(
@@ -58,10 +50,18 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), AccountInstance)
 
+    def test_retrieve_account(self):
+        """ 测试获取指定 ID 账号详情 """
+        request = DetailAccountRequest(id_='3381308f-7983-45be-a89a-bcaf94bd4b9d')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AccountInstance)
+
     def test_update_account(self):
         """ 测试更新指定 ID 账号 """
         request = UpdateAccountRequest(
-            id_='2fc7034d-5902-4e94-87cb-95455d410cc0', username='test',
+            id_='3381308f-7983-45be-a89a-bcaf94bd4b9d', username='test',
             asset='3381308f-7983-45be-a89a-bcaf94bd4b9d', comment='test',
             secret_type='password', secret='123456', name='test',
             privileged=True, push_now=True, is_active=True,
@@ -74,7 +74,7 @@ class TestFunctionality(unittest.TestCase):
 
     def test_delete_account(self):
         """ 测试删除指定 ID 账号 """
-        request = DeleteAccountRequest(id_='04cf23e8-b4b2-4687-b4c9-1b5001be5c98')
+        request = DeleteAccountRequest(id_='3381308f-7983-45be-a89a-bcaf94bd4b9d')
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_request_ok())

@@ -42,14 +42,6 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
 
-    def test_retrieve_login_user_acl(self):
-        """ 测试获取指定 ID 资产登陆控制详情 """
-        request = DetailAssetLoginACLRequest(id_='63a34176-cd19-4475-8f25-a9b8bcfd35e0')
-        resp: Response = self.client.do(request, with_model=True)
-
-        self.assertTrue(resp.is_success())
-        self.assertIsInstance(resp.get_data(), AssetLoginACLInstance)
-
     def test_create_login_user_acl(self):
         """ 测试创建资产登陆控制 """
         users = UserManyFilterParam()
@@ -103,6 +95,14 @@ class TestFunctionality(unittest.TestCase):
                 'f288c986-79b9-48c8-aa00-7dd8841f1017'
             ], assets=assets, accounts=accounts, rules=rules,
         )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), AssetLoginACLInstance)
+
+    def test_retrieve_login_user_acl(self):
+        """ 测试获取指定 ID 资产登陆控制详情 """
+        request = DetailAssetLoginACLRequest(id_='e6bf4ebd-0962-4af3-a5fb-dec1bca2c5ff')
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())

@@ -39,14 +39,6 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
 
-    def test_retrieve_connect_method_acl(self):
-        """ 测试获取指定 ID 连接方式控制详情 """
-        request = DetailConnectMethodACLRequest(id_='ba177a3a-b0cc-48e2-8eab-b0283ef89c91')
-        resp: Response = self.client.do(request, with_model=True)
-
-        self.assertTrue(resp.is_success())
-        self.assertIsInstance(resp.get_data(), ConnectMethodACLInstance)
-
     def test_create_connect_method_acl(self):
         """ 测试创建连接方式控制 """
         users = UserManyFilterParam()
@@ -84,6 +76,14 @@ class TestFunctionality(unittest.TestCase):
             name='sdk-connect-acl-new', users=users, priority=22,
             connect_methods=methods
         )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), ConnectMethodACLInstance)
+
+    def test_retrieve_connect_method_acl(self):
+        """ 测试获取指定 ID 连接方式控制详情 """
+        request = DetailConnectMethodACLRequest(id_='e6bf4ebd-0962-4af3-a5fb-dec1bca2c5ff')
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())

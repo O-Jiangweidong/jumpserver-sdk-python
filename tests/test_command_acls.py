@@ -46,14 +46,6 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
 
-    def test_retrieve_command_group(self):
-        """ 测试获取指定 ID 命令过滤-命令组详情 """
-        request = DetailCommandGroupRequest(id_='7a003d30-7e9d-4ab2-b566-f766a1576056')
-        resp: Response = self.client.do(request, with_model=True)
-
-        self.assertTrue(resp.is_success())
-        self.assertIsInstance(resp.get_data(), CommandGroupInstance)
-
     def test_create_command_group(self):
         """ 测试创建命令过滤-命令组 """
         request = CreateCommandGroupRequest(
@@ -79,6 +71,14 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), CommandGroupInstance)
 
+    def test_retrieve_command_group(self):
+        """ 测试获取指定 ID 命令过滤-命令组详情 """
+        request = DetailCommandGroupRequest(id_='bf6682af-7056-413d-be80-3026041295dd')
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), CommandGroupInstance)
+
     def test_delete_command_group(self):
         """ 测试删除指定 ID 命令过滤-命令组 """
         request = DeleteCommandGroupRequest(id_='bf6682af-7056-413d-be80-3026041295dd')
@@ -94,14 +94,6 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), list)
-
-    def test_retrieve_command_filter(self):
-        """ 测试获取指定 ID 命令过滤详情 """
-        request = DetailCommandFilterRequest(id_='4ed8e190-f378-4348-a7bd-fbc215512883')
-        resp: Response = self.client.do(request, with_model=True)
-
-        self.assertTrue(resp.is_success())
-        self.assertIsInstance(resp.get_data(), CommandFilterInstance)
 
     def test_create_command_filter(self):
         """ 测试创建命令过滤 """
@@ -154,6 +146,14 @@ class TestFunctionality(unittest.TestCase):
             ], accounts=accounts,
             command_groups=['7a003d30-7e9d-4ab2-b566-f766a1576056'],
         )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
+        self.assertIsInstance(resp.get_data(), CommandFilterInstance)
+
+    def test_retrieve_command_filter(self):
+        """ 测试获取指定 ID 命令过滤详情 """
+        request = DetailCommandFilterRequest(id_='bf6682af-7056-413d-be80-3026041295ee')
         resp: Response = self.client.do(request, with_model=True)
 
         self.assertTrue(resp.is_success())
