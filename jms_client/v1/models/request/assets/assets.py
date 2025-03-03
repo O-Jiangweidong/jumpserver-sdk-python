@@ -36,6 +36,7 @@ class DescribeAssetsRequest(ExtraRequestMixin, BaseAssetRequest):
             platform: str = '',
             exclude_platform: str = '',
             domain: str = '',
+            node_id: str = '',
             type_: str = '',
             category: str = '',
             protocols: str = '',
@@ -53,6 +54,7 @@ class DescribeAssetsRequest(ExtraRequestMixin, BaseAssetRequest):
         :param platform: 平台过滤，支持按照 `平台名称` 或者 `平台 ID` 精确匹配
         :param exclude_platform: 平台过滤，不包含的平台名称模糊匹配
         :param domain: 网域过滤，支持按照 `网域名称` 模糊匹配，或者 `网域 ID` 精确匹配
+        :param node_id: 节点过滤
         :param type_: 平台类型精确匹配
         :param category: 平台类别精确匹配
         :param protocols: 协议名称精确匹配，多个协议用逗号(,)隔开
@@ -74,6 +76,8 @@ class DescribeAssetsRequest(ExtraRequestMixin, BaseAssetRequest):
             query_params['exclude_platform'] = exclude_platform
         if domain:
             query_params['domain'] = domain
+        if node_id:
+            query_params['node_id'] = node_id
         if type_:
             query_params['type'] = type_
         if category:
