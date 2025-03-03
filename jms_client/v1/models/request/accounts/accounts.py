@@ -1,5 +1,7 @@
-from jms_client.v1.models.instance.accounts import AccountInstance
-from ..const.account import SecretType
+from jms_client.v1.models.instance.accounts import (
+    AccountInstance, WithTemplateAccountInstance
+)
+from ..const.account import SecretType, OnInvalidType
 from ..common import Request
 from ..params import PushParam
 from ..mixins import (
@@ -153,3 +155,37 @@ class ClearAccountSecretRequest(Request):
     @staticmethod
     def get_method():
         return 'patch'
+
+
+class WithTemplateCreateAccountRequest(Request):
+    """ 使用账号模板创建账号 """
+    URL = 'accounts/accounts/bulk/'
+    InstanceClass = WithTemplateAccountInstance
+
+    def __init__(
+            self,
+            assets: list,  # 格式为 ['asset1_id', 'asset2_id']
+            template_id: str,
+            is_active: bool = True,
+            privileged: bool = False,
+            push_now: bool = False,
+            secret_type: str = SecretType.PASSWORD,
+            on_invalid: str = OnInvalidType.ERROR,
+            **kwargs,
+    ):
+        super().__init__(**kwargs)
+        self._body.update({
+            'assets': assets, 'template': template_id,
+            'secret_type': SecretType(secret_type),
+            'on_invalid': OnInvalidType(on_invalid),
+        })
+        if isinstance(privileged, bool):
+            self._body['privileged'] = privileged
+        if isinstance(is_active, bool):
+            self._body['is_active'] = is_active
+        if isinstance(push_now, bool):
+            self._body['push_now'] = push_now
+
+    @staticmethod
+    def get_method():
+        return 'post'

@@ -52,3 +52,22 @@ class AccountInstance(Instance):
     @property
     def display(self):
         return f'{self.name}({self.username})'
+
+
+class WithTemplateAccountInstance(AccountInstance):
+    TYPE = 'WithTemplateAccount'
+
+    def __init__(self, **kwargs):
+        """
+        :attr asset: 资产显示名称
+        :attr changed: 是否修改
+        :attr state: 状态
+        """
+        self.asset: str = ''
+        self.changed: bool = False
+        self.state: str = ''
+        super().__init__(**kwargs)
+
+    @property
+    def display(self):
+        return f'{self.asset}-{self.state}'

@@ -7,7 +7,8 @@ from jms_client.v1.client import Client
 from jms_client.v1.models.request.accounts import (
     DescribeAccountsRequest, DetailAccountRequest,
     DeleteAccountRequest, CreateAccountRequest,
-    UpdateAccountRequest, ClearAccountSecretRequest
+    UpdateAccountRequest, ClearAccountSecretRequest,
+    WithTemplateCreateAccountRequest,
 )
 from jms_client.v1.models.instance.accounts import AccountInstance
 from jms_client.v1.models.response import Response
@@ -90,3 +91,18 @@ class TestFunctionality(unittest.TestCase):
         resp: Response = self.client.do(request)
 
         self.assertTrue(resp.is_request_ok())
+
+    def test_create_account_with_template(self):
+        """ 测试使用账号模板创建账号 """
+        request = WithTemplateCreateAccountRequest(
+            template_id='8bd5bce0-43d8-4b0c-9cb3-06fb44c09971',
+            assets=[
+                '3381308f-7983-45be-a89a-bcaf94bd4b9d',
+                '48874a43-df32-4eb4-af07-4164c10b302d'
+            ]
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_request_ok())
+        self.assertIsInstance(resp.get_data(), list)
+        self.assertTrue(resp.get_data())
