@@ -1,3 +1,5 @@
+from typing import List
+
 from ..common import Instance
 
 
@@ -30,10 +32,10 @@ class AssetInstance(Instance):
         self.comment: str = ''
         self.domain: dict = {}
         self.is_active: bool = False
-        self.labels: list = []
-        self.nodes: list = []
+        self.labels: List = []
+        self.nodes: List = []
         self.platform: dict = {}
-        self.protocols: list = []
+        self.protocols: List = []
         # readonly
         self.category = ''
         self.connectivity = ''
@@ -107,7 +109,7 @@ class WebInstance(AssetInstance):
         self.username_selector: str = 'name=username'
         self.password_selector: str = 'name=password'
         self.submit_selector: str = 'id=login_button'
-        self.script: list = []
+        self.script: List = []
         super().__init__(**kwargs)
 
 

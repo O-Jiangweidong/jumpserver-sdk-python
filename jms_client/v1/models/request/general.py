@@ -1,3 +1,5 @@
+from typing import List
+
 from jms_client.v1.models.instance.general import ResourceCacheInstance
 from .common import Request
 
@@ -18,7 +20,7 @@ class CreateResourceCacheRequest(BaseResourceCacheRequest):
 
     def __init__(
             self,
-            resources: list,
+            resources: List,
             **kwargs
     ):
         """

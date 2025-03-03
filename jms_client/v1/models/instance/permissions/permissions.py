@@ -1,3 +1,5 @@
+from typing import List
+
 from ..common import Instance
 
 
@@ -31,10 +33,10 @@ class PermissionInstance(Instance):
         self.name: str = ''
         self.comment: str = ''
         self.is_active: bool = True
-        self.labels: list = []
-        self.accounts: list = []
-        self.actions: list = []
-        self.protocols: list = []
+        self.labels: List = []
+        self.accounts: List = []
+        self.actions: List = []
+        self.protocols: List = []
         self.date_start: str = ''
         self.date_expired: str = ''
         # readonly

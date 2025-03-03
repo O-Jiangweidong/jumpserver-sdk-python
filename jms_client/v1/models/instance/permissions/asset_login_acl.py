@@ -1,3 +1,5 @@
+from typing import List
+
 from ..common import Instance
 
 
@@ -33,10 +35,10 @@ class AssetLoginACLInstance(Instance):
         self.org_id: str = ''
         self.org_name: str = ''
         self.priority: int = 0
-        self.reviewers: list = []
+        self.reviewers: List = []
         self.rules: dict = {}
         self.users: dict = {}
         self.assets: dict = {}
-        self.accounts: list = []
+        self.accounts: List = []
         self.action: dict = {}
         super().__init__(**kwargs)

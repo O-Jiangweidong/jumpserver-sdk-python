@@ -1,3 +1,5 @@
+from typing import List
+
 from jms_client.v1.models.instance.assets import DomainInstance
 from ..common import Request
 from ..mixins import (
@@ -39,8 +41,8 @@ class CreateUpdateDomainParamsMixin(object):
     def __init__(
             self,
             name: str,
-            assets: list = None,
-            gateways: list = None,
+            assets: List = None,
+            gateways: List = None,
             comment: str = '',
             **kwargs
     ):

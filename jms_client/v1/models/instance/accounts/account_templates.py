@@ -1,3 +1,5 @@
+from typing import List
+
 from ..common import Instance
 
 
@@ -33,7 +35,7 @@ class AccountTemplateInstance(Instance):
         self.auto_push: bool = False
         self.privileged: bool = False
         self.password_rules: dict = {}
-        self.platforms: list = []
+        self.platforms: List = []
         self.push_params: dict = {}
         self.secret_strategy: dict = {}
         self.secret_type: dict = {}
@@ -43,7 +45,7 @@ class AccountTemplateInstance(Instance):
         self.data_updated: str = ''
         self.org_id: str = ''
         self.org_name: str = ''
-        self.labels: list = []
+        self.labels: List = []
         self.su_from: str = ''
         super().__init__(**kwargs)
 

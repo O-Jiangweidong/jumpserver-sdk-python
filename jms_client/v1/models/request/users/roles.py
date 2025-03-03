@@ -1,3 +1,5 @@
+from typing import List
+
 from jms_client.v1.models.instance.users import RoleInstance, RoleUserInstance
 from ..common import Request
 from ..mixins import (
@@ -111,7 +113,7 @@ class AppendUsersToRoleRequest(BaseRoleRelationRequest):
     """ 向指定角色批量添加用户 """
     def __init__(
             self,
-            users: list,
+            users: List,
             role_id: str,
             **kwargs
     ):

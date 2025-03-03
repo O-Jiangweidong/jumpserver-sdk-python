@@ -1,3 +1,5 @@
+from typing import List
+
 from ..common import Instance
 
 
@@ -28,7 +30,7 @@ class UserLoginACLInstance(Instance):
         self.date_updated: str = ''
         self.org_id: str = ''
         self.priority: int = 0
-        self.reviewers: list = []
-        self.rules: list = []
-        self.users: list = []
+        self.reviewers: List = []
+        self.rules: List = []
+        self.users: List = []
         super().__init__(**kwargs)

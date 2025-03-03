@@ -1,9 +1,12 @@
+from typing import List
+
 from jms_client.v1.models.instance.assets import (
     AssetInstance, HostInstance, DatabaseInstance, DeviceInstance,
     CloudInstance, WebInstance, GPTInstance, CustomInstance,
     PermNodeInstance,
 )
 from ..common import Request
+from ..params import AccountListParam
 from ..mixins import (
     WithIDMixin, ExtraRequestMixin, CreateMixin,
     UpdateMixin, DeleteMixin, BulkDeleteMixin,
@@ -25,7 +28,7 @@ class BaseAssetRequest(Request):
 
 class DescribeAssetsRequest(ExtraRequestMixin, BaseAssetRequest):
     """
-    此方法获取的资产是通用类型，顾返回的资产只包含不同类型共同的字段
+    此方法获取的资产是通用类型，所以返回的资产只包含不同类型共同的字段
     如数据库中的 dbname 则不存在，若想获取不同类型独特的字段，则需要更改请求模型
     如数据库的则为 DescribeDatabasesRequest
     """
@@ -103,7 +106,7 @@ class DescribeAssetsRequest(ExtraRequestMixin, BaseAssetRequest):
 
 class DetailAssetRequest(WithIDMixin, BaseAssetRequest):
     """
-    此方法获取的资产是通用类型，顾返回的资产只包含通用类型的字段
+    此方法获取的资产是通用类型，所以返回的资产只包含通用类型的字段
     如数据库中的 dbname 则不存在，若想获取不同类型独特的字段，则需要更改请求模型
     如数据库的则为 DetailDatabaseRequest
     """
@@ -119,31 +122,7 @@ class BulkDeleteAssetRequest(BulkDeleteMixin, BaseAssetRequest):
 
 class CreateUpdateAssetParamsMixin(object):
     _body: dict
-
-    # TODO 后边搞完账号模型后，再来补充账号相关的内容
-    """
-        "accounts":[
-        {
-            "privileged": False,
-            "secret_type": "password",
-            "push_now": True,
-            "on_invalid": "error",
-            "is_active": True,
-            "name": "hello",
-            "username": "hello",
-            "params": {
-                "push_account_posix": {
-                    "modify_sudo": True,
-                    "sudo": "/bin/whoami",
-                    "shell": "/bin/bash",
-                    "home": "/home",
-                    "groups": "usergroup"
-                }
-            },
-            "secret": "secret"
-            }
-        ]
-    """
+    get_method: callable
 
     def __init__(
             self,
@@ -151,9 +130,10 @@ class CreateUpdateAssetParamsMixin(object):
             address: str,
             domain: str = '',
             platform: str = '',
-            nodes: list = None,
-            protocols: list = None,
-            labels: list = None,
+            nodes: List = None,
+            protocols: List = None,
+            labels: List = None,
+            accounts: AccountListParam = None,
             is_active: bool = True,
             comment: str = '',
             **kwargs
@@ -166,17 +146,15 @@ class CreateUpdateAssetParamsMixin(object):
         :param nodes: 节点 ID 列表, eg: ["node1_id", "node2_id"]
         :param protocols: 协议列表, eg: [{'name': 'ssh', 'port': '22'}]
         :param labels: 标签列表, eg: ["name1:key1", "name2:key2"]
+        :param accounts: 账号列表
         :param is_active: 是否激活
         :param comment: 备注
         :param kwargs: 其他参数
         """
         super().__init__(**kwargs)
         self._body.update({
-            'name': name,
-            'address': address,
-            'platform': platform,
-            'is_active': is_active,
-            'comment': comment,
+            'name': name, 'address': address, 'platform': platform,
+            'is_active': is_active, 'comment': comment,
         })
         if domain:
             self._body['domain'] = domain
@@ -186,6 +164,8 @@ class CreateUpdateAssetParamsMixin(object):
             self._body['protocols'] = protocols
         if labels is not None:
             self._body['labels'] = labels
+        if self.get_method() == 'post' and isinstance(accounts, AccountListParam):
+            self._body['accounts'] = accounts.get_result()
 
 
 class BaseHostRequest(BaseAssetRequest):

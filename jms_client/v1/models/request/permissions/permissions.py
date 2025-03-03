@@ -1,3 +1,5 @@
+from typing import List
+
 from jms_client.v1.models.instance.permissions import (
     PermissionInstance
 )
@@ -143,10 +145,10 @@ class CreateUpdatePermissionParamsMixin(object):
             date_start: str = '',  # 2025-02-17 02:01:57
             date_expired: str = '',  # 2025-02-17 02:01:57
             is_active: bool = True,
-            users: list = None,
-            assets: list = None,
-            nodes: list = None,
-            user_groups: list = None,
+            users: List = None,
+            assets: List = None,
+            nodes: List = None,
+            user_groups: List = None,
             accounts: AccountParam = None,
             actions: ActionParam = None,
             protocols: ProtocolParam = None,
@@ -242,7 +244,7 @@ class AppendUsersToPermissionRequest(BaseUserRelationRequest):
     """ 向指定授权批量添加用户 """
     def __init__(
             self,
-            users: list,
+            users: List,
             permission_id: str,
             **kwargs
     ):
@@ -288,7 +290,7 @@ class AppendUserGroupsToPermissionRequest(BaseUserGroupRelationRequest):
     """ 向指定授权批量添加用户组 """
     def __init__(
             self,
-            user_groups: list,
+            user_groups: List,
             permission_id: str,
             **kwargs
     ):
@@ -334,7 +336,7 @@ class AppendAssetsToPermissionRequest(BaseAssetRelationRequest):
     """ 向指定授权批量添加资产 """
     def __init__(
             self,
-            assets: list,
+            assets: List,
             permission_id: str,
             **kwargs
     ):
@@ -380,7 +382,7 @@ class AppendNodesToPermissionRequest(BaseNodeRelationRequest):
     """ 向指定授权批量添加节点 """
     def __init__(
             self,
-            nodes: list,
+            nodes: List,
             permission_id: str,
             **kwargs
     ):

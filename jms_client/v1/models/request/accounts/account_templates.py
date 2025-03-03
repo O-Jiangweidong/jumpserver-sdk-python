@@ -1,3 +1,5 @@
+from typing import List
+
 from jms_client.v1.models.instance.accounts import AccountTemplateInstance
 from ..common import Request
 from ..params import SimpleProtocolParam as ProtocolParam, PushParam
@@ -88,7 +90,7 @@ class CreateUpdateAccountTemplateParamsMixin(object):
             su_from: str = '',
             secret: SecretParam = None,
             auto_push: bool = False,
-            platforms: list = None,
+            platforms: List = None,
             push_params: PushParam = None,
             comment: str = '',
             **kwargs

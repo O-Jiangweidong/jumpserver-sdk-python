@@ -1,3 +1,5 @@
+from typing import List
+
 from ..common import Instance
 
 
@@ -32,8 +34,8 @@ class PlatformInstance(Instance):
         self.type: dict = {}
         self.category: dict = {}
         self.charset: dict = {}
-        self.labels: list = []
-        self.protocols: list = []
+        self.labels: List = []
+        self.protocols: List = []
         self.create_by: str = ''
         self.updated_by: str = ''
         self.custom_fields: dict = {}

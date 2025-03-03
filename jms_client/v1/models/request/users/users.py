@@ -1,3 +1,5 @@
+from typing import List
+
 from jms_client.const import USER, ORG_USER
 from jms_client.v1.models.instance.users import (
     UserInstance, UserProfileInstance, PermUserInstance,
@@ -114,12 +116,12 @@ class CreateUpdateUserParamsMixin(object):
             username: str,
             email: str,
             comment: str = '',
-            groups: list = None,
+            groups: List = None,
             mfa_level: str = None,
             source: str = None,
             is_active: bool = True,
-            system_roles: list = None,
-            org_roles: list = None,
+            system_roles: List = None,
+            org_roles: List = None,
             date_expired: str = None,
             phone: str = None,
             wechat: str = None,
@@ -208,8 +210,8 @@ class InviteUserRequest(CreateMixin, Request):
 
     def __init__(
             self,
-            org_roles: list,
-            users: list,
+            org_roles: List,
+            users: List,
             **kwargs
     ):
         """

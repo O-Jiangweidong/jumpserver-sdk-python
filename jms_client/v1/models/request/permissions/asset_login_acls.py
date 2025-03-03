@@ -1,4 +1,4 @@
-import re
+from typing import List
 
 from jms_client.v1.models.instance.permissions import AssetLoginACLInstance
 from ..const import ACLAction
@@ -58,7 +58,7 @@ class CreateUpdateAssetLoginACLParamsMixin(object):
             action: str = ACLAction.REJECT,
             is_active: bool = True,
             priority: int = 50,
-            reviewers: list = None,
+            reviewers: List = None,
             rules: RuleParam = None,
             accounts: AccountParam = None,
             users: UserManyFilterParam = None,

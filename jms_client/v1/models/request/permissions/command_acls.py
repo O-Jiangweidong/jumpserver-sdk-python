@@ -1,3 +1,5 @@
+from typing import List
+
 from jms_client.v1.models.instance.permissions import (
     CommandGroupInstance, CommandFilterInstance,
 )
@@ -127,10 +129,10 @@ class CreateUpdateCommandFilterParamsMixin(object):
             is_active: bool = True,
             action: str = ACLAction.REJECT,
             comment: str = '',
-            command_groups: list = None,
+            command_groups: List = None,
             accounts: AccountParam = None,
             assets: AssetManyFilterParam = None,
-            reviewers: list = None,
+            reviewers: List = None,
             users: UserManyFilterParam = None,
             **kwargs
     ):

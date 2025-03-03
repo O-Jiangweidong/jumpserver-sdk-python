@@ -1,3 +1,5 @@
+from typing import List
+
 from ..common import Instance
 
 
@@ -36,7 +38,7 @@ class AccountInstance(Instance):
         self.privileged: bool = False
         self.is_active: bool = True
         self.comment: str = ''
-        self.labels: list = []
+        self.labels: List = []
         self.source_id: str = ''
         self.su_from: dict = {}
         self.connectivity: dict = {}

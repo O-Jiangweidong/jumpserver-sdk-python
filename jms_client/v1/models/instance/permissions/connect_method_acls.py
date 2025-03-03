@@ -1,3 +1,5 @@
+from typing import List
+
 from ..common import Instance
 
 
@@ -29,6 +31,6 @@ class ConnectMethodACLInstance(Instance):
         self.date_update: str = ''
         self.org_id: str = ''
         self.actions: dict = {}
-        self.reviewers: list = []
-        self.users: list = []
+        self.reviewers: List = []
+        self.users: List = []
         super().__init__(**kwargs)

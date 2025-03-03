@@ -1,3 +1,5 @@
+from typing import List
+
 from ..common import Instance
 
 
@@ -54,14 +56,14 @@ class CommandFilterInstance(Instance):
         self.org_id: str = ''
         self.org_name: str = ''
         self.priority: int = 0
-        self.accounts: list[str] = []
+        self.accounts: List[str] = []
         self.action: dict = {}
         self.assets: dict = {}
-        self.command_groups: list = []
+        self.command_groups: List = []
         self.created_by: str = ''
         self.date_created: str = ''
         self.date_updated: str = ''
         self.is_active: bool = False
-        self.reviewers: list = []
+        self.reviewers: List = []
         self.users: dict = {}
         super().__init__(**kwargs)

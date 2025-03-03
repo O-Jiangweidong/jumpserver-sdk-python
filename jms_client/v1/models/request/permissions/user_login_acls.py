@@ -1,4 +1,4 @@
-import re
+from typing import List
 
 from jms_client.v1.models.instance.permissions import UserLoginACLInstance
 from ..const import ACLAction
@@ -55,7 +55,7 @@ class CreateUpdateUserLoginACLParamsMixin(object):
             action: str = ACLAction.REJECT,
             is_active: bool = True,
             priority: int = 50,
-            reviewers: list = None,
+            reviewers: List = None,
             rules: RuleParam = None,
             users: UserManyFilterParam = None,
             **kwargs

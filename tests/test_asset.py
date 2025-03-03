@@ -35,6 +35,8 @@ from jms_client.v1.models.request.assets import (
 from jms_client.v1.models.instance.assets import (
     AssetInstance,
 )
+from jms_client.v1.models.request.const import SecretType
+from jms_client.v1.models.request.params import AccountListParam, PushParam
 from jms_client.v1.models.response import Response
 
 
@@ -114,6 +116,14 @@ class TestFunctionality(unittest.TestCase):
 
     def test_create_host(self):
         """ 测试创建主机类型资产 """
+        push_param = PushParam()
+        push_param.set_posix_params(groups=['group1', 'group2'])
+        accounts = AccountListParam()
+        accounts.add_account(
+            name='dev', username='dev', secret='123456',
+            secret_type=SecretType.PASSWORD, privileged=True,
+            push_now=True, params=push_param
+        )
         request = CreateHostRequest(
             name='sdk-host', address='1.1.1.1',
             domain='bf6682af-7056-413d-be80-302604129598',
@@ -121,7 +131,8 @@ class TestFunctionality(unittest.TestCase):
                 '02f821c7-a316-4e2e-a50b-e41faf59f68d'
             ],
             protocols=[{'name': 'ssh', 'port': '22'}],
-            labels=['大西瓜:big', '水蜜桃:a']
+            labels=['大西瓜:big', '水蜜桃:a'],
+            accounts=accounts
         )
         resp: Response = self.client.do(request, with_model=True)
 

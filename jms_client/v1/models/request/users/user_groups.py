@@ -1,3 +1,5 @@
+from typing import List
+
 from jms_client.v1.models.instance.users import UserGroupInstance
 from ..common import Request
 from ..mixins import (
@@ -46,7 +48,7 @@ class CreateUpdateUserGroupParamsMixin(object):
     def __init__(
             self,
             name: str,
-            users: list = None,
+            users: List = None,
             comment: str = '',
             **kwargs
     ):
@@ -88,7 +90,7 @@ class AppendUserToGroupRequest(BaseRelationRequest):
     """ 向指定用户组批量添加用户 """
     def __init__(
             self,
-            users: list,
+            users: List,
             group_id: str,
             **kwargs
     ):

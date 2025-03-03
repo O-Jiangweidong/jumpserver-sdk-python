@@ -1,3 +1,5 @@
+from typing import List
+
 import configparser
 
 import unittest
@@ -79,7 +81,7 @@ class TestFunctionality(unittest.TestCase):
         """ 测试绑定标签到资源 """
         request = DescribeLabelResourceTypesRequest()
         resp: Response = self.client.do(request, with_model=True)
-        types: list[ResourceTypeInstance] = resp.get_data()
+        types: List[ResourceTypeInstance] = resp.get_data()
         resource_type_id = ''
         for type_ in types:
             if type_.model == ResourceType.ACCOUNT_TEMPLATE:

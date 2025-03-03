@@ -1,3 +1,5 @@
+from typing import List
+
 from ..common import Instance
 
 
@@ -82,10 +84,10 @@ class UserInstance(Instance):
         self.is_service_account: bool = False
         self.is_superuser: bool = False
         self.can_public_key_auth: bool = True
-        self.groups: list = []
-        self.labels: list = []
-        self.system_roles: list = []
-        self.org_roles: list = []
+        self.groups: List = []
+        self.labels: List = []
+        self.system_roles: List = []
+        self.org_roles: List = []
         self.mfa_level: dict = {}
         self.password_strategy: dict = {}
         self.phone: dict = {}
@@ -108,12 +110,12 @@ class UserProfileInstance(UserInstance):
         :param kwargs: 其他参数
         """
         super().__init__(**kwargs)
-        self.audit_orgs: list = []
-        self.console_orgs: list = []
-        self.workbench_orgs: list = []
-        self.guide_url: list = []
-        self.perms: list = []
-        self.receive_backends: list = []
+        self.audit_orgs: List = []
+        self.console_orgs: List = []
+        self.workbench_orgs: List = []
+        self.guide_url: List = []
+        self.perms: List = []
+        self.receive_backends: List = []
         self.public_key_hash_md5: str = ''
         self.public_key_comment: str = ''
 

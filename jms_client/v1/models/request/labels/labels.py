@@ -1,3 +1,5 @@
+from typing import List
+
 from jms_client.v1.models.instance.labels import (
     LabelInstance, ResourceTypeInstance, LabelResourceInstance
 )
@@ -115,7 +117,7 @@ class BindLabelForResourceRequest(UpdateMixin, Request):
             self,
             label_id: str,
             resource_type_id: str,
-            resource_ids: list,
+            resource_ids: List,
             **kwargs
     ):
         """

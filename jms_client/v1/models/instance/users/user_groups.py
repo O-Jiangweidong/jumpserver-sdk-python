@@ -1,3 +1,5 @@
+from typing import List
+
 from ..common import Instance
 
 
@@ -23,6 +25,6 @@ class UserGroupInstance(Instance):
         self.org_name: str = ''
         self.created_by: str = ''
         self.date_created: str = ''
-        self.labels: list = []
+        self.labels: List = []
         self.users_amount: int = 0
         super().__init__(**kwargs)

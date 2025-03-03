@@ -1,6 +1,8 @@
 import re
 
-from .const import PlatformType
+from typing import List
+
+from .const import PlatformType, SecretType
 
 
 class ProtocolParam(object):
@@ -308,13 +310,13 @@ class ManyToManyFilterParam(object):
     def set_all(self):
         self._results = {'type': 'all'}
 
-    def set_specify(self,  obj_ids: list):
+    def set_specify(self,  obj_ids: List):
         """
         :param obj_ids: 指定对象，格式为 ['obj1_id', 'obj2_id']
         """
         self._results = {'type': 'ids', 'ids': obj_ids}
 
-    def set_filter_attrs(self, attrs: list):
+    def set_filter_attrs(self, attrs: List):
         attrs_rule_map = self._get_attrs_rule_map()
         for attr in attrs:
             name = attr.get('name')
@@ -333,9 +335,9 @@ class ManyToManyFilterParam(object):
 
 class UserManyFilterParam(ManyToManyFilterParam):
     """
-     :method set_specify(obj_ids: list => [user1_id, user2_id]): 指定用户
+     :method set_specify(obj_ids: List => [user1_id, user2_id]): 指定用户
 
-     :method set_filter_attrs(attrs: list => 具体用法看下方注释): 指定用户属性
+     :method set_filter_attrs(attrs: List => 具体用法看下方注释): 指定用户属性
         attrs: 用户属性，格式为 [{'name': '', 'match': '', 'value': ''}]
             以下为 'name' 为某个属性时，match 支持的内容 及 value 的内容格式
             name: 用户名称、value: 值、match：
@@ -376,9 +378,9 @@ class UserManyFilterParam(ManyToManyFilterParam):
 
 class AssetManyFilterParam(ManyToManyFilterParam):
     """
-     :method set_specify(obj_ids: list => [user1_id, user2_id]): 指定用户
+     :method set_specify(obj_ids: List => [user1_id, user2_id]): 指定用户
 
-     :method set_filter_attrs(attrs: list => 具体用法看下方注释): 指定资产属性
+     :method set_filter_attrs(attrs: List => 具体用法看下方注释): 指定资产属性
         attrs: 资产属性，格式为 [{'name': '', 'match': '', 'value': ''}]
             以下为 'name' 为某个属性时，match 支持的内容 及 value 的内容格式
             name: 用户名称、value: 值、match：
@@ -457,7 +459,7 @@ class AccountParam(object):
         self._accounts.append(self.USER)
         return self
 
-    def with_spec(self, username: list):
+    def with_spec(self, username: List):
         """ 设置指定账号
         :param username:
         """
@@ -484,10 +486,10 @@ class RuleParam(object):
         ]
         return self._rule
 
-    def set_ip_group(self, ip_groups: list):
+    def set_ip_group(self, ip_groups: List):
         self._rule['ip_group'] = ip_groups
 
-    def set_time_period(self, weeks: list[int], time_periods: list):
+    def set_time_period(self, weeks: List[int], time_periods: List):
         """
         :param weeks: 星期，取值范围 0-6、分别代表星期日至星期六
         :param time_periods: 时间段，元素格式为 00:00~00:00
@@ -512,7 +514,7 @@ class PushParam(object):
 
     def set_aix_params(
             self,
-            groups: list = None,
+            groups: List = None,
             home: str = '',
             modify_sudo: bool = False,
             shell: str = '/bin/bash',
@@ -524,7 +526,7 @@ class PushParam(object):
             'modify_sudo': modify_sudo, 'shell': shell,
         }
 
-    def set_windows_params(self, groups: list = None):
+    def set_windows_params(self, groups: List = None):
         groups = groups or ['Users', 'Remote Desktop Users']
         self._result['push_account_local_windows'] = {
             'groups': ','.join(groups)
@@ -532,7 +534,7 @@ class PushParam(object):
 
     def set_posix_params(
             self,
-            groups: list = None,
+            groups: List = None,
             home: str = '',
             modify_sudo: bool = False,
             shell: str = '/bin/bash',
@@ -543,3 +545,33 @@ class PushParam(object):
             'groups': ','.join(groups), 'home': home, 'sudo': sudo,
             'modify_sudo': modify_sudo, 'shell': shell,
         }
+
+
+class AccountListParam(object):
+    def __init__(self):
+        self._result = []
+
+    def get_result(self):
+        return self._result
+
+    def add_account(
+            self,
+            name: str,
+            username: str,
+            secret: str = '',
+            is_active: bool = True,
+            privileged: bool = False,
+            push_now: bool = False,
+            secret_type: str = SecretType.PASSWORD,
+            params: PushParam = None,
+
+    ):
+        if push_now and not isinstance(params, PushParam):
+            params = PushParam()
+        secret_type = SecretType(secret_type)
+        self._result.append({
+            'name': name, 'username': username, 'secret': secret,
+            'is_active': bool(is_active), 'push_now': bool(push_now),
+            'privileged': bool(privileged), 'secret_type': secret_type,
+            'params': params.get_result()
+        })

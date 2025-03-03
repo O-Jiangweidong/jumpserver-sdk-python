@@ -1,3 +1,5 @@
+from typing import List
+
 from jms_client.v1.models.instance.accounts import (
     AccountInstance, WithTemplateAccountInstance
 )
@@ -146,7 +148,7 @@ class ClearAccountSecretRequest(Request):
 
     def __init__(
             self,
-            accounts: list,  # 格式为  ['asset1_id', 'asset2_id']
+            accounts: List,  # 格式为  ['asset1_id', 'asset2_id']
             **kwargs
     ):
         super().__init__(**kwargs)
@@ -164,7 +166,7 @@ class WithTemplateCreateAccountRequest(Request):
 
     def __init__(
             self,
-            assets: list,  # 格式为 ['asset1_id', 'asset2_id']
+            assets: List,  # 格式为 ['asset1_id', 'asset2_id']
             template_id: str,
             is_active: bool = True,
             privileged: bool = False,
