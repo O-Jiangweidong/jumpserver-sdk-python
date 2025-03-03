@@ -1,6 +1,6 @@
 from jms_client.v1.models.instance.accounts import AccountTemplateInstance
 from ..common import Request
-from ..params import SimpleProtocolParam as ProtocolParam, PushParams
+from ..params import SimpleProtocolParam as ProtocolParam, PushParam
 from ..mixins import (
     WithIDMixin, ExtraRequestMixin,
     CreateMixin, UpdateMixin, DeleteMixin
@@ -89,7 +89,7 @@ class CreateUpdateAccountTemplateParamsMixin(object):
             secret: SecretParam = None,
             auto_push: bool = False,
             platforms: list = None,
-            push_params: PushParams = None,
+            push_params: PushParam = None,
             comment: str = '',
             **kwargs
     ):
@@ -101,6 +101,7 @@ class CreateUpdateAccountTemplateParamsMixin(object):
         :param secret: 密码及策略
         :param auto_push: 是否自动推送
         :param platforms: 平台 ID，只有开启自动推送才有效
+        :param push_params: 推送参数
         :param comment: 备注
         :param kwargs: 其他参数
         """

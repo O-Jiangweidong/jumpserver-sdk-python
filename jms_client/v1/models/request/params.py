@@ -503,7 +503,7 @@ class RuleParam(object):
                 self._time_period[week].append(time_period)
 
 
-class PushParams(object):
+class PushParam(object):
     def __init__(self):
         self._result = {}
 

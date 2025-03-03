@@ -1,6 +1,7 @@
 from jms_client.v1.models.instance.accounts import AccountInstance
 from ..const.account import SecretType
 from ..common import Request
+from ..params import PushParam
 from ..mixins import (
     WithIDMixin, ExtraRequestMixin,
     CreateMixin, UpdateMixin, DeleteMixin
@@ -86,6 +87,7 @@ class CreateUpdateAccountParamsMixin(object):
             is_active: bool = True,
             push_now: bool = False,
             privileged: bool = False,
+            push_params: PushParam = None,
             **kwargs
     ):
         """
@@ -98,18 +100,20 @@ class CreateUpdateAccountParamsMixin(object):
         :param su_from: 切换自 ID
         :param is_active: 是否激活
         :param privileged: 特权账号
+        :param push_params: 推送参数
         :param push_now: 是否推送账号至资产
         """
         super().__init__(**kwargs)
         self._body.update({
-            'is_active': is_active, 'username': username,
-            'secret_type': SecretType(secret_type),
-            'push_now': push_now, 'asset': asset, 'name': name
+            'is_active': is_active, 'username': username, 'name': name,
+            'secret_type': SecretType(secret_type), 'asset': asset,
         })
         if isinstance(privileged, bool):
             self._body['privileged'] = privileged
         if isinstance(push_now, bool):
             self._body['push_now'] = push_now
+        if isinstance(push_params, PushParam) and push_now:
+            self._body['params'] = push_params.get_result()
         if secret:
             self._body['secret'] = secret
         if comment:
