@@ -17,6 +17,8 @@ class TestFunctionality(unittest.TestCase):
     def _assert_response(self, client):
         resp: Response = client.do(UserProfileRequest(), with_model=True)
         user: UserProfileInstance = resp.get_data()
+
+        self.assertTrue(resp.is_request_ok())
         self.assertTrue(user.is_active)
 
     def test_access_key_auth(self):

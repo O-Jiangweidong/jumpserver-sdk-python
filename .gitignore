@@ -2,3 +2,4 @@ tmp
 .idea
 config.ini
 __pycache__/
+dist
