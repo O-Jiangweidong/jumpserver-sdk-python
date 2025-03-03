@@ -136,3 +136,20 @@ class UpdateAccountRequest(
 
 class DeleteAccountRequest(DeleteMixin, BaseAccountRequest):
     """ 删除指定 ID 的账号 """
+
+
+class ClearAccountSecretRequest(Request):
+    """ 清除指定 ID 的账号密码 """
+    URL = 'accounts/accounts/clear-secret/'
+
+    def __init__(
+            self,
+            accounts: list,  # 格式为  ['asset1_id', 'asset2_id']
+            **kwargs
+    ):
+        super().__init__(**kwargs)
+        self._body['account_ids'] = accounts
+
+    @staticmethod
+    def get_method():
+        return 'patch'

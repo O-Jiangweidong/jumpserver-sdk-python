@@ -7,7 +7,7 @@ from jms_client.v1.client import Client
 from jms_client.v1.models.request.accounts import (
     DescribeAccountsRequest, DetailAccountRequest,
     DeleteAccountRequest, CreateAccountRequest,
-    UpdateAccountRequest
+    UpdateAccountRequest, ClearAccountSecretRequest
 )
 from jms_client.v1.models.instance.accounts import AccountInstance
 from jms_client.v1.models.response import Response
@@ -71,6 +71,18 @@ class TestFunctionality(unittest.TestCase):
 
         self.assertTrue(resp.is_success())
         self.assertIsInstance(resp.get_data(), AccountInstance)
+
+    def test_clear_accounts_secret(self):
+        """ 测试清除指定 ID 账号密码 """
+        request = ClearAccountSecretRequest(
+            accounts=[
+                '6cee6d36-63a8-4509-b9c2-e0aebc65a290',
+                '1ed0287b-d45e-4ce5-bfa2-ed4a3d52f867'
+            ]
+        )
+        resp: Response = self.client.do(request, with_model=True)
+
+        self.assertTrue(resp.is_success())
 
     def test_delete_account(self):
         """ 测试删除指定 ID 账号 """
