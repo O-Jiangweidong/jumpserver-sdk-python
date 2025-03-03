@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jumpserver-sdk"
-version = "0.8.0"
+version = "0.8.1"
 description = "JumpServer Python SDK"
 authors = ["jiangweidong <1053570670@qq.com>"]
 readme = "README.md"
