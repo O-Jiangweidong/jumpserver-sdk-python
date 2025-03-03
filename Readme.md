@@ -291,8 +291,36 @@ SDK 旨在为开发者提供便捷的接口和工具，以便快速集成 JumpSe
 
 ## 安装与使用
 
-### 安装(未实现，1.0 版本发布时同步上线)
+### 安装
 
 ```bash
 pip install jumpserver-sdk
+```
+
+### 使用（更多使用示例，查询项目下的 tests 测试用例参考）
+```python
+from jms_client.client import get_client
+from jms_client.v1.client import Client
+from jms_client.v1.models.request.users import (
+    DescribeUsersRequest
+)
+from jms_client.v1.models.instance.users import (
+    UserInstance,
+)
+from jms_client.v1.models.response import Response
+from typing import List
+
+
+client: Client = get_client(
+    version='3.10', web_url='https://jumpserver.dev',
+    username='username', password='password'
+)
+client.set_org('org_id')
+
+request = DescribeUsersRequest(limit=2)
+resp: Response = client.do(request, with_model=True)
+
+users: List[UserInstance] = resp.get_data()
+for user in users:
+    print('Username: ', user.username)
 ```
