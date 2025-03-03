@@ -53,7 +53,7 @@ class CreateUpdateLabelParamsMixin(object):
             self,
             name: str,
             value: str,
-            comment: str,
+            comment: str = '',
             **kwargs
     ):
         """

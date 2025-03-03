@@ -279,7 +279,7 @@ class TestFunctionality(unittest.TestCase):
         self.assertIsInstance(resp.get_data(), AssetInstance)
 
     def test_update_cloud(self):
-        """ 测试更新指定 ID 网络设备资产属性 """
+        """ 测试更新指定 ID 云服务资产属性 """
         request = UpdateCloudRequest(
             id_='23f78712-2732-4f6e-a762-757d17fdffc5',
             name='sdk-cloud-new', address='http://192.168.1.1/k8s',

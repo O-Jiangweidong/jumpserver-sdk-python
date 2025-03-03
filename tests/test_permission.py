@@ -111,6 +111,7 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_request_ok())
 
     def test_list_authorized_perms_for_asset_and_user_request(self):
+        """ 测试查询`用户和资产`对应的授权 """
         request = DescribePermsForAssetAndUserRequest(
             asset_id='e0bdf9e2-3184-43b1-b80e-ce3edbd50253',
             user_id='90c61428-5ff3-4ee7-b220-451de8a275c5',
@@ -121,6 +122,7 @@ class TestFunctionality(unittest.TestCase):
         self.assertIsInstance(resp.get_data(), list)
 
     def test_list_authorized_perms_for_asset_and_user_group_request(self):
+        """ 测试查询`用户组和资产`对应的授权 """
         request = DescribePermsForAssetAndUserGroupRequest(
             asset_id='e0bdf9e2-3184-43b1-b80e-ce3edbd50253',
             user_group_id='70df0624-246f-43b0-b18a-9b3f58da9030',

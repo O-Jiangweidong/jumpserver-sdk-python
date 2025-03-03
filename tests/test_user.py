@@ -107,6 +107,7 @@ class TestFunctionality(unittest.TestCase):
         self.assertTrue(resp.is_request_ok())
 
     def test_list_authorized_users_for_asset_request(self):
+        """ 测试获取`资产`被授权的用户 """
         request = DescribeAuthorizedUsersForAssetRequest(
             asset_id='e0bdf9e2-3184-43b1-b80e-ce3edbd50253'
         )
@@ -116,6 +117,7 @@ class TestFunctionality(unittest.TestCase):
         self.assertIsInstance(resp.get_data(), list)
 
     def test_list_users_for_permission(self):
+        """ 测试获取`授权`的用户  """
         request = DescribeUsersForPermissionRequest(
             id_='d43c9898-1b73-46ab-91dd-ed0db1305817',
         )
